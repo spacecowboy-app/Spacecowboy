@@ -1,0 +1,39 @@
+# Copyright 2021 Rolf Michelsen and Tami Weiss
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# Docker file for building and hosting the Planning Poker app.
+# The app is accessible at port 80.
+#
+# Build with
+#   docker build --force-rm -t spacecowboy-app .
+#
+# Run with
+#   docker run -d -p 8000:80/tcp --name spacecowboy-app spacecowboy-app:latest
+#
+# Enjoy!
+
+FROM nginx:1.21 AS base
+
+FROM node:14.17 AS build
+ARG SPACECOWBOY_VERSION=development
+WORKDIR /app
+COPY . .
+RUN npm install -g npm@8.1
+RUN npm install
+RUN npm run build
+
+FROM base AS final
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d

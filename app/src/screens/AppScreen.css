@@ -1,0 +1,170 @@
+/*
+    Copyright 2021 Rolf Michelsen and Tami Weiss
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+/*
+    Layout styles used throughout the application.
+*/
+
+
+/*
+    Container wrapping the entire application.
+
+    The application contains three main areas: the top bar with navigation controls, the main application screen,
+    and the footer.
+
+    This styling is copied from the CSS Cookbook recipie for stick footers at
+    https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers
+*/
+.appcontainer {
+    min-height: 98vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+
+/*
+    The main container for an application screen.  The screen container can contain a number of panels stacked
+    vertically.
+*/
+.screencontainer {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+
+/*
+    Container for the top navigation bar.
+*/
+.topbarcontainer {
+}
+
+/*
+    Container for the application footer.
+*/
+.footercontainer {
+}
+
+
+
+/*
+    Panels for various application elements, primarily used inside a screencontainer or other flexbox.
+*/
+
+
+/* Panel for rendering a hero image within a screencontainer or another flexbox. */
+.imagepanel {
+    flex: 0 1 auto;
+}
+
+
+/* Panel for rendering a screen header within a screencontainer or another panel.  Usually contains h1, h2, ... elements. */
+.headerpanel {
+    padding: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* Panel for laying out a set of elements horizontally within a screencontainer or another panel. */
+.horizontalpanel {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.horizontalcenterpanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 90%;
+}
+
+
+/* Makes a panel with two element give each element the same size */
+.halfpanel {
+    flex: 0 0 50%;
+}
+
+/* Panel for layout out a set of elements vertically within a screencontainer or another panel. */
+.verticalpanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
+}
+
+/* Panel for rendering one or more buttons at the bottom of a screencontainer or another panel. */
+.buttonpanel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+
+/*
+    Styling for common controls.
+*/
+
+/* Style for a button control */
+.button {
+    border: 1px solid #d8d8d8;
+    border-radius: 2px;;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 45px;
+    padding-right: 45px;
+    color: #FFFFFF;
+    background-color: #424242;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 4px;
+    min-width: 120px;
+    transition-property: transform;
+    transition-duration: 0.25s;
+}
+
+.button:hover {
+    transform: scale(1.1, 1.1);
+    cursor: pointer;
+}
+
+.button:disabled {
+    transform: none;
+    cursor: inherit;
+    background-color: #424242;
+    opacity: 0.2;
+}
+
+
+/* Styling for INPUT elements */
+.inputcontrol {
+    font-size: xx-large;
+    background-color: #EEEDEB;
+    border: 1px;
+    border-color: #979797;
+    text-align: center;
+    outline: none;
+    margin: 10px;
+}
