@@ -20,12 +20,17 @@
 
 
 /* Container for all footer elements */
+
 .footer {
     display: flex;
-    justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 4em 0 0 0;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 4em;
+    padding-right: 4em;
+    list-style-type: none;
+    margin: 0 0 2em 0;
 }
 
 
@@ -36,19 +41,23 @@
 
 /* Layout container for a single footer info panel */
 .footerInfoPanel {
-    flex: 0 1 40em;
-    padding: 0 4em;
+    flex-grow: 1;
+    margin-right: auto;
 }
 
 .footerContactPanel {
-    flex: 0 0 content;
-    padding: 0 4em;
+    padding-left: 1em;
 }
 
 .footerLinksPanel {
-    flex: 0 0 content;
-    padding: 0 4em;
+    align-self: flex-end;
 }
+
+.footerLinksPanel img {
+    width: 50%;
+    opacity: 50%;
+}
+
 
 .footerInfoStrong {
     font-weight: bold;
