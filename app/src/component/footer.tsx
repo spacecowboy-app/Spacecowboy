@@ -27,7 +27,7 @@ export default function FooterPanel(): JSX.Element
 {
     return (
         <div className="footer shadedcontainer">
-            <div className="footerInfoPanelLeft">
+            <div className="footerInfoPanel">
                 <p className="footerInfoStrong">Space Cowboy</p>
                 <p>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</p>
                 <p></p>
@@ -35,7 +35,7 @@ export default function FooterPanel(): JSX.Element
                 <p className="copyrightnotice">&copy; Copyright 2021 Rolf Michelsen and Tami Weiss<br/>
                                                 Version: {Configuration.Version}</p>
             </div>
-            <div className="footerInfoPanelRight">
+            <div className="footerContactPanel">
                 <p className="footerInfoStrong">Send feedback</p>
                 <p>Space Cowboy HQ</p>
                 <p>OSLO NORWAY</p>

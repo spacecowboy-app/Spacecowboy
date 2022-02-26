@@ -35,12 +35,12 @@
 
 
 /* Layout container for a single footer info panel */
-.footerInfoPanelLeft {
+.footerInfoPanel {
     flex: 0 1 40em;
     padding: 0 4em;
 }
 
-.footerInfoPanelRight {
+.footerContactPanel {
     flex: 0 0 content;
     padding: 0 4em;
 }
