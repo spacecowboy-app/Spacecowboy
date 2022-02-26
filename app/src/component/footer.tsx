@@ -42,8 +42,8 @@ export default function FooterPanel(): JSX.Element
             </div>
             <div className="footerContactPanel">
                 <p className="footerInfoStrong">Send feedback</p>
-                <p>Space Cowboy HQ</p>
-                <p>OSLO NORWAY</p>
+                <p>Space Cowboy HQ<br/>
+                   OSLO NORWAY</p>
                 <p><a className="emaillink" href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</a></p>
             </div>
         </div>
