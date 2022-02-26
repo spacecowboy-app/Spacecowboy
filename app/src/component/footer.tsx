@@ -19,6 +19,8 @@ import React from "react";
 import Configuration from "../Config";
 
 import "./footer.css";
+import GitHubLogo from "../images/GitHub-Mark-64px.png";
+
 
 /**
  * Application footer
@@ -27,21 +29,22 @@ export default function FooterPanel(): JSX.Element
 {
     return (
         <div className="footer shadedcontainer">
-            <div className="footerInfo">
-                <div className="footerInfoPanelLeft">
-                    <p className="footerInfoStrong">Space Cowboy</p>
-                    <p>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</p>
-                    <p></p>
-                    <p>No warranty. No personal data collected.</p>
-                    <p className="copyrightnotice">&copy; Copyright 2021 Rolf Michelsen and Tami Weiss<br/>
-                                                   Version: {Configuration.Version}</p>
-                </div>
-                <div className="footerInfoPanelRight">
-                    <p className="footerInfoStrong">Send feedback</p>
-                    <p>Space Cowboy HQ</p>
-                    <p>OSLO NORWAY</p>
-                    <p><a className="emaillink" href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</a></p>
-                </div>
+            <div className="footerInfoPanel">
+                <p className="footerInfoStrong">Space Cowboy</p>
+                <p>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</p>
+                <p></p>
+                <p>No warranty. No personal data collected.</p>
+                <p className="copyrightnotice">&copy; Copyright 2021 Rolf Michelsen and Tami Weiss<br/>
+                                                Version: {Configuration.Version}</p>
+            </div>
+            <div className="footerLinksPanel">
+                <a href="https://github.com/spacecowboy-app"><img src={GitHubLogo} /></a>
+            </div>
+            <div className="footerContactPanel">
+                <p className="footerInfoStrong">Send feedback</p>
+                <p>Space Cowboy HQ<br/>
+                   OSLO NORWAY</p>
+                <p><a className="emaillink" href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</a></p>
             </div>
         </div>
     );

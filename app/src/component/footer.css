@@ -20,8 +20,17 @@
 
 
 /* Container for all footer elements */
+
 .footer {
-    margin-top: 4em 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 4em;
+    padding-right: 4em;
+    list-style-type: none;
+    margin: 0 0 2em 0;
 }
 
 
@@ -29,26 +38,36 @@
     margin-bottom: 0;
 }
 
-
-/* Layout container for the footer info panels */
-.footerInfo {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: wrap;
+.footer a:any-link {
+    color: black;
+    text-decoration: none;
 }
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
 
 
 /* Layout container for a single footer info panel */
-.footerInfoPanelLeft {
-    flex: 0 1 40em;
-    padding: 0 4em;
+.footerInfoPanel {
+    flex-grow: 1;
+    margin-right: auto;
 }
 
-.footerInfoPanelRight {
-    flex: 0 0 content;
-    padding: 0 4em;
+.footerContactPanel {
+    padding-left: 1em;
 }
+
+.footerLinksPanel {
+    align-self: flex-end;
+}
+
+.footerLinksPanel img {
+    width: 50%;
+    opacity: 50%;
+}
+
 
 .footerInfoStrong {
     font-weight: bold;

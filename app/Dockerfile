@@ -12,18 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# Docker file for building and hosting the Planning Poker app.
-# The app is accessible at port 80.
-#
-# Build with
-#   docker build --force-rm -t spacecowboy-app .
-#
-# Run with
-#   docker run -d -p 8000:80/tcp --name spacecowboy-app spacecowboy-app:latest
-#
-# Enjoy!
-
 FROM nginx:1.21 AS base
 
 FROM node:14.19 AS build
