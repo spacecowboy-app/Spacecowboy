@@ -21,21 +21,16 @@
 
 /* Container for all footer elements */
 .footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 4em 0 0 0;
 }
 
 
 .footer p {
     margin-bottom: 0;
-}
-
-
-/* Layout container for the footer info panels */
-.footerInfo {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 
 
