@@ -45,6 +45,11 @@
     padding: 0 4em;
 }
 
+.footerLinksPanel {
+    flex: 0 0 content;
+    padding: 0 4em;
+}
+
 .footerInfoStrong {
     font-weight: bold;
     font-size: 110%;

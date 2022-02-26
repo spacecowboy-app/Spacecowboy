@@ -19,6 +19,8 @@ import React from "react";
 import Configuration from "../Config";
 
 import "./footer.css";
+import GitHubLogo from "../images/GitHub-Mark-64px.png";
+
 
 /**
  * Application footer
@@ -34,6 +36,9 @@ export default function FooterPanel(): JSX.Element
                 <p>No warranty. No personal data collected.</p>
                 <p className="copyrightnotice">&copy; Copyright 2021 Rolf Michelsen and Tami Weiss<br/>
                                                 Version: {Configuration.Version}</p>
+            </div>
+            <div className="footerLinksPanel">
+                <a href="https://github.com/spacecowboy-app"><img src={GitHubLogo} /></a>
             </div>
             <div className="footerContactPanel">
                 <p className="footerInfoStrong">Send feedback</p>
