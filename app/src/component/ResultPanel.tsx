@@ -60,6 +60,7 @@ export default function ResultPanel(): JSX.Element
             <div className="resultpanel">
                 {votes}
             </div>
+            {addParticipantsHint(participants.length)}
         </div>
     );
 
@@ -110,5 +111,19 @@ export default function ResultPanel(): JSX.Element
         if (name1 < name2) { return -1; }
         if (name1 > name2) { return 1; }
         return 0;
+    }
+
+
+    function addParticipantsHint(participantCount: number): JSX.Element
+    {
+        if (participantCount !== 1) {
+            return (<></>);
+        }
+
+        return (
+            <div>
+                <p>It is lonely here. Remember to <a href={`/${sessionId}/share`}>invite additional players</a>.</p>
+            </div>
+        );
     }
 }
