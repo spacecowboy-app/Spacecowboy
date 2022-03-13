@@ -38,6 +38,7 @@ export default function ResultPanel(): JSX.Element
     const participants = useSelector((state:AppState) => state.session.participants);
     const sessionId = useSelector((state:AppState) => state.session.id);
     const participantId = useSelector((state: AppState) => state.session.participantId);
+    const votingCompleted = useSelector((state: AppState) => state.session.votingCompleted);
     const participantVoteCardId = useSelector((state: AppState) => state.session.participantVoteCardId) ?? deck?.noVote.id;
 
     if (!deck || !sessionId) {
@@ -49,7 +50,7 @@ export default function ResultPanel(): JSX.Element
     others.sort((a,b) => compareParticipants(a,b));
     const all = me === undefined ? others : Array(me).concat(others);
 
-    const votes = all.flatMap((p) => vote(p, sessionId, p.id === participantId));
+    const votes = all.flatMap((p) => vote(p, sessionId, p.id === participantId, votingCompleted));
 
     return(
         <div className="verticalpanel">
@@ -63,9 +64,9 @@ export default function ResultPanel(): JSX.Element
     );
 
 
-    function vote(p: Participant, sessionId: string, me: boolean): JSX.Element[]
+    function vote(p: Participant, sessionId: string, me: boolean, votingCompleted: boolean): JSX.Element[]
     {
-        const card = lookupCard(p.id === participantId && participantVoteCardId ? participantVoteCardId : p.vote);
+        const card = lookupCard(me && participantVoteCardId && !votingCompleted ? participantVoteCardId : p.vote);
         if (!card) {
             return ([]);
         }
