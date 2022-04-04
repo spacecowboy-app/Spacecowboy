@@ -27,5 +27,10 @@ namespace Spacecowboy.Service
         /// Valid values are "redis" and "memory".
         /// </remarks>
         public string RepositoryType { get; set; }
+
+        /// <summary>
+        /// Name of this instance of the service.  Each running instance has a unique name.
+        /// </summary>
+        public string InstanceName { get; set; }
     }
 }
