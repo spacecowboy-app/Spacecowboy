@@ -12,5 +12,7 @@ services:
         build: ./service/
         image: service:dev
         env_file: .env
+        environment:
+            Spacecowboy__InstanceName: "compose"
         ports:
             - 5000:80/tcp
