@@ -61,6 +61,7 @@ namespace Spacecowboy.Service
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
                     .Enrich.FromLogContext()
+                    .Enrich.WithProperty("InstanceName", Environment.GetEnvironmentVariable("Spacecowboy__InstanceName") ?? "n/a")
                     .WriteTo.Console())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
