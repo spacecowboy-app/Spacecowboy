@@ -18,7 +18,7 @@ FROM node:14.19 AS build
 ARG SPACECOWBOY_VERSION=development
 WORKDIR /app
 COPY . .
-RUN npm install -g npm@8.4
+RUN npm install -g npm@8.7
 RUN npm install
 RUN npm run build
 
