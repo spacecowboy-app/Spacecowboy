@@ -26,6 +26,7 @@ using Spacecowboy.Service.Controllers.Hubs;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json.Serialization;
 
@@ -111,7 +112,22 @@ namespace Spacecowboy.Service
                 );
             });
 
+            /* Set the service instance name as a label on all metrics published. */
+            var instanceName = serviceOptions["InstanceName"];
+            if (instanceName != null)
+            {
+                Metrics.DefaultRegistry.SetStaticLabels(new Dictionary<string, string>
+                {
+                  { "instance_name", instanceName }
+                });
+                Log.Information("Metrics will be annotated with instance name {instanceName}", instanceName);
+            }
+            else
+            {
+                Log.Information("No instance name configured");
+            }
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
