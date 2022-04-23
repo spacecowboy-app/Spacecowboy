@@ -44,7 +44,7 @@ namespace Spacecowboy.Service.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private static readonly Gauge sessionsCreated = Metrics.CreateGauge("spacecowboy_sessions_total", "Accumulated number of session creatied");
+        private static readonly Counter sessionsCreated = Metrics.CreateCounter("spacecowboy_sessions_total", "Accumulated number of session creatied");
         private static readonly Gauge sessionsCurrent = Metrics.CreateGauge("spacecowboy_sessions_current", "Number of active sessions");
         private static readonly Counter participantsTotal = Metrics.CreateCounter("spacecowboy_participants_total", "Accumulated number of participants across all sessions created",
             new CounterConfiguration
@@ -218,12 +218,10 @@ namespace Spacecowboy.Service.Controllers
             try
             {
                 await repository.AddSessionAsync(new Session(sessionId));
-                var metrics = await repository.GetMetrics();
-                log.LogInformation("Created session {SessionId}, a total of {TotalSessions} sessions so far", sessionId, metrics.TotalSessions);
-                sessionsCreated.Set(metrics.TotalSessions);
+                log.LogInformation("Created session {SessionId}", sessionId);
+                sessionsCreated.Inc();
                 sessionsCurrent.Inc();
                 return Created("", new SessionResponse(await repository.GetSessionAsync(sessionId)));
-
             }
             catch (SessionExistsException)
             {
