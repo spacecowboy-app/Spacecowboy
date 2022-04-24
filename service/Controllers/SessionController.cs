@@ -27,7 +27,6 @@ using Spacecowboy.Service.Controllers.Hubs;
 using Spacecowboy.Service.Model;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
