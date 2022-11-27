@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B50A335-8E27-4C1F-A428-F95E8F85EF14}"
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
-		compose.yaml = compose.yaml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -16,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Test", "service.tes
 	ProjectSection(ProjectDependencies) = postProject
 		{73C530AB-E5EF-4744-8EFC-B920E6E8D344} = {73C530AB-E5EF-4744-8EFC-B920E6E8D344}
 	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F099827A-3F6C-46D3-AB73-F1A4CF3B45B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +32,10 @@ Global
 		{B2404FB6-0268-4C28-AAF7-D68FA260E9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2404FB6-0268-4C28-AAF7-D68FA260E9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2404FB6-0268-4C28-AAF7-D68FA260E9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F099827A-3F6C-46D3-AB73-F1A4CF3B45B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F099827A-3F6C-46D3-AB73-F1A4CF3B45B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F099827A-3F6C-46D3-AB73-F1A4CF3B45B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F099827A-3F6C-46D3-AB73-F1A4CF3B45B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,11 @@
+name: "spacecowboy"
+
+services:
+
+  spacecowboys-service:
+    image: ${DOCKER_REGISTRY-}service
+    build: ./service/
+
+  spacecowboys-app:
+    image: ${DOCKER_REGISTRY-}app
+    build: ./app/
