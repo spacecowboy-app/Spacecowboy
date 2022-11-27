@@ -1,8 +1,11 @@
-version: '3.4'
+name: "spacecowboy"
 
 services:
-  service:
+
+  spacecowboys-service:
     image: ${DOCKER_REGISTRY-}service
-    build:
-      context: .
-      dockerfile: service/Dockerfile
+    build: ./service/
+
+  spacecowboys-app:
+    image: ${DOCKER_REGISTRY-}app
+    build: ./app/
