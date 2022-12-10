@@ -36,7 +36,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="prometheus-net" Version="7.0.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="7.0.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.80" />
