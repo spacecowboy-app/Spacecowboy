@@ -1,5 +1,5 @@
 /*
-    Copyright 2021 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2023 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ export default function FooterPanel(): JSX.Element
                 <p>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</p>
                 <p></p>
                 <p>No warranty. No personal data collected.</p>
-                <p className="copyrightnotice">&copy; Copyright 2021 Rolf Michelsen and Tami Weiss<br/>
+                <p className="copyrightnotice">&copy; Copyright 2021-2023 Rolf Michelsen and Tami Weiss<br/>
                                                 Version: {Configuration.Version}</p>
             </div>
             <div className="footerLinksPanel">
