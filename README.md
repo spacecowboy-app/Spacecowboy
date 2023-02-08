@@ -82,4 +82,4 @@ In this case, both the service and the application will be configured for develo
 
 ---
 
-© Copyright 2021 Rolf Michelsen and Tami Weiss
+© Copyright 2021-2023 Rolf Michelsen and Tami Weiss
