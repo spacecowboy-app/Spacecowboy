@@ -16,6 +16,7 @@
 
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -39,9 +40,9 @@ export default function Home(): JSX.Element {
             </Head>
             <main>
                 <Stack spacing={2} alignItems="center">
-                    <h1>Welcome Space Cowboy</h1>
-                    <h3>Name your space, select a deck and</h3>
-                    <h3>start a game of agile decision making</h3>
+                    <Typography variant="h1">Welcome Space Cowboy</Typography>
+                    <Typography variant="h3">Name your space, select a deck and</Typography>
+                    <Typography variant="h3">start a game of agile decision making</Typography>
                     <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Stack spacing={2} direction="row">
                         <Button variant="contained" href="/start">start a game</Button>
