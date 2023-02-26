@@ -14,8 +14,9 @@
     limitations under the License.
 */
 
-import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+
+import "../styles/globals.css";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
