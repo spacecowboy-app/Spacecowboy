@@ -23,6 +23,7 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"mhutchie.git-graph",
+				"orta.vscode-jest",
 				"gruntfuggly.todo-tree"
 			]
 		}
