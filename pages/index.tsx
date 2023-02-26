@@ -40,10 +40,10 @@ export default function Home(): JSX.Element {
             </Head>
             <main>
                 <Stack spacing={2} alignItems="center">
+                    <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h1">Welcome Space Cowboy</Typography>
                     <Typography variant="h3">Name your space, select a deck and</Typography>
                     <Typography variant="h3">start a game of agile decision making</Typography>
-                    <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Stack spacing={2} direction="row">
                         <Button variant="contained" href="/start">start a game</Button>
                         <Button variant="contained" href="/join">join a game</Button>
