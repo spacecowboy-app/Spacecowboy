@@ -2,6 +2,29 @@
   "name": "spacecowboy-app",
   "version": "0.1.0",
   "private": true,
+  "description": "Lightweight decisions for distributed teams",
+  "keywords": [
+      "collaboration",
+      "planning poker",
+      "agile estimation"
+  ],
+  "homepage": "https://spacecowboy.app",
+  "bugs": "https://github.com/spacecowboy-app/Spacecowboy/issues",
+  "license": "Apache-2.0",
+  "contributors": [
+      {
+          "name": "Rolf Michelsen",
+          "url": "https://github.com/rolfmichelsen"
+      },
+      {
+          "name": "Tami Weiss",
+          "url": "https://github.com/alivetwice"
+      }
+  ],
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/spacecowboy-app/spacecowboy-app"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
