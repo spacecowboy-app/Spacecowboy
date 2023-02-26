@@ -4,26 +4,26 @@
   "private": true,
   "description": "Lightweight decisions for distributed teams",
   "keywords": [
-      "collaboration",
-      "planning poker",
-      "agile estimation"
+    "collaboration",
+    "planning poker",
+    "agile estimation"
   ],
   "homepage": "https://spacecowboy.app",
   "bugs": "https://github.com/spacecowboy-app/Spacecowboy/issues",
   "license": "Apache-2.0",
   "contributors": [
-      {
-          "name": "Rolf Michelsen",
-          "url": "https://github.com/rolfmichelsen"
-      },
-      {
-          "name": "Tami Weiss",
-          "url": "https://github.com/alivetwice"
-      }
+    {
+      "name": "Rolf Michelsen",
+      "url": "https://github.com/rolfmichelsen"
+    },
+    {
+      "name": "Tami Weiss",
+      "url": "https://github.com/alivetwice"
+    }
   ],
   "repository": {
-      "type": "git",
-      "url": "https://github.com/spacecowboy-app/spacecowboy-app"
+    "type": "git",
+    "url": "https://github.com/spacecowboy-app/spacecowboy-app"
   },
   "scripts": {
     "dev": "next dev",
@@ -32,6 +32,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
     "@next/font": "13.1.6",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
