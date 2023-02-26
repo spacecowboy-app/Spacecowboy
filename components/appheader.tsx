@@ -14,22 +14,26 @@
     limitations under the License.
 */
 
-import type { AppProps } from "next/app";
-
-import Layout from "@/components/layout";
-
-import "../styles/globals.css";
-
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Link from "next/link"
 
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function ApplicationHeader(): JSX.Element
+{
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
-    ) 
+        <>
+            <Box sx={{ flexGrow: 1}} >
+                <AppBar position="static" >
+                    <Toolbar>
+                        <Link href="/about">
+                            <Typography>About</Typography>
+                        </Link>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+        </>
+    )
 }

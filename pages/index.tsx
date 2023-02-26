@@ -14,12 +14,17 @@
     limitations under the License.
 */
 
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Head from "next/head";
+import Image from "next/image";
+
+import styles from "@/styles/Home.module.css";
+import HeroImage from "@/images/hero/welcome.png";
 
 
-export default function Home() {
+export default function Home(): JSX.Element {
     return (
         <>
             <Head>
@@ -34,7 +39,16 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <p>Spacecowboy!</p>
+                <Stack spacing={2} alignItems="center">
+                    <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+                    <Typography variant="h1">Welcome Space Cowboy</Typography>
+                    <Typography variant="h3">Name your space, select a deck and</Typography>
+                    <Typography variant="h3">start a game of agile decision making</Typography>
+                    <Stack spacing={2} direction="row">
+                        <Button variant="contained" href="/start">start a game</Button>
+                        <Button variant="contained" href="/join">join a game</Button>
+                    </Stack>
+                </Stack>
             </main>
       </>
     )
