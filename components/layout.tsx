@@ -14,22 +14,24 @@
     limitations under the License.
 */
 
-import type { AppProps } from "next/app";
+import React from "react";
 
-import Layout from "@/components/layout";
-
-import "../styles/globals.css";
-
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import ApplicationHeader from "./appheader";
 
 
-export default function App({ Component, pageProps }: AppProps) {
+interface Props {
+    children: JSX.Element;
+}
+
+
+export default function Layout(props: Props): JSX.Element
+{
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
-    ) 
+        <>
+            <ApplicationHeader />
+            <main>
+                { props.children } 
+            </main>
+        </>
+    );
 }
