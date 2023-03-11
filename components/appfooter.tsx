@@ -19,12 +19,13 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link"
 
+import Configuration from "../Configuration";
+
 import Github from "@/images/GitHub-Mark-64px.png";
 
 
 export default function ApplicationFooter(): JSX.Element
 {
-    // #TODO: Add version information to footer
     return (
         <>
             <Stack direction="row">
@@ -33,6 +34,7 @@ export default function ApplicationFooter(): JSX.Element
                     <Typography>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
                     <Typography>No warranty. No personal data collected.</Typography>
                     <Typography>&copy; Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                    <Typography>Version {Configuration.AppVersion}</Typography>
                 </div>
                 <div>
                     <Link href="https://github.com/spacecowboy-app" >
