@@ -14,8 +14,50 @@
     limitations under the License.
 */
 
+import React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
+import log from "loglevel";
 
-export default function StartGame(): JSX.Element
-{
-    return (<>Start game</>);
+import Service from "@/service/Service";
+
+import HeroImage from "@/images/hero/place.png";
+
+
+export default function StartGame(): JSX.Element {
+    const [sessionId, setSessionId] = React.useState<string | undefined>();
+
+    // Get default session name and set as value for input field
+    React.useEffect(() => {
+
+        if (!sessionId) {
+            getDefaultSessionId();
+        }
+
+        async function getDefaultSessionId(): Promise<void> {
+            try {
+                const sessionId = await Service.GetRandomSessionId();
+                setSessionId(sessionId);
+            }
+            catch {
+                // TODO: Provide user feedback on error
+                log.error("Failed to get session name from service");
+            }
+        }
+    }, [sessionId]);
+
+    return (
+        <Box component="form">
+            <Stack spacing={2} alignItems="center">
+                <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+                <Typography variant="h3">Name your space or take one here</Typography>
+                <TextField id="session-id" defaultValue={sessionId} onChange={e => setSessionId(e.target.value)} />
+                <Button variant="contained" href="/">take this place</Button>
+            </Stack>
+        </Box>
+    );
 }
