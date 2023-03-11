@@ -14,8 +14,23 @@
     limitations under the License.
 */
 
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
+
+import HeroImage from "@/images/hero/place.png";
+
 
 export default function StartGame(): JSX.Element
 {
-    return (<>Start game</>);
+    return (
+        <Stack spacing={2} alignItems="center" component="form">
+            <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+            <Typography variant="h3">Name your space or take one here</Typography>
+            <TextField />
+            <Button variant="contained" href="/">take this place</Button>
+        </Stack>
+    );
 }
