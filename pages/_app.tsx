@@ -14,6 +14,7 @@
     limitations under the License.
 */
 
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 
 import Layout from "@/components/layout";
@@ -25,11 +26,15 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+const theme = createTheme({});
+
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <ThemeProvider theme={theme}>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </ThemeProvider>
     ) 
 }
