@@ -62,7 +62,7 @@ export default function About(): JSX.Element
                         <Typography>tell your story and start the showdown</Typography>
                     </Stack>
                 </Stack>
-                <Typography>Continue the game until you've made all your decisions.</Typography>
+                <Typography>Continue the game until you have made all your decisions.</Typography>
             </Stack>
             <Stack alignItems="center" spacing={4} >
                 <Typography variant="h2">Playing the Game</Typography>
