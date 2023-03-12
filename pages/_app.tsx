@@ -19,19 +19,38 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import log, { levels } from "loglevel";
 
+import "@fontsource/poppins";
+
 import Layout from "@/components/layout";
 
 import "../styles/globals.css";
 
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 
 // TODO: Fix hardcoded loglevel
 log.setLevel(log.levels.TRACE);
 
-const theme = createTheme({});
+const theme = createTheme({
+    typography: {
+        fontFamily: [
+            '"Poppins"', 
+            'Helvetica', 
+            'sans-serif'
+        ].join(","),
+        h1: {
+            fontSize: "32px",
+            fontWeight: "500",
+            textTransform: "lowercase",
+        },
+        h2: {
+            fontSize: "22px",
+            fontWeight: "500",
+        },
+        h3: {
+            fontSize: "14px",
+            fontWeight: "500",
+        },
+    },
+});
 
 
 export default function App({ Component, pageProps }: AppProps) {

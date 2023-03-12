@@ -14,6 +14,7 @@
     limitations under the License.
 */
 
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
@@ -27,27 +28,25 @@ import Github from "@/images/GitHub-Mark-64px.png";
 export default function ApplicationFooter(): JSX.Element
 {
     return (
-        <>
-            <Stack direction="row">
-                <div>
-                    <Typography>Space Cowboy</Typography>
-                    <Typography>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
-                    <Typography>No warranty. No personal data collected.</Typography>
-                    <Typography>&copy; Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
-                    <Typography>Version {Configuration.AppVersion}</Typography>
-                </div>
-                <div>
-                    <Link href="https://github.com/spacecowboy-app" >
-                        <Image src={Github} alt="Github repository" />
-                    </Link>
-                </div>
-                <div>
-                    <Typography>Send feedback</Typography>
-                    <Typography>Space Cowboy HQ</Typography>
-                    <Typography>OSLO NORWAY</Typography>
-                    <Link href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</Link>                    
-                </div>
-            </Stack>
-        </>
+        <Stack direction="row" spacing={2} >
+            <Box flexGrow={1} ml={2}>
+                <Typography>Space Cowboy</Typography>
+                <Typography>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
+                <Typography>No warranty. No personal data collected.</Typography>
+                <Typography>&copy; Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                <Typography>Version {Configuration.AppVersion}</Typography>
+            </Box>
+            <Box alignSelf="flex-end">
+                <Link href="https://github.com/spacecowboy-app" >
+                    <Image src={Github} alt="Github repository" />
+                </Link>
+            </Box>
+            <Box mr={2}>
+                <Typography>Send feedback</Typography>
+                <Typography>Space Cowboy HQ</Typography>
+                <Typography>OSLO NORWAY</Typography>
+                <Link href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</Link>                    
+            </Box>
+        </Stack>
     );
 }
