@@ -36,6 +36,19 @@ const theme = createTheme({
             'Helvetica', 
             'sans-serif'
         ].join(","),
+        h1: {
+            fontSize: "32px",
+            fontWeight: "500",
+            textTransform: "lowercase",
+        },
+        h2: {
+            fontSize: "22px",
+            fontWeight: "500",
+        },
+        h3: {
+            fontSize: "14px",
+            fontWeight: "500",
+        },
     },
 });
 
