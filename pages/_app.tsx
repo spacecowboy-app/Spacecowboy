@@ -20,7 +20,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
 
-import "@fontsource/poppins";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
 
 import Layout from "@/components/layout";
 
