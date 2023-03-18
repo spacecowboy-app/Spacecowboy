@@ -32,6 +32,11 @@ import "../styles/globals.css";
 log.setLevel(log.levels.TRACE);
 
 const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#000000",
+        },
+    },
     typography: {
         fontFamily: [
             '"Poppins"',
