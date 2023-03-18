@@ -17,7 +17,8 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
-import log, { levels } from "loglevel";
+import Head from "next/head";
+import log from "loglevel";
 
 import "@fontsource/poppins";
 
@@ -32,8 +33,8 @@ log.setLevel(log.levels.TRACE);
 const theme = createTheme({
     typography: {
         fontFamily: [
-            '"Poppins"', 
-            'Helvetica', 
+            '"Poppins"',
+            'Helvetica',
             'sans-serif'
         ].join(","),
         h1: {
@@ -55,11 +56,26 @@ const theme = createTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
-        </ThemeProvider>
-    ) 
+        <>
+            <Head>
+                <title>Spacecowboy</title>
+                <meta name="description" content="Spacecowboy : Quick decisions" key="description" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta property="og:title" content="Spacecowboy : Quick decisions" key="title" />
+                <meta property="og:type" content="website" key="type" />
+                <meta property="og:url" content="https://spacecowboy.app" key="url" />
+                <meta property="og:image" content="https://spacecowboy.app/thumbnail.png" key="image" />
+                <link rel="apple-touch-icon" href="/logo192.png" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                </ThemeProvider>
+            </main>
+        </>
+    )
 }
