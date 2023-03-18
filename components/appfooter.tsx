@@ -33,7 +33,7 @@ export default function ApplicationFooter(): JSX.Element
                 <Typography>Space Cowboy</Typography>
                 <Typography>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
                 <Typography>No warranty. No personal data collected.</Typography>
-                <Typography>&copy; Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                <Typography>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
                 <Typography>Version {Configuration.AppVersion}</Typography>
             </Box>
             <Box alignSelf="flex-end">
