@@ -29,23 +29,25 @@ export default function ApplicationFooter(): JSX.Element
 {
     return (
         <Stack direction="row" spacing={2} >
-            <Box flexGrow={1} ml={2}>
-                <Typography>Space Cowboy</Typography>
-                <Typography>The place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
-                <Typography>No warranty. No personal data collected.</Typography>
-                <Typography>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
-                <Typography>Version {Configuration.AppVersion}</Typography>
+            <Box flexGrow={1} pl={2}>
+                <Typography variant="h4">Space Cowboy</Typography>
+                <Typography pt={1}>The place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
+                <Typography pt={1}>No warranty. No personal data collected.</Typography>
+                <Typography variant="subtitle1" pt={1}>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                <Typography variant="subtitle1">Version {Configuration.AppVersion}</Typography>
             </Box>
             <Box alignSelf="flex-end">
                 <Link href="https://github.com/spacecowboy-app" >
                     <Image src={Github} alt="Github repository" />
                 </Link>
             </Box>
-            <Box mr={2}>
-                <Typography>Send feedback</Typography>
-                <Typography>Space Cowboy HQ</Typography>
+            <Box pr={2}>
+                <Typography variant="h4">Send feedback</Typography>
+                <Typography pt={1}>Space Cowboy HQ</Typography>
                 <Typography>OSLO NORWAY</Typography>
-                <Link href="mailto:howdy@spacecowboy.app">howdy@spacecowboy.app</Link>                    
+                <Link href="mailto:howdy@spacecowboy.app">
+                    <Typography pt={1}>howdy@spacecowboy.app</Typography>
+                </Link>                    
             </Box>
         </Stack>
     );

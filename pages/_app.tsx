@@ -51,6 +51,13 @@ const theme = createTheme({
             fontSize: "14px",
             fontWeight: "500",
         },
+        h4: {
+            fontSize: "110%",
+            fontWeight: "bold",
+        },
+        subtitle1: {
+            fontSize: "80%",
+        },
     },
 });
 
