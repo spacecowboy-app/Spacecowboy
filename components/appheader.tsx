@@ -16,9 +16,13 @@
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Image from "next/image";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Link from "next/link"
+
+import Logo from "@/images/logo.png";
 
 
 export default function ApplicationHeader(): JSX.Element
@@ -28,9 +32,11 @@ export default function ApplicationHeader(): JSX.Element
             <Box sx={{ flexGrow: 1}} >
                 <AppBar position="static" >
                     <Toolbar>
-                        <Link href="/about">
-                            <Typography>About</Typography>
-                        </Link>
+                        <IconButton href="/" LinkComponent={Link} size="large" edge="start" color="inherit" >
+                            <Image src={Logo} width={32} alt="Logo" />
+                        </IconButton>
+                        <Box sx={{ flexGrow: 1 }} ></Box>
+                        <Button color="inherit" href="/about" LinkComponent={Link}>About</Button>
                     </Toolbar>
                 </AppBar>
             </Box>
