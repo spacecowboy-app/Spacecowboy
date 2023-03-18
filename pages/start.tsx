@@ -21,6 +21,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import Link from "next/link"
 import log from "loglevel";
 
 import Service from "@/service/Service";
@@ -56,7 +57,7 @@ export default function StartGame(): JSX.Element {
                 <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h3">Name your space or take one here</Typography>
                 <TextField id="session-id" defaultValue={sessionId} onChange={e => setSessionId(e.target.value)} />
-                <Button variant="contained" href="/">take this place</Button>
+                <Button variant="contained" href="/" LinkComponent={Link} >take this place</Button>
             </Stack>
         </Box>
     );
