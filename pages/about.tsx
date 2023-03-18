@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
@@ -75,7 +75,7 @@ export default function About(): JSX.Element
             </Stack>
             <Stack alignItems="center" spacing={4} >
                 <Typography variant="h1">Ready to Play?</Typography>
-                <Button variant="contained" href="/start">start a game</Button>
+                <Button variant="contained" href="/start" LinkComponent={Link} >start a game</Button>
             </Stack>
         </Stack>
     );
