@@ -31,7 +31,7 @@ export default function ApplicationFooter(): JSX.Element
         <Stack direction="row" spacing={2} >
             <Box flexGrow={1} ml={2}>
                 <Typography>Space Cowboy</Typography>
-                <Typography>the place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
+                <Typography>The place in space for fast decisions and great collaboration on the world wild web and the galaxy</Typography>
                 <Typography>No warranty. No personal data collected.</Typography>
                 <Typography>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
                 <Typography>Version {Configuration.AppVersion}</Typography>
