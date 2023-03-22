@@ -30,7 +30,7 @@ import HeroImage from "@/images/hero/place.png";
 
 
 export default function StartGame(): JSX.Element {
-    const [sessionId, setSessionId] = React.useState<string | undefined>();
+    const [sessionId, setSessionId] = React.useState<string|null>();
 
     // Get default session name and set as value for input field
     React.useEffect(() => {
@@ -50,6 +50,11 @@ export default function StartGame(): JSX.Element {
             }
         }
     }, [sessionId]);
+
+    // TODO: Use a better approach for setting the suggested session name
+    if (!sessionId) {
+        return (<></>);
+    } 
 
     return (
         <Box component="form">
