@@ -46,7 +46,7 @@ export default function StartGame(): JSX.Element {
             Service.GetRandomSessionId()
             .then(result => { 
                 log.debug(`Got random session name ${result}`);
-                setSession({ id: result, isValid: true });
+                setSession({ id: result, isValid: isSessionIdValid(result) });
             })
             .catch(() => log.error("Failed to get session name from service"));
         }
@@ -57,7 +57,7 @@ export default function StartGame(): JSX.Element {
             <Stack spacing={2} alignItems="center">
                 <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h3">Name your space or take one here</Typography>
-                <TextField id="session-id" value={session?.id ?? ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                <TextField id="session-id" value={session?.id ?? ""} error={!session?.isValid} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
                 <Button variant="contained" type="submit" >take this place</Button>
             </Stack>
         </Box>
@@ -66,7 +66,23 @@ export default function StartGame(): JSX.Element {
 
     function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
     {
-        setSession({ id: e.target.value, isValid: true });
+        const id = e.target.value.trim();
+        setSession({ id: id, isValid: isSessionIdValid(id) });
+    }
+
+
+    /** Return `true` is the session id is valid. */
+    // TODO: Implement check for session name already in use
+    function isSessionIdValid(id: string): boolean
+    {
+        if (id.length > 50 || RegExp("[/&#?]").test(id))
+            return false;
+        
+        const reservedIds = [ "about", "join", "start" ];
+        if (reservedIds.find(e => e == id.toLowerCase()))
+            return false;
+
+        return true;
     }
 
 
