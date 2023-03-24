@@ -23,6 +23,7 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link"
 import log from "loglevel";
+import { useRouter } from "next/router";
 
 import Service from "@/service/Service";
 
@@ -31,6 +32,7 @@ import HeroImage from "@/images/hero/place.png";
 
 export default function StartGame(): JSX.Element {
     const [sessionId, setSessionId] = React.useState<string|null>();
+    const router = useRouter();
 
     // Get default session name and set as value for input field
     React.useEffect(() => {
@@ -57,13 +59,28 @@ export default function StartGame(): JSX.Element {
     } 
 
     return (
-        <Box component="form">
+        <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
             <Stack spacing={2} alignItems="center">
                 <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h3">Name your space or take one here</Typography>
                 <TextField id="session-id" defaultValue={sessionId} onChange={e => setSessionId(e.target.value)} />
-                <Button variant="contained" href="/" LinkComponent={Link} >take this place</Button>
+                <Button variant="contained" type="submit" >take this place</Button>
             </Stack>
         </Box>
     );
+
+
+    /**
+     * Callback for starting a new session
+     * Creates the session on the server and redirects to deck selection.
+     */
+    function startSession(e: React.SyntheticEvent): void
+    {
+        e.preventDefault();
+        // TODO: Add logic to create the session
+        log.info(`Starting a new session ${sessionId}`);
+        router.push({ pathname:"/[session]", query: { session: sessionId } });
+    }
+
+
 }
