@@ -29,39 +29,45 @@ import Service from "@/service/Service";
 import HeroImage from "@/images/hero/place.png";
 
 
+interface Session {
+    id: string,
+    isValid: boolean,
+};
+
+
 export default function StartGame(): JSX.Element {
-    const [ sessionId, setSessionId ] = useState<string|undefined>(undefined);
+    const [ session, setSession ] = useState<Session|undefined>(undefined);
     const router = useRouter();
 
     // Get default session name and set as value for input field
     // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
     useEffect(() => {
-        if (sessionId === undefined) {
-            log.debug(`SessionId = ${sessionId ?? "undefined"}`)
+        if (session === undefined) {
             Service.GetRandomSessionId()
             .then(result => { 
                 log.debug(`Got random session name ${result}`);
-                setSessionId(s => s ?? result);
+                setSession({ id: result, isValid: true });
             })
             .catch(() => log.error("Failed to get session name from service"));
         }
-    }, [ sessionId ]);
-
-    // TODO: Use a better approach for setting the suggested session name
-    if (!sessionId) {
-        return (<></>);
-    } 
+    }, [ session ]);
 
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
             <Stack spacing={2} alignItems="center">
                 <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h3">Name your space or take one here</Typography>
-                <TextField id="session-id" defaultValue={sessionId} onChange={e => setSessionId(e.target.value)} />
+                <TextField id="session-id" value={session?.id ?? ""} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
                 <Button variant="contained" type="submit" >take this place</Button>
             </Stack>
         </Box>
     );
+
+
+    function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
+    {
+        setSession({ id: e.target.value, isValid: true });
+    }
 
 
     /**
@@ -72,8 +78,8 @@ export default function StartGame(): JSX.Element {
     {
         e.preventDefault();
         // TODO: Add logic to create the session
-        log.info(`Starting a new session ${sessionId}`);
-        router.push({ pathname:"/[session]", query: { session: sessionId } });
+        log.info(`Starting a new session ${session?.id}`);
+        router.push({ pathname:"/[session]", query: { session: session?.id } });
     }
 
 
