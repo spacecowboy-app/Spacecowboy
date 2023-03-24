@@ -58,7 +58,7 @@ export default function StartGame(): JSX.Element {
                 <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h3">Name your space or take one here</Typography>
                 <TextField id="session-id" value={session?.id ?? ""} error={session?.error !== undefined} label={session?.error} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
-                <Button variant="contained" type="submit" >take this place</Button>
+                <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
             </Stack>
         </Box>
     );
