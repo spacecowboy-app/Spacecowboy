@@ -14,14 +14,13 @@
     limitations under the License.
 */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import Link from "next/link"
 import log from "loglevel";
 import { useRouter } from "next/router";
 
@@ -31,27 +30,22 @@ import HeroImage from "@/images/hero/place.png";
 
 
 export default function StartGame(): JSX.Element {
-    const [sessionId, setSessionId] = React.useState<string|null>();
+    const [ sessionId, setSessionId ] = useState<string|undefined>(undefined);
     const router = useRouter();
 
     // Get default session name and set as value for input field
-    React.useEffect(() => {
-
-        if (!sessionId) {
-            getDefaultSessionId();
+    // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
+    useEffect(() => {
+        if (sessionId === undefined) {
+            log.debug(`SessionId = ${sessionId ?? "undefined"}`)
+            Service.GetRandomSessionId()
+            .then(result => { 
+                log.debug(`Got random session name ${result}`);
+                setSessionId(s => s ?? result);
+            })
+            .catch(() => log.error("Failed to get session name from service"));
         }
-
-        async function getDefaultSessionId(): Promise<void> {
-            try {
-                const sessionId = await Service.GetRandomSessionId();
-                setSessionId(sessionId);
-            }
-            catch {
-                // TODO: Provide user feedback on error
-                log.error("Failed to get session name from service");
-            }
-        }
-    }, [sessionId]);
+    }, [ sessionId ]);
 
     // TODO: Use a better approach for setting the suggested session name
     if (!sessionId) {
