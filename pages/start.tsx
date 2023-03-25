@@ -18,7 +18,7 @@ import Alert from "@mui/material/Alert";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Snackbar from "@mui/material/Snackbar";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -26,11 +26,10 @@ import Image from "next/image";
 import log from "loglevel";
 import { useRouter } from "next/router";
 
+import Constants from "@/constants";
 import Service from "@/service/Service";
 
 import HeroImage from "@/images/hero/place.png";
-import { SnackbarCloseReason } from "@mui/base";
-import { bottomNavigationActionClasses } from "@mui/material";
 
 
 interface Session {
@@ -67,7 +66,7 @@ export default function StartGame(): JSX.Element {
                     <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
                 </Stack>
             </Box>
-            <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleErrorClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+            <Snackbar open={errorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
                     Unable to communicate with Space Cowboy service
                 </Alert>
