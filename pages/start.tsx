@@ -32,29 +32,24 @@ import Service from "@/service/Service";
 import HeroImage from "@/images/hero/place.png";
 
 
-interface Session {
-    id: string,
-    error?: string,
-};
-
 
 export default function StartGame(): JSX.Element {
-    const [ session, setSession ] = useState<Session|undefined>(undefined);
+    const [ sessionId, setSessionId ] = useState<string|undefined>(undefined);
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
 
     // Get default session name and set as value for input field
     // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
     useEffect(() => {
-        if (session === undefined) {
+        if (sessionId === undefined) {
             Service.GetRandomSessionId()
             .then(result => { 
                 log.debug(`Got random session name ${result}`);
-                setSession({ id: result, error: validateSessionId(result) });
+                setSessionId(result);
             })
             .catch(() => setErrorOpen(true) );
         }
-    }, [ session ]);
+    }, [ sessionId ]);
 
     return (
         <>
@@ -62,8 +57,8 @@ export default function StartGame(): JSX.Element {
                 <Stack spacing={2} alignItems="center">
                     <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h3">Name your space or take one here</Typography>
-                    <TextField id="session-id" value={session?.id ?? ""} error={session?.error !== undefined} label={session?.error} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
-                    <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
+                    <TextField id="session-id" value={sessionId ?? ""} error={false} label={undefined} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                    <Button variant="contained" type="submit" disabled={false} >take this place</Button>
                 </Stack>
             </Box>
             <Snackbar open={errorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
@@ -88,7 +83,7 @@ export default function StartGame(): JSX.Element {
     function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
     {
         const id = e.target.value.trim();
-        setSession({ id: id, error: validateSessionId(id) });
+        setSessionId(id);
     }
 
 
@@ -114,15 +109,14 @@ export default function StartGame(): JSX.Element {
 
 
     /**
-     * Callback for starting a new session
-     * Creates the session on the server and redirects to deck selection.
+     * Callback for starting a new session.
+     * Redirects to the session screen.
      */
     function startSession(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        // TODO: Add logic to create the session
-        log.info(`Starting a new session ${session?.id}`);
-        router.push({ pathname:"/[session]", query: { session: session?.id } });
+        log.info(`Starting a new session ${sessionId}`);
+        router.push({ pathname:"/[session]", query: { session: sessionId } });
     }
 
 
