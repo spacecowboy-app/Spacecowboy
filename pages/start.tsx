@@ -80,31 +80,11 @@ export default function StartGame(): JSX.Element {
     }
 
 
+    /** Callback for changing the session id text field.  */
     function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
     {
         const id = e.target.value.trim();
         setSessionId(id);
-    }
-
-
-    /** Return an error message if the session id is invalid, otherwise `undefined`. */
-    // TODO: Implement check for session name already in use
-    function validateSessionId(id: string): string|undefined
-    {
-        if (id.length == 0)
-            return "Please provide space name"
-
-        if (id.length > 50)
-            return "Name too long";
-
-        if (RegExp("[/&#?]").test(id))
-            return "Name contains invalid characters"
-        
-        const reservedIds = [ "about", "join", "start" ];
-        if (reservedIds.find(e => e == id.toLowerCase()))
-            return "Name is reserved";
-
-        return undefined;
     }
 
 
@@ -118,6 +98,4 @@ export default function StartGame(): JSX.Element {
         log.info(`Starting a new session ${sessionId}`);
         router.push({ pathname:"/[session]", query: { session: sessionId } });
     }
-
-
 }
