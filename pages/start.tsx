@@ -88,7 +88,14 @@ export default function StartGame(): JSX.Element {
         const id = e.target.value.trim();
         setSessionId(id);
         const validationError = Session.IsValidId(id)
-        setSessionError(validationError);
+        if (validationError) {
+            setSessionError(validationError);
+        }
+        else {
+            Service.SessionIdExists(id)
+                .then((r) => setSessionError(r ? "Name cannot be used" : undefined))
+                .catch(() => { log.warn("Unable to connect to service"); });
+        }
     }
 
 
