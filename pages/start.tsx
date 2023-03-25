@@ -34,7 +34,8 @@ import HeroImage from "@/images/hero/place.png";
 
 
 export default function StartGame(): JSX.Element {
-    const [ sessionId, setSessionId ] = useState<string|undefined>(undefined);
+    const [ sessionId, setSessionId ] = useState<string|undefined>();
+    const [ sessionError, setSessionError ] = useState<string|undefined>();
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
 
@@ -57,7 +58,7 @@ export default function StartGame(): JSX.Element {
                 <Stack spacing={2} alignItems="center">
                     <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h3">Name your space or take one here</Typography>
-                    <TextField id="session-id" value={sessionId ?? ""} error={false} label={undefined} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                    <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
                     <Button variant="contained" type="submit" disabled={false} >take this place</Button>
                 </Stack>
             </Box>
