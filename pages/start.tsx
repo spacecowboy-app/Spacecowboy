@@ -57,7 +57,7 @@ export default function StartGame(): JSX.Element {
     }, [ session ]);
 
     return (
-        <Stack>
+        <>
             <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
                 <Stack spacing={2} alignItems="center">
                     <Image src={HeroImage} alt="Welcome to Spacecowboy" />
@@ -71,7 +71,7 @@ export default function StartGame(): JSX.Element {
                     Unable to communicate with Space Cowboy service
                 </Alert>
             </Snackbar>
-        </Stack>
+        </>
     );
 
 
