@@ -26,10 +26,11 @@ import Image from "next/image";
 import log from "loglevel";
 import { useRouter } from "next/router";
 
-import Constants from "@/constants";
-import Service from "@/service/Service";
+import Constants from "../constants";
+import Session from "../model/Session";
+import Service from "../service/Service";
 
-import HeroImage from "@/images/hero/place.png";
+import HeroImage from "../images/hero/place.png";
 
 
 
@@ -86,6 +87,8 @@ export default function StartGame(): JSX.Element {
     {
         const id = e.target.value.trim();
         setSessionId(id);
+        const validationError = Session.IsValidId(id)
+        setSessionError(validationError);
     }
 
 
