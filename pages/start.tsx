@@ -14,9 +14,11 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import Alert from "@mui/material/Alert";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -27,6 +29,8 @@ import { useRouter } from "next/router";
 import Service from "@/service/Service";
 
 import HeroImage from "@/images/hero/place.png";
+import { SnackbarCloseReason } from "@mui/base";
+import { bottomNavigationActionClasses } from "@mui/material";
 
 
 interface Session {
@@ -37,6 +41,7 @@ interface Session {
 
 export default function StartGame(): JSX.Element {
     const [ session, setSession ] = useState<Session|undefined>(undefined);
+    const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
 
     // Get default session name and set as value for input field
@@ -48,20 +53,37 @@ export default function StartGame(): JSX.Element {
                 log.debug(`Got random session name ${result}`);
                 setSession({ id: result, error: validateSessionId(result) });
             })
-            .catch(() => log.error("Failed to get session name from service"));
+            .catch(() => setErrorOpen(true) );
         }
     }, [ session ]);
 
     return (
-        <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
-            <Stack spacing={2} alignItems="center">
-                <Image src={HeroImage} alt="Welcome to Spacecowboy" />
-                <Typography variant="h3">Name your space or take one here</Typography>
-                <TextField id="session-id" value={session?.id ?? ""} error={session?.error !== undefined} label={session?.error} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
-                <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
-            </Stack>
-        </Box>
+        <Stack>
+            <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
+                <Stack spacing={2} alignItems="center">
+                    <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+                    <Typography variant="h3">Name your space or take one here</Typography>
+                    <TextField id="session-id" value={session?.id ?? ""} error={session?.error !== undefined} label={session?.error} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                    <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
+                </Stack>
+            </Box>
+            <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleErrorClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+                <Alert severity="error">
+                    Unable to communicate with Space Cowboy service
+                </Alert>
+            </Snackbar>
+        </Stack>
     );
+
+
+    /** Callback for closing the error snackbar. */
+    function handleErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    {
+        if (reason == "clickaway") {
+            return;
+        }
+        setErrorOpen(false)
+    }
 
 
     function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
