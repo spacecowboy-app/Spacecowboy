@@ -37,4 +37,17 @@ export default class Service
         }
         throw new ServiceException(response.status, response.statusText);
     }
+
+
+    /**
+     * Check whether a session identifier is in use
+     * @param sessionId Session identifier
+     * @throws {ServiceException} Error in communicating with the service
+    */
+    public static async SessionIdExists(sessionId: string): Promise<boolean>
+    {
+        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: this.headers});
+        return (response.status !== 404);
+    }
+    
 }
