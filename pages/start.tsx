@@ -26,35 +26,32 @@ import Image from "next/image";
 import log from "loglevel";
 import { useRouter } from "next/router";
 
-import Constants from "@/constants";
-import Service from "@/service/Service";
+import Constants from "../constants";
+import Session from "../model/Session";
+import Service from "../service/Service";
 
-import HeroImage from "@/images/hero/place.png";
+import HeroImage from "../images/hero/place.png";
 
-
-interface Session {
-    id: string,
-    error?: string,
-};
 
 
 export default function StartGame(): JSX.Element {
-    const [ session, setSession ] = useState<Session|undefined>(undefined);
+    const [ sessionId, setSessionId ] = useState<string|undefined>();
+    const [ sessionError, setSessionError ] = useState<string|undefined>();
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
 
     // Get default session name and set as value for input field
     // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
     useEffect(() => {
-        if (session === undefined) {
+        if (sessionId === undefined) {
             Service.GetRandomSessionId()
             .then(result => { 
                 log.debug(`Got random session name ${result}`);
-                setSession({ id: result, error: validateSessionId(result) });
+                setSessionId(result);
             })
             .catch(() => setErrorOpen(true) );
         }
-    }, [ session ]);
+    }, [ sessionId ]);
 
     return (
         <>
@@ -62,8 +59,8 @@ export default function StartGame(): JSX.Element {
                 <Stack spacing={2} alignItems="center">
                     <Image src={HeroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h3">Name your space or take one here</Typography>
-                    <TextField id="session-id" value={session?.id ?? ""} error={session?.error !== undefined} label={session?.error} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
-                    <Button variant="contained" type="submit" disabled={session?.error !== undefined} >take this place</Button>
+                    <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                    <Button variant="contained" type="submit" disabled={false} >take this place</Button>
                 </Stack>
             </Box>
             <Snackbar open={errorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
@@ -85,45 +82,31 @@ export default function StartGame(): JSX.Element {
     }
 
 
+    /** Callback for changing the session id text field.  */
     function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
     {
         const id = e.target.value.trim();
-        setSession({ id: id, error: validateSessionId(id) });
-    }
-
-
-    /** Return an error message if the session id is invalid, otherwise `undefined`. */
-    // TODO: Implement check for session name already in use
-    function validateSessionId(id: string): string|undefined
-    {
-        if (id.length == 0)
-            return "Please provide space name"
-
-        if (id.length > 50)
-            return "Name too long";
-
-        if (RegExp("[/&#?]").test(id))
-            return "Name contains invalid characters"
-        
-        const reservedIds = [ "about", "join", "start" ];
-        if (reservedIds.find(e => e == id.toLowerCase()))
-            return "Name is reserved";
-
-        return undefined;
+        setSessionId(id);
+        const validationError = Session.IsValidId(id)
+        if (validationError) {
+            setSessionError(validationError);
+        }
+        else {
+            Service.SessionIdExists(id)
+                .then((r) => setSessionError(r ? "Name cannot be used" : undefined))
+                .catch(() => { log.warn("Unable to connect to service"); });
+        }
     }
 
 
     /**
-     * Callback for starting a new session
-     * Creates the session on the server and redirects to deck selection.
+     * Callback for starting a new session.
+     * Redirects to the session screen.
      */
     function startSession(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        // TODO: Add logic to create the session
-        log.info(`Starting a new session ${session?.id}`);
-        router.push({ pathname:"/[session]", query: { session: session?.id } });
+        log.info(`Starting a new session ${sessionId}`);
+        router.push({ pathname:"/[session]", query: { session: sessionId } });
     }
-
-
 }
