@@ -23,6 +23,7 @@ import log from "loglevel";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 
+import Configuration from "@/Configuration";
 import Layout from "@/components/layout";
 
 import "../styles/globals.css";
@@ -65,6 +66,9 @@ const theme = createTheme({
         },
     },
 });
+
+log.info(`App version ${Configuration.AppVersion}`);
+log.info(`API base ${Configuration.ApiBase}`)
 
 
 export default function App({ Component, pageProps }: AppProps) {
