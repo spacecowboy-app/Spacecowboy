@@ -11,9 +11,14 @@ RUN npm ci
 
 # Rebuild the source code only when needed
 FROM base AS builder
+ARG VERSION=development
+ARG APIBASE=""
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV NEXT_PUBLIC_SPACECOWBOY_VERSION=$VERSION
+ENV NEXT_PUBLIC_SPACECOWBOY_API_BASE=$APIBASE
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
