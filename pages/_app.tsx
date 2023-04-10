@@ -26,7 +26,7 @@ import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
 import Layout from "@/components/layout";
-import store from "@/store";
+import store from "@/store/store";
 
 import "../styles/globals.css";
 
