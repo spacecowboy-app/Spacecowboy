@@ -19,12 +19,14 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
+import { Provider } from "react-redux";
 
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
 import Layout from "@/components/layout";
+import store from "@/store";
 
 import "../styles/globals.css";
 
@@ -86,12 +88,14 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                </ThemeProvider>
+                <Provider store={store} >
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                    </ThemeProvider>
+                </Provider>
             </main>
         </>
     )
