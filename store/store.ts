@@ -15,10 +15,11 @@
 */
 
 import { configureStore } from "@reduxjs/toolkit";
+import themeselectorSlice from "@/components/themeselector/themeselectorSlice";
 
 const store = configureStore({
     reducer: {
-
+        themeselector: themeselectorSlice,
     },
 });
 
