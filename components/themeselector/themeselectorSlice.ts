@@ -19,7 +19,7 @@ import type { RootState } from "@/store/store";
 import ReducerException from "@/store/ReducerException";
 
 
-enum Theme {
+export enum Theme {
     Light,
     Dark,
 }
