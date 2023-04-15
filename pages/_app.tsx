@@ -15,10 +15,11 @@
 */
 
 import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
+import { useMemo } from "react";
 import { Provider } from "react-redux";
 
 import "@fontsource/poppins/400.css";
@@ -27,6 +28,7 @@ import "@fontsource/poppins/500.css";
 import Configuration from "@/Configuration";
 import Layout from "@/components/layout";
 import store from "@/store/store";
+import { useAppSelector } from "@/store/hooks";
 
 import "../styles/globals.css";
 
@@ -34,7 +36,7 @@ import "../styles/globals.css";
 // TODO: Fix hardcoded loglevel
 log.setLevel(log.levels.TRACE);
 
-const theme = createTheme({
+const baseTheme: ThemeOptions = {
     palette: {
         primary: {
             main: "#000000",
@@ -67,7 +69,7 @@ const theme = createTheme({
             fontSize: "80%",
         },
     },
-});
+};
 
 log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
@@ -100,6 +102,17 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element
 
 function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
 {
+    const colorTheme = useAppSelector(state => state.colorTheme.theme);
+
+    const theme = useMemo( () => createTheme(
+        {
+            ...baseTheme,
+            palette: {
+                mode: colorTheme,
+            }
+        }
+    ), [ colorTheme ]);
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
