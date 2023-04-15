@@ -18,7 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { Theme, toggle } from "./themeselectorSlice";
+import { toggle } from "./themeselectorSlice";
 
 
 /**
@@ -26,12 +26,12 @@ import { Theme, toggle } from "./themeselectorSlice";
  */
 export default function ThemeSelector(): JSX.Element
 {
-    const theme = useAppSelector((state) => state.themeselector.theme);
+    const theme = useAppSelector((state) => state.colorTheme.theme);
     const dispatch = useAppDispatch();
 
     return (
         <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch(toggle()) } >
-            {theme == Theme.Light ? <LightMode /> : <DarkMode /> }
+            {theme == "light" ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
 

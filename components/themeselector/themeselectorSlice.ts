@@ -19,33 +19,27 @@ import type { RootState } from "@/store/store";
 import ReducerException from "@/store/ReducerException";
 
 
-export enum Theme {
-    Light,
-    Dark,
+interface ColorThemeState {
+    theme: "light"|"dark",
 }
 
 
-interface ThemeselectorState {
-    theme: Theme,
-}
-
-
-const initialState: ThemeselectorState = {
-    theme: Theme.Light,
+const initialState: ColorThemeState = {
+    theme: "light",
 };
 
 
-export const themeselectorSlice = createSlice({
-    name: "themeselector",
+export const colorThemeSlice = createSlice({
+    name: "colorTheme",
     initialState,
     reducers: {
         toggle: (state) => {
             switch (state.theme) {
-                case Theme.Light:
-                    state.theme = Theme.Dark;
+                case "light":
+                    state.theme = "dark";
                     break;
-                case Theme.Dark:
-                    state.theme = Theme.Light;
+                case "dark":
+                    state.theme = "light";
                     break;
                 default:
                     throw new ReducerException("Invalid value for theme in themeselector");
@@ -55,6 +49,6 @@ export const themeselectorSlice = createSlice({
 });
 
 
-export const { toggle } = themeselectorSlice.actions;
-export const selectThemeselector = (state: RootState) => state.themeselector.theme;
-export default themeselectorSlice.reducer;
+export const { toggle } = colorThemeSlice.actions;
+export const selectColorTheme = (state: RootState) => state.colorTheme.theme;
+export default colorThemeSlice.reducer;
