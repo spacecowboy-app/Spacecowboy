@@ -18,7 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { toggle } from "./themeselectorSlice";
+import { toggle } from "./colorThemeSlice";
 
 
 /**

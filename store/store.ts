@@ -15,7 +15,7 @@
 */
 
 import { configureStore } from "@reduxjs/toolkit";
-import colorThemeSlice from "@/components/themeselector/themeselectorSlice";
+import colorThemeSlice from "@/components/colortheme/colorThemeSlice";
 
 const store = configureStore({
     reducer: {
