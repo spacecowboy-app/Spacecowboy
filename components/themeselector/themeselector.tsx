@@ -19,7 +19,6 @@ import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { Theme, toggle } from "./themeselectorSlice";
-import log from "loglevel";
 
 
 /**
@@ -31,7 +30,7 @@ export default function ThemeSelector(): JSX.Element
     const dispatch = useAppDispatch();
 
     return (
-        <IconButton color="inherit" aria-label="theme toggle" >
+        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch(toggle()) } >
             {theme == Theme.Light ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
