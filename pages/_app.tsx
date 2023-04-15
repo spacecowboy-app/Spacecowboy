@@ -37,11 +37,6 @@ import "../styles/globals.css";
 log.setLevel(log.levels.TRACE);
 
 const baseTheme: ThemeOptions = {
-    palette: {
-        primary: {
-            main: "#000000",
-        },
-    },
     typography: {
         fontFamily: [
             '"Poppins"',
@@ -70,6 +65,17 @@ const baseTheme: ThemeOptions = {
         },
     },
 };
+
+const colorThemes = {
+    light: {
+        primary: {
+            main: "#000000",
+        },
+    },
+    dark: {},
+};
+
+
 
 log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
@@ -109,7 +115,8 @@ function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
             ...baseTheme,
             palette: {
                 mode: colorTheme,
-            }
+                ...(colorTheme === "light" ? colorThemes.light : colorThemes.dark)
+            },
         }
     ), [ colorTheme ]);
 
