@@ -81,7 +81,7 @@ log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
 
 
-export default function App({ Component, pageProps }: AppProps): JSX.Element
+export default function App({ Component, router, pageProps }: AppProps): JSX.Element
 {
     return (
         <>
@@ -98,7 +98,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element
             </Head>
             <main>
                 <Provider store={store} >
-                    <StatefulApp Component={Component} pageProps={pageProps} />
+                    <StatefulApp Component={Component} router={router} pageProps={pageProps} />
                 </Provider>
             </main>
         </>
