@@ -73,7 +73,8 @@ log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
 
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps): JSX.Element
+{
     return (
         <>
             <Head>
@@ -89,14 +90,22 @@ export default function App({ Component, pageProps }: AppProps) {
             </Head>
             <main>
                 <Provider store={store} >
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                            <Layout>
-                                <Component {...pageProps} />
-                            </Layout>
-                    </ThemeProvider>
+                    <StatefulApp Component={Component} pageProps={pageProps} />
                 </Provider>
             </main>
         </>
     )
+}
+
+
+function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
+{
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+        </ThemeProvider>
+    );
 }
