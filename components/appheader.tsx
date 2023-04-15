@@ -23,6 +23,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link"
 
 import Logo from "@/images/logo.png";
+import ThemeSelector from "@/components/colortheme/colorThemeSelector";
 
 
 export default function ApplicationHeader(): JSX.Element
@@ -37,6 +38,7 @@ export default function ApplicationHeader(): JSX.Element
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
                         <Button color="inherit" href="/about" LinkComponent={Link}>About</Button>
+                        <ThemeSelector />
                     </Toolbar>
                 </AppBar>
             </Box>
