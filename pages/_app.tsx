@@ -26,7 +26,7 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 import store from "@/store/store";
 import { useAppSelector } from "@/store/hooks";
 

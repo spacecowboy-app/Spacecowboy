@@ -17,8 +17,8 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 
-import ApplicationHeader from "./appheader";
-import ApplicationFooter from "./appfooter";
+import ApplicationHeader from "./ApplicationHeader";
+import ApplicationFooter from "./ApplicationFooter";
 
 
 interface Props {
@@ -33,7 +33,7 @@ export default function Layout(props: Props): JSX.Element
             <Stack spacing={2} >
                 <ApplicationHeader />
                 <main>
-                    { props.children } 
+                    { props.children }
                 </main>
                 <ApplicationFooter />
             </Stack>
