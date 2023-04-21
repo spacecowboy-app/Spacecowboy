@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
+import Container from "@mui/material/Container";
 import React from "react";
-import Stack from "@mui/material/Stack";
 
-import ApplicationHeader from "./appheader";
-import ApplicationFooter from "./appfooter";
+import ApplicationFooter from "./ApplicationFooter";
+import ApplicationHeader from "./ApplicationHeader";
 
 
 interface Props {
@@ -26,17 +26,19 @@ interface Props {
 }
 
 
+/**
+ * Layout for the application screen.
+ * The screen consists of an ApplicationHeader, the route component and an ApplicationFooter.
+ */
 export default function Layout(props: Props): JSX.Element
 {
     return (
-        <>
-            <Stack spacing={2} >
-                <ApplicationHeader />
-                <main>
-                    { props.children } 
-                </main>
-                <ApplicationFooter />
-            </Stack>
-        </>
+        <div style={{ display: "grid", minHeight: "98vh", gridTemplateRows: "auto 1fr auto", gap: 16 }} >
+            <ApplicationHeader />
+            <Container maxWidth="xl">
+                { props.children }
+            </Container>
+            <ApplicationFooter />
+        </div>
     );
 }
