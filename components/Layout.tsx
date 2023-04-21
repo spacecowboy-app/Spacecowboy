@@ -14,6 +14,7 @@
     limitations under the License.
 */
 
+import Container from "@mui/material/Container";
 import React from "react";
 import Stack from "@mui/material/Stack";
 
@@ -29,14 +30,12 @@ interface Props {
 export default function Layout(props: Props): JSX.Element
 {
     return (
-        <>
-            <Stack spacing={2} >
-                <ApplicationHeader />
-                <main>
-                    { props.children }
-                </main>
-                <ApplicationFooter />
-            </Stack>
-        </>
+        <Stack spacing={2} >
+            <ApplicationHeader />
+            <Container maxWidth="xl">
+                { props.children }
+            </Container>
+            <ApplicationFooter />
+        </Stack>
     );
 }
