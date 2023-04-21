@@ -26,6 +26,10 @@ interface Props {
 }
 
 
+/**
+ * Layout for the application screen.
+ * The screen consists of an ApplicationHeader, the route component and an ApplicationFooter.
+ */
 export default function Layout(props: Props): JSX.Element
 {
     return (
