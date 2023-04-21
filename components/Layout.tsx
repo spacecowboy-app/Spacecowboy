@@ -16,10 +16,9 @@
 
 import Container from "@mui/material/Container";
 import React from "react";
-import Stack from "@mui/material/Stack";
 
-import ApplicationHeader from "./ApplicationHeader";
 import ApplicationFooter from "./ApplicationFooter";
+import ApplicationHeader from "./ApplicationHeader";
 
 
 interface Props {
@@ -30,12 +29,12 @@ interface Props {
 export default function Layout(props: Props): JSX.Element
 {
     return (
-        <Stack spacing={2} >
+        <div style={{ display: "grid", minHeight: "98vh", gridTemplateRows: "auto 1fr auto", gap: 16 }} >
             <ApplicationHeader />
             <Container maxWidth="xl">
                 { props.children }
             </Container>
             <ApplicationFooter />
-        </Stack>
+        </div>
     );
 }
