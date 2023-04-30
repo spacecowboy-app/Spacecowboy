@@ -28,7 +28,7 @@ import Github from "@/images/GitHub-Mark-64px.png";
 export default function ApplicationFooter(): JSX.Element
 {
     return (
-        <Grid container spacing={2} borderTop={1} pt={1} pb={1} pl={2} pr={2}>
+        <Grid container spacing={2} borderTop={1} mt={6} pt={1} pb={1} pl={2} pr={2}>
             <Grid flexGrow={1}>
                 <Box>
                     <Typography variant="h4">Space Cowboy</Typography>
