@@ -22,15 +22,15 @@ import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import log from "loglevel";
 import { useRouter } from "next/router";
 
+import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import Session from "../model/Session";
 import Service from "../service/Service";
 
-import HeroImage from "../images/hero/place.png";
+import heroImage from "../images/hero/place.png";
 
 
 
@@ -45,7 +45,7 @@ export default function StartGame(): JSX.Element {
     useEffect(() => {
         if (sessionId === undefined) {
             Service.GetRandomSessionId()
-            .then(result => { 
+            .then(result => {
                 log.debug(`Got random session name ${result}`);
                 setSessionId(result);
             })
@@ -57,7 +57,7 @@ export default function StartGame(): JSX.Element {
         <>
             <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
                 <Stack spacing={2} alignItems="center">
-                    <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+                    <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h3">Name your space or take one here</Typography>
                     <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
                     <Button variant="contained" type="submit" disabled={false} >take this place</Button>
@@ -83,7 +83,7 @@ export default function StartGame(): JSX.Element {
 
 
     /** Callback for changing the session id text field.  */
-    function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void 
+    function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void
     {
         const id = e.target.value.trim();
         setSessionId(id);

@@ -17,16 +17,17 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import Link from "next/link";
 
-import HeroImage from "@/images/hero/welcome.png";
+import HeroImage from "@/components/HeroImage";
+
+import heroImage from "@/images/hero/welcome.png";
 
 
 export default function Home(): JSX.Element {
     return (
         <Stack spacing={2} alignItems="center">
-            <Image src={HeroImage} alt="Welcome to Spacecowboy" />
+            <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
             <Typography variant="h1">Welcome Space Cowboy</Typography>
             <Typography variant="h3">Name your space, select a deck and</Typography>
             <Typography variant="h3">start a game of agile decision making</Typography>
