@@ -31,7 +31,7 @@ export default class Service
     }
 
     /** Return a random session identifier. */
-    public static async GetRandomSessionId(): Promise<string>
+    public static async GetRandomSessionIdAsync(): Promise<string>
     {
         const response = await fetch(`${Configuration.ApiBase}/api/v0/session/random`, {method: "GET", headers: this.headers});
         log.debug(`GetRandomSessionId returned ${response.status}`)
@@ -47,7 +47,7 @@ export default class Service
      * @param sessionId Session identifier
      * @throws {ServiceException} Error in communicating with the service
     */
-    public static async SessionIdExists(sessionId: string): Promise<boolean>
+    public static async SessionIdExistsAsync(sessionId: string): Promise<boolean>
     {
         const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: this.headers});
         return (response.status !== 404);
