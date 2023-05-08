@@ -15,12 +15,15 @@
 */
 
 import Configuration from "@/Configuration";
+import Charmset from "@/model/Charmset";
+import Deck from "@/model/Deck";
 import log from "loglevel";
-
+import charms from "@/charms";
+import decks from "@/decks";
 import ServiceException from "./ServiceException";
 
 /** Access the Spacecowboy service component. */
-export default class Service 
+export default class Service
 {
     private static readonly headers = {
         "User-Agent": `Spacecowboy/${Configuration.AppVersion}`,
@@ -49,5 +52,24 @@ export default class Service
         const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: this.headers});
         return (response.status !== 404);
     }
-    
+
+
+    /**
+     * Return all available charm sets.
+     * @returns An array of charm sets.
+     */
+    public static GetCharmsAsync(): Promise<Charmset[]>
+    {
+        return new Promise((resolve) => resolve(charms));
+    }
+
+
+    /**
+     * Return all available decks.
+     * @returnsAn array of decks.
+     */
+    public static GetDecksAsync(): Promise<Deck[]>
+    {
+        return new Promise((resolve) => resolve(decks));
+    }
 }
