@@ -14,8 +14,58 @@
     limitations under the License.
 */
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import log from "loglevel";
+import React, { SyntheticEvent, useEffect, useState } from "react";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
+
+import HeroImage from "@/components/HeroImage";
+import Session from "@/model/Session";
+
+import heroImage from "@/images/hero/join.png";
+
 
 export default function JoinGame(): JSX.Element
 {
-    return (<>Join game</>);
+    const [ sessionId, setSessionId ] = useState<string|undefined>();
+    const [ sessionError, setSessionError ] = useState<string|undefined>();
+    const router = useRouter();
+
+    return (
+        <Box component="form" onSubmit={(e:React.SyntheticEvent) => joinSession(e)}>
+            <Stack spacing={2} alignItems="center">
+                <HeroImage src={heroImage} alt="" />
+                <Typography variant="h3">The name of the place is</Typography>
+                <TextField id="session-id" error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                <Button variant="contained" type="submit" disabled={false} >join this place</Button>
+            </Stack>
+        </Box>
+    );
+
+    /** Callback for changing the session id text field.  */
+    function updateSessionId(e: React.ChangeEvent<HTMLInputElement>): void
+    {
+        const id = e.target.value.trim();
+        setSessionId(id);
+        const validationError = Session.IsValidId(id)
+        if (validationError) {
+            setSessionError(validationError);
+        }
+    }
+
+    /**
+     * Callback for joining a session.
+     * Redirects to the session screen.
+     */
+    function joinSession(e: React.SyntheticEvent): void
+    {
+        e.preventDefault();
+        log.info(`Joining session ${sessionId}`);
+        router.push({ pathname:"/[session]", query: { session: sessionId } });
+    }
+
 }
