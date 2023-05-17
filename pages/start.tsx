@@ -78,7 +78,7 @@ export default function StartGame(): JSX.Element {
         if (reason == "clickaway") {
             return;
         }
-        setErrorOpen(false)
+        setErrorOpen(false);
     }
 
 
@@ -87,7 +87,7 @@ export default function StartGame(): JSX.Element {
     {
         const id = e.target.value.trim();
         setSessionId(id);
-        const validationError = Session.IsValidId(id)
+        const validationError = Session.IsValidId(id);
         if (validationError) {
             setSessionError(validationError);
         }
