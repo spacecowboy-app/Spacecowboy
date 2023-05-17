@@ -14,20 +14,23 @@
     limitations under the License.
 */
 
-// TODO Describe the different card styles here.
-export type CardStyle = "value-image" | "image-value" | "centered-image";
+import Grid from "@mui/material/Unstable_Grid2";
+
+import Card from "@/components/Card";
+import CardModel from "@/model/Card";
 
 
-/** A single card. */
-export default interface Card {
+interface Props {
+    cards: CardModel[],
+}
 
-    value?: string,
 
-    // Color must be a color name defined as a CSS variable.
-    color?: string,
-
-    // An image path relative to Constants.CardsPath.
-    image: string,
-
-    style?: CardStyle,
+export default function Deck(props: Props): JSX.Element
+{
+    // TODO Use a proper key for the card components.
+    return (
+        <Grid container>
+            { props.cards.map(c => <Grid key={c.value}><Card key={c.value} card={c}/></Grid>) }
+        </Grid>
+    );
 }

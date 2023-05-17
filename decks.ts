@@ -38,7 +38,7 @@ const decks: Deck[] = [
         ],
         flipped: { color: "darkgray", image: "flipped.png", style: "centered-image" },
         notflipped: { color: "lightgray", image: "notflipped.png", style: "centered-image" },
-        decktop: { image: "hats/justhat11.png" }
+        decktop: { value: "Mad Hatter", image: "hats/justhat11.png", style: "image-value" }
     }
 ];
 

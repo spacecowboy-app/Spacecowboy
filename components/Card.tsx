@@ -45,10 +45,11 @@ export default function Card(props: Props): JSX.Element
     };
 
     const cardBackground = `var(--${props.card.color})`;
+    const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (
         <div className={styles.card} style={ { backgroundColor: cardBackground }} >
-            { CardValueAndImage(props.card) }
+            { layoutFunction(props.card) }
         </div>
     );
 
@@ -69,7 +70,7 @@ export default function Card(props: Props): JSX.Element
     {
         return (
             <div className={styles.cardlayout}>
-                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} alt={props.card.value ?? ""} />
+                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
                 <div className={styles.cardvalue}>{card.value}</div>
             </div>
         );
@@ -81,7 +82,7 @@ export default function Card(props: Props): JSX.Element
     {
         return (
             <div className={styles.cardCenteredItem}>
-                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} alt={props.card.value ?? ""} />
+                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
             </div>
         );
     }
