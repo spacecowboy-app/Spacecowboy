@@ -20,8 +20,14 @@ export type CardStyle = "value-image" | "image-value" | "centered-image";
 
 /** A single card. */
 export default interface Card {
+
     value?: string,
+
+    // Color must be a color name defined as a CSS variable.
     color?: string,
+
+    // An image path relative to Constants.CardsPath.
     image: string,
+
     style?: CardStyle,
 }
