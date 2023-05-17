@@ -41,7 +41,7 @@ export default function JoinGame(): JSX.Element
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h3">The name of the place is</Typography>
                 <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
-                <Button variant="contained" type="submit" disabled={false} >join this place</Button>
+                <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
             </Stack>
         </Box>
     );
