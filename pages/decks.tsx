@@ -14,10 +14,13 @@
     limitations under the License.
 */
 
+import Deck from "@/components/Deck";
+import decks from "@/decks";
+
 
 export default function DeckGallery(): JSX.Element
 {
     return (
-        <>Deck gallery</>
+        <Deck cards={ decks.map(d => ({ ...d.decktop, color: "decktop" }) ) } />
     );
 }
