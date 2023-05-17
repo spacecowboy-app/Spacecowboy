@@ -24,4 +24,8 @@ export default class Constants
 
     /** Position for all snackbar messages. */
     public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "bottom", horizontal: "center" };
+
+    /** Path to decks assets. */
+    public static readonly CardsPath = "/assets/decks/";
+
 }

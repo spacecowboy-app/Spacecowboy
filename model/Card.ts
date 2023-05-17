@@ -14,10 +14,14 @@
     limitations under the License.
 */
 
+// TODO Describe the different card styles here.
+export type CardStyle = "value-image" | "image-value" | "centered-image";
+
+
 /** A single card. */
 export default interface Card {
     value?: string,
     color?: string,
     image: string,
-    style?: string,
+    style?: CardStyle,
 }

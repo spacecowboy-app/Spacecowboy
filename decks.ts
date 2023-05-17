@@ -23,21 +23,21 @@ const decks: Deck[] = [
         type: "Fibonacci",
         font: "deckfont-large",
         cards: [
-            { value:"0", color: "deckmarigold", image: "hats/justhat1.png" },
-            { value:"1", color: "decktangerine", image: "hats/justhat2.png" },
-            { value:"2", color: "decktangerine", image: "hats/justhat3.png" },
-            { value:"3", color: "decktangerine", image: "hats/justhat5.png" },
-            { value:"5", color: "deckcoral", image: "hats/justhat6.png" },
-            { value:"8", color: "deckcoral", image: "hats/justhat7.png" },
-            { value:"13", color: "deckcoral", image: "hats/justhat9.png" },
-            { value:"21", color: "deckbubblegum", image: "hats/justhat10.png" },
-            { value:"34", color: "deckbubblegum", image: "hats/justhat11.png" },
-            { value:"\u221e", color: "deckteal", image: "hats/justhat8.png" },
-            { value:"?", color: "deckocean", image: "hats/justhat4.png" },
-            { value:"Z", color: "deckjade", image: "hats/justhat12.png" }
+            { value:"0", color: "marigold", image: "hats/justhat1.png" },
+            { value:"1", color: "tangerine", image: "hats/justhat2.png" },
+            { value:"2", color: "tangerine", image: "hats/justhat3.png" },
+            { value:"3", color: "tangerine", image: "hats/justhat5.png" },
+            { value:"5", color: "coral", image: "hats/justhat6.png" },
+            { value:"8", color: "coral", image: "hats/justhat7.png" },
+            { value:"13", color: "coral", image: "hats/justhat9.png" },
+            { value:"21", color: "bubblegum", image: "hats/justhat10.png" },
+            { value:"34", color: "bubblegum", image: "hats/justhat11.png" },
+            { value:"\u221e", color: "teal", image: "hats/justhat8.png" },
+            { value:"?", color: "ocean", image: "hats/justhat4.png" },
+            { value:"Z", color: "jade", image: "hats/justhat12.png" }
         ],
-        flipped: { color: "deckdarkgray", image: "flipped.png", style: "centered-image" },
-        notflipped: { color: "decklightgray", image: "notflipped.png", style: "centered-image" },
+        flipped: { color: "darkgray", image: "flipped.png", style: "centered-image" },
+        notflipped: { color: "lightgray", image: "notflipped.png", style: "centered-image" },
         decktop: { image: "hats/justhat11.png" }
     }
 ];
