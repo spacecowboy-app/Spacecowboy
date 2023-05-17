@@ -38,6 +38,7 @@ export default function ApplicationHeader(): JSX.Element
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
                         <Button color="inherit" href="/about" LinkComponent={Link}>About</Button>
+                        <Button color="inherit" href="/decks" LinkComponent={Link}>Deck gallery</Button>
                         <ThemeSelector />
                     </Toolbar>
                 </AppBar>

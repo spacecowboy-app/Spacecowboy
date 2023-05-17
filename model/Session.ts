@@ -29,8 +29,8 @@ export default class Session {
 
         if (!RegExp("^[a-zA-Z0-9\-]+$").test(id))
             return "Name contains invalid characters"
-        
-        const reservedIds = [ "about", "join", "start" ];
+
+        const reservedIds = [ "about", "join", "start", "decks" ];
         if (reservedIds.find(e => e == id.toLowerCase()))
             return "Name is reserved";
 
