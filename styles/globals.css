@@ -15,6 +15,7 @@
 */
 
 :root {
+    /* Palette used for card backgrounds. */
     --apricot: #ffc287;
     --bubblegum: #c66391;
     --cherrybomb: #dd2553;
@@ -41,6 +42,10 @@
     --slate: #7f8596;
     --tangerine: #EC6F42;
     --teal: #56C3B9;
+
+    /* Palette for deck tops. */
+    --decktop: #FAA81B;
+    --decktopselected: #7E7E7E;
 
     box-sizing: border-box;
 }
