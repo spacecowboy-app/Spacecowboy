@@ -20,7 +20,6 @@ import Card from "./Card";
 export default interface Deck {
     name: string,
     type: string,
-    font: string,
     cards: Card[],
     flipped: Card,
     notflipped: Card,

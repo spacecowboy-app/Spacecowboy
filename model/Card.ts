@@ -17,6 +17,9 @@
 // TODO Describe the different card styles here.
 export type CardStyle = "value-image" | "image-value" | "centered-image";
 
+// Card font settings, must correspond to a CSS class.
+export type CardFont = "small" | "large";
+
 
 /** A single card. */
 export default interface Card {
@@ -30,4 +33,6 @@ export default interface Card {
     image: string,
 
     style?: CardStyle,
+
+    font?: CardFont,
 }
