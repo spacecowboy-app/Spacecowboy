@@ -14,9 +14,10 @@
     limitations under the License.
 */
 
+import cn from "classnames";
 import Image from "next/image";
 
-import CardModel, { CardStyle } from "@/model/Card";
+import CardModel, { CardFont, CardStyle } from "@/model/Card";
 import Constants from "@/constants";
 
 import styles from "@/styles/Card.module.css";
@@ -38,17 +39,24 @@ interface Props {
 /** Render a card. */
 export default function Card(props: Props): JSX.Element
 {
+    // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
         "value-image": CardValueAndImage,
         "image-value": CardImageAndValue,
         "centered-image": CardCenteredImage,
     };
 
+    // TODO Handle bug if trying to lookup a card font that is not defined here in a good way
+    const fontStyles: Record<CardFont, string> = {
+        "small": styles.cardfontSmall,
+        "large": styles.cardfontLarge,
+    };
+
     const cardBackground = `var(--${props.card.color})`;
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (
-        <div className={styles.card} style={ { backgroundColor: cardBackground }} >
+        <div className={cn(styles.card, props.card.font && fontStyles[props.card.font])} style={ { backgroundColor: cardBackground }} >
             { layoutFunction(props.card) }
         </div>
     );
