@@ -88,3 +88,15 @@
     transform: scale(1.1, 1.1);
     cursor: pointer;
 }
+
+/*
+  Fonts used for card values
+*/
+
+.cardfontSmall {
+    font: 12px sans-serif;
+}
+
+.cardfontLarge {
+    font: xx-large sans-serif;
+}
