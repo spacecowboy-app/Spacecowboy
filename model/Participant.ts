@@ -14,17 +14,30 @@
     limitations under the License.
 */
 
-import Card from "./Card";
+import Avatar from "./Avatar";
 
-/** A card deck. */
-export default interface Deck {
-    /** Deck id (uuid). */
-    id: string,
 
-    name: string,
-    type: string,
-    cards: Card[],
-    flipped: Card,
-    notflipped: Card,
-    decktop: Card,
+/**
+ * Information about the participants in a session and their vote.
+ * Note that vote can refer to the noVote or notRevealed cards.
+ */
+export default class Participant {
+    public id: string;
+    public avatar: Avatar;
+    public vote: string;
+    public idle: number;
+
+    public constructor(id: string, avatar: Avatar, vote: string, idle: number)
+    {
+        this.id = id;
+        this.avatar = avatar;
+        this.vote = vote;
+        this.idle = idle;
+    }
+
+    public IsIdle(): boolean
+    {
+        return false;
+        // return (this.idle > 10);
+    }
 }

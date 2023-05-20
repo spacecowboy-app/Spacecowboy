@@ -23,13 +23,15 @@ export type CardFont = "small" | "large";
 
 /** A single card. */
 export default interface Card {
+    /** Card identifier (uuid). */
+    id: string,
 
     value?: string,
 
-    // Color must be a color name defined as a CSS variable.
+    /** Color must be a color name defined as a CSS variable. */
     color?: string,
 
-    // An image path relative to Constants.CardsPath.
+    /** An image path relative to Constants.CardsPath. */
     image: string,
 
     style?: CardStyle,

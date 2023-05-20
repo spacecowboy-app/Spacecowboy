@@ -14,17 +14,17 @@
     limitations under the License.
 */
 
-import Card from "./Card";
 
-/** A card deck. */
-export default interface Deck {
-    /** Deck id (uuid). */
-    id: string,
+/**
+ * An avatar representing a participant in the game
+ */
+export default class Avatar {
+    name: string;
+    image: string;
 
-    name: string,
-    type: string,
-    cards: Card[],
-    flipped: Card,
-    notflipped: Card,
-    decktop: Card,
+    public constructor(name: string, image: string)
+    {
+        this.name = name;
+        this.image = image;
+    }
 }

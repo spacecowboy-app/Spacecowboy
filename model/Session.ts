@@ -14,8 +14,29 @@
     limitations under the License.
 */
 
+import Deck from "./Deck";
+import Participant from "./Participant";
 
+
+/** Session information. */
 export default class Session {
+
+    public id: string;
+    public participants: Participant[];
+    public deck?: Deck;
+    public createTime: string;
+    public generation: number;
+    public votingCompleted: boolean;
+
+    /** Constructor. */
+    public constructor(id: string, createTime: string, generation: number, votingCompleted: boolean)
+    {
+        this.id = id;
+        this.participants = [];
+        this.createTime = createTime;
+        this.generation = generation;
+        this.votingCompleted = votingCompleted;
+    }
 
 
     /** Validate a session identifier, returning  an error description if it is invalid. */
