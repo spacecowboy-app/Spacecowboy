@@ -20,11 +20,11 @@
  */
 export default class Avatar {
     name: string;
-    image: string;
+    charm: string;
 
-    public constructor(name: string, image: string)
+    public constructor(name: string, charm: string)
     {
         this.name = name;
-        this.image = image;
+        this.charm = charm;
     }
 }
