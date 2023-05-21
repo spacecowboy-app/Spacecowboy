@@ -32,7 +32,7 @@ export default interface Card {
     color?: string,
 
     /** An image path relative to Constants.CardsPath. */
-    image: string,
+    image?: string,
 
     style?: CardStyle,
 
