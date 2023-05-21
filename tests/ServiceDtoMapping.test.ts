@@ -16,7 +16,7 @@
 
 import { test, expect } from "@jest/globals";
 
-import SessionResponse, { MapFromSessionResponse } from "../service/dto/SessionResponse";
+import SessionResponse, { asSession } from "../service/dto/SessionResponse";
 
 
 describe("SessionResponse", () => {
@@ -36,7 +36,7 @@ describe("SessionResponse", () => {
                 id: "b4f4f10a-45c5-490b-b545-ebdbcb8091b5",
             },
         }
-        const session = MapFromSessionResponse(sessionResponse);
+        const session = asSession(sessionResponse);
         expect(session.id).toBe("foo-bar");
         expect(session.createTime).toBe("2023-01-01T10:10:10");
         expect(session.generation).toBe(1);

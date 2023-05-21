@@ -37,7 +37,7 @@ export default interface ParticipantResponse {
 }
 
 
-export function MapFromParticipantResponse(response: ParticipantResponse): Participant {
+export function asParticipant(response: ParticipantResponse): Participant {
     const charm = { name: response.name, charm: response.avatar};
     return new Participant(response.id, charm, response.vote, response.idle);
 }
