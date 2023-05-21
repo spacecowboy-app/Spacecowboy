@@ -21,6 +21,7 @@ import SessionResponse, { MapFromSessionResponse } from "../service/dto/SessionR
 
 describe("SessionResponse", () => {
 
+    // TODO Very minimalistic test
     test("valid object maps correctly", () => {
         const sessionResponse: SessionResponse = {
             id: "foo-bar",
@@ -28,8 +29,12 @@ describe("SessionResponse", () => {
             generation: 1,
             votingCompleted: false,
             cards: [],
-            noVote: {},
-            notRevealed: {},
+            noVote: {
+                id: "eaf6aac8-8772-4926-bb6e-0ff3eda499a3",
+            },
+            notRevealed: {
+                id: "b4f4f10a-45c5-490b-b545-ebdbcb8091b5",
+            },
         }
         const session = MapFromSessionResponse(sessionResponse);
         expect(session.id).toBe("foo-bar");
