@@ -14,37 +14,30 @@
     limitations under the License.
 */
 
-import ModelMappingException from "./ModelMappingException";
-import Participant from "@/model/Participant";
+import Participant from "../../model/Participant";
 
 
 /** Participant object as returned from the service REST API. */
-export default class ParticipantResponse {
+export default interface ParticipantResponse {
 
     /** Participant id. */
-    public id?: string;
+    id: string;
 
     /** Participant name. */
-    public name?: string;
+    name: string;
 
     /** Participant charm relative url. */
-    public avatar?: string;
+    avatar: string;
 
     /** Number of seconds this participant has been idle */
-    public idle?: number;
+    idle: number;
 
     /** ID of card representing this participant's vote, possibly the novote or notrevealed cards. */
-    public vote?: string;
+    vote: string;
+}
 
 
-    public MapToModel(): Participant {
-        if (!this.id) throw new ModelMappingException("Participant id must have a value");
-        if (!this.name) throw new ModelMappingException("Participant name must have a value");
-        if (!this.avatar) throw new ModelMappingException("Participant avatar must have a value");
-        if (!this.idle) throw new ModelMappingException("Participant idle must have a value");
-        if (!this.vote) throw new ModelMappingException("Participant vote must have a value");
-
-        const charm = { name: this.name, charm: this.avatar};
-        return new Participant(this.id, charm, this.vote, this.idle);
-    }
+export function MapFromParticipantResponse(response: ParticipantResponse): Participant {
+    const charm = { name: response.name, charm: response.avatar};
+    return new Participant(response.id, charm, response.vote, response.idle);
 }
