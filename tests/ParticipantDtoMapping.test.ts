@@ -16,7 +16,7 @@
 
 import { test, expect } from "@jest/globals";
 
-import ParticipantResponse, { MapFromParticipantResponse } from "../service/dto/ParticipantResponse";
+import ParticipantResponse, { asParticipant } from "../service/dto/ParticipantResponse";
 
 
 describe("ParticipantResponse", () => {
@@ -29,7 +29,7 @@ describe("ParticipantResponse", () => {
             idle: 0,
             vote: "foo"
         }
-        const p = MapFromParticipantResponse(participantResponse);
+        const p = asParticipant(participantResponse);
         expect(p.id).toBe("f72fd6d7-1647-4822-9ea1-525a91e958b0");
         expect(p.avatar.name).toBe("Clyde");
         expect(p.avatar.charm).toBe("/clyde.png");

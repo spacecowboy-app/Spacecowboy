@@ -29,38 +29,32 @@ export default interface CardResponse {
 }
 
 
-export function MapFromCardResponse(response: CardResponse): Card {
+export function asCard(response: CardResponse): Card {
     return ({
         id: response.id,
         value: response.value,
         image: response.image,
         color: response.color,
-        font: asCardFont(response.font),
-        style: asCardStyle(response.style),
+        font: response.font ? asCardFont(response.font) : undefined,
+        style: response.style ? asCardStyle(response.style) : undefined,
     });
 }
 
 
 // TODO can this be done better?
-function asCardFont(a?: string): CardFont|undefined {
+function asCardFont(a: string): CardFont {
     const validFonts = [ "large", "small" ];
-    if (a) {
-        if (validFonts.includes(a)) {
-            return a as CardFont;
-        }
+    if (!validFonts.includes(a)) {
         throw new ModelMappingException(`Received an unexpected card font "${a}"`);
     }
-    return undefined;
+    return a as CardFont;
 }
 
 
-function asCardStyle(a?: string): CardStyle|undefined {
+function asCardStyle(a: string): CardStyle {
     const validStyles = [ "value-image", "image-value", "centered-image" ];
-    if (a) {
-        if (validStyles.includes(a)) {
-            return a as CardStyle;
-        }
+    if (!validStyles.includes(a)) {
         throw new ModelMappingException(`Received an unexpected card style "${a}"`);
     }
-    return undefined;
+    return a as CardStyle;
 }

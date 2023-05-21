@@ -15,7 +15,7 @@
 */
 
 import CardResponse from "./CardResponse";
-import ParticipantResponse, { MapFromParticipantResponse } from "./ParticipantResponse";
+import ParticipantResponse, { asParticipant } from "./ParticipantResponse";
 import Session from "../../model/Session";
 
 
@@ -32,9 +32,9 @@ export default interface SessionResponse {
 }
 
 
-export function MapFromSessionResponse(response: SessionResponse): Session {
+export function asSession(response: SessionResponse): Session {
     const session = new Session(response.id, response.createTime, response.generation, response.votingCompleted);
-    session.participants = response.participants ? response.participants.map(p => MapFromParticipantResponse(p)) : [];
+    session.participants = response.participants ? response.participants.map(p => asParticipant(p)) : [];
     // TODO Map deck
     return session;
 }
