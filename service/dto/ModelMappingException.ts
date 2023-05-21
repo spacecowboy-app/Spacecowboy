@@ -14,27 +14,20 @@
     limitations under the License.
 */
 
-// TODO Describe the different card styles here.
-export type CardStyle = "value-image" | "image-value" | "centered-image";
 
-// Card font settings, must correspond to a CSS class.
-export type CardFont = "small" | "large";
+/** Encapsulates an error while communicating with the service. */
+export default class ModelMappingException {
+
+    /** Descriptive error message. */
+    public message: string;
 
 
-/** A single card. */
-export default interface Card {
-    /** Card identifier (uuid). */
-    id: string,
-
-    value?: string,
-
-    /** Color must be a color name defined as a CSS variable. */
-    color?: string,
-
-    /** An image path relative to Constants.CardsPath. */
-    image?: string,
-
-    style?: CardStyle,
-
-    font?: CardFont,
+    /**
+     * Create a service error object
+     * @param message Descriptive error message
+     */
+    public constructor(message: string)
+    {
+        this.message = message;
+    }
 }
