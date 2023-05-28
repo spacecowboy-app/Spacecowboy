@@ -38,7 +38,9 @@ const decks: Deck[] = [
         ],
         flipped: { id: "38d19b0d-ab9b-493c-9385-fef84cbd4b62", color: "darkgray", image: "flipped.png", style: "centered-image" },
         notflipped: { id: "a1b35a4a-2176-4638-a128-0e0245970f98", color: "lightgray", image: "notflipped.png", style: "centered-image" },
-        decktop: { id: "3e203b85-a0ab-42cd-bcda-157621ee98ab", value: "Mad Hatter", image: "hats/justhat11.png", style: "image-value", font: "small" }
+        decktop: { id: "3e203b85-a0ab-42cd-bcda-157621ee98ab", value: "Mad Hatter", image: "hats/justhat11.png", style: "image-value", font: "small" },
+        noVote: { id: "8be2c13b-9ddb-434e-960f-c1de485b8934" },
+        hiddenVote: { id: "d10ca582-feec-41c9-8888-c34f0e54f381" },
     }
 ];
 
