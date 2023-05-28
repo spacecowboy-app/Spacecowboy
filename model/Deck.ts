@@ -16,6 +16,7 @@
 
 import Card from "./Card";
 
+
 /** A card deck. */
 export default interface Deck {
     /** Deck id (uuid). */
@@ -27,4 +28,6 @@ export default interface Deck {
     flipped: Card,
     notflipped: Card,
     decktop: Card,
+    noVote: Card,
+    hiddenVote: Card,
 }
