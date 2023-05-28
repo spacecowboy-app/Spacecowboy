@@ -14,20 +14,24 @@
     limitations under the License.
 */
 
-import Card from "./Card";
+import Card from "@/model/Card";
 
 
-/** A card deck. */
-export default interface Deck {
-    /** Deck id (uuid). */
-    id: string,
+/** Card object as used in service requests. */
+export default interface CardRequest {
+    value?: string;
+    image?: string;
+    color?: string;
+    font?: string;
+    style?: string;
+}
 
-    name: string,
-    type: string,
-    cards: Card[],
-    flipped: Card,
-    notflipped: Card,
-    decktop: Card,
-    noVote: Card,
-    hiddenVote: Card,
+export function asCardRequest(card: Card): CardRequest {
+    return ({
+        value: card.value,
+        image: card.image,
+        color: card.color,
+        font: card.font,
+        style: card.style,
+    });
 }
