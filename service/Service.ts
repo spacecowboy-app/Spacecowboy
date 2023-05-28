@@ -23,6 +23,7 @@ import decks from "@/decks";
 import ServiceException from "./ServiceException";
 import Session from "@/model/Session";
 import { asSession } from "@/service/dto/SessionResponse";
+import { asCardRequest } from "@/service/dto/CardRequest";
 
 
 /** Access the Spacecowboy service component. */
@@ -113,4 +114,21 @@ export default class Service
         throw new ServiceException(response.status, response.statusText);
     }
 
+
+    /**
+     * Add a deck to a session
+     * @async
+     * @param sessionId Session identifier
+     * @param deck Deck to add
+     * @throws {ServiceException} Error in communicating with the service
+     */
+    public static async AddDeckAsync(sessionId: string, deck: Deck): Promise<void>
+    {
+        const sessionCards = deck.cards.map((c) => asCardRequest(c));
+        const sessionDeck = {cards: sessionCards, noVote: asCardRequest(deck.noVote), notRevealed: asCardRequest(deck.hiddenVote), name: deck.name, type: deck.type};
+        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/deck`, {method: "PUT", headers: this.headers, body: JSON.stringify(sessionDeck)});
+        if (!response.ok) {
+            throw new ServiceException(response.status, response.statusText);
+        }
+    }
 }
