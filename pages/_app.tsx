@@ -14,6 +14,8 @@
     limitations under the License.
 */
 
+"use client";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
