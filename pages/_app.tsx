@@ -21,7 +21,7 @@ import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
-import { useMemo } from "react";
+import { StrictMode, useMemo } from "react";
 import { Provider } from "react-redux";
 
 import "@fontsource/poppins/400.css";
@@ -99,9 +99,11 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <Provider store={store} >
-                    <StatefulApp Component={Component} router={router} pageProps={pageProps} />
-                </Provider>
+                <StrictMode>
+                    <Provider store={store} >
+                        <StatefulApp Component={Component} router={router} pageProps={pageProps} />
+                    </Provider>
+                </StrictMode>
             </main>
         </>
     )
