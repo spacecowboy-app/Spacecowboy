@@ -21,16 +21,14 @@ import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
-import { StrictMode, useMemo } from "react";
-import { Provider } from "react-redux";
+import { StrictMode, useContext, useMemo } from "react";
 
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
 import Layout from "@/components/Layout";
-import store from "@/store/store";
-import { useAppSelector } from "@/store/hooks";
+import { ThemeVariantProvider, ThemeVariantContext } from "@/state/ThemeVariantContext";
 
 import "../styles/globals.css";
 
@@ -100,9 +98,9 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
             </Head>
             <main>
                 <StrictMode>
-                    <Provider store={store} >
+                    <ThemeVariantProvider>
                         <StatefulApp Component={Component} router={router} pageProps={pageProps} />
-                    </Provider>
+                    </ThemeVariantProvider>
                 </StrictMode>
             </main>
         </>
@@ -112,17 +110,17 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
 
 function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
 {
-    const colorTheme = useAppSelector(state => state.colorTheme.theme);
+    const themeVariant = useContext(ThemeVariantContext);
 
     const theme = useMemo( () => createTheme(
         {
             ...baseTheme,
             palette: {
-                mode: colorTheme,
-                ...(colorTheme === "light" ? colorThemes.light : colorThemes.dark)
+                mode: themeVariant,
+                ...(themeVariant === "light" ? colorThemes.light : colorThemes.dark)
             },
         }
-    ), [ colorTheme ]);
+    ), [ themeVariant ]);
 
     return (
         <ThemeProvider theme={theme}>

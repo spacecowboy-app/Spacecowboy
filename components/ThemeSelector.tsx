@@ -14,11 +14,12 @@
     limitations under the License.
 */
 
+import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { toggle } from "./colorThemeSlice";
+
+import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/state/ThemeVariantContext";
 
 
 /**
@@ -26,11 +27,11 @@ import { toggle } from "./colorThemeSlice";
  */
 export default function ThemeSelector(): JSX.Element
 {
-    const theme = useAppSelector((state) => state.colorTheme.theme);
-    const dispatch = useAppDispatch();
+    const theme = useContext(ThemeVariantContext);
+    const dispatch = useContext(ThemeVariantDispatchContext);
 
     return (
-        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch(toggle()) } >
+        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch({ type: "toggle" }) } >
             {theme == "light" ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
