@@ -26,109 +26,106 @@ import { asSession } from "@/service/dto/SessionResponse";
 import { asCardRequest } from "@/service/dto/CardRequest";
 
 
-/** Access the Spacecowboy service component. */
-export default class Service
-{
-    private static readonly headers = {
-        "User-Agent": `Spacecowboy/${Configuration.AppVersion}`,
-        "Content-Type": "application/json"
-    }
+const headers = {
+    "User-Agent": `Spacecowboy/${Configuration.AppVersion}`,
+    "Content-Type": "application/json"
+};
 
-    /** Return a random session identifier. */
-    public static async GetRandomSessionIdAsync(): Promise<string>
-    {
-        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/random`, {method: "GET", headers: this.headers});
-        log.debug(`GetRandomSessionId returned ${response.status}`)
-        if (response.ok) {
-            return response.json();
+
+/** Return a random session identifier. */
+export async function GetRandomSessionIdAsync(): Promise<string>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/random`, {method: "GET", headers: headers});
+    log.debug(`GetRandomSessionId returned ${response.status}`)
+    if (response.ok) {
+        return response.json();
+    }
+    throw new ServiceException(response.status, response.statusText);
+}
+
+
+/**
+ * Check whether a session identifier is in use
+ * @param sessionId Session identifier
+ * @throws {ServiceException} Error in communicating with the service
+*/
+export async function SessionIdExistsAsync(sessionId: string): Promise<boolean>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: headers});
+    return (response.status !== 404);
+}
+
+
+/**
+ * Return all available charm sets.
+ * @returns An array of charm sets.
+ */
+export function GetCharmsAsync(): Promise<Charmset[]>
+{
+    return new Promise((resolve) => resolve(charms));
+}
+
+
+/**
+ * Return all available decks.
+ * @returnsAn array of decks.
+ */
+export function GetDecksAsync(): Promise<Deck[]>
+{
+    return new Promise((resolve) => resolve(decks));
+}
+
+
+/**
+ * Get information about a session
+ * @param id  Session identifier
+ * @param participantId ID of participant requesting the information
+ * @throws {ServiceException} Error in communicating with the service
+ * @returns A session object or null if the session does not exist
+ */
+export async function GetSessionAsync(id: string, participantId?: string): Promise<Session|null>
+{
+    const pquery = participantId ? `?participantId=${participantId}` : "";
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${id}${pquery}`, {method: "GET", headers: headers});
+    if (!response.ok) {
+        if (response.status === 404) {
+            return null;
         }
         throw new ServiceException(response.status, response.statusText);
     }
+    return asSession(await response.json());
+}
 
 
-    /**
-     * Check whether a session identifier is in use
-     * @param sessionId Session identifier
-     * @throws {ServiceException} Error in communicating with the service
-    */
-    public static async SessionIdExistsAsync(sessionId: string): Promise<boolean>
-    {
-        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: this.headers});
-        return (response.status !== 404);
-    }
-
-
-    /**
-     * Return all available charm sets.
-     * @returns An array of charm sets.
-     */
-    public static GetCharmsAsync(): Promise<Charmset[]>
-    {
-        return new Promise((resolve) => resolve(charms));
-    }
-
-
-    /**
-     * Return all available decks.
-     * @returnsAn array of decks.
-     */
-    public static GetDecksAsync(): Promise<Deck[]>
-    {
-        return new Promise((resolve) => resolve(decks));
-    }
-
-
-    /**
-     * Get information about a session
-     * @param id  Session identifier
-     * @param participantId ID of participant requesting the information
-     * @throws {ServiceException} Error in communicating with the service
-     * @returns A session object or null if the session does not exist
-     */
-    public static async GetSessionAsync(id: string, participantId?: string): Promise<Session|null>
-    {
-        const pquery = participantId ? `?participantId=${participantId}` : "";
-        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${id}${pquery}`, {method: "GET", headers: this.headers});
-        if (!response.ok) {
-            if (response.status === 404) {
-                return null;
-            }
-            throw new ServiceException(response.status, response.statusText);
-        }
+/**
+ * Create a new session
+ * The session is identified by a session identifier, which must be unique.
+ * @param sessionId Session identifier
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function CreateSessionAsync(sessionId: string): Promise<Session>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "PUT", headers: headers});
+    if (response.ok) {
         return asSession(await response.json());
     }
+    throw new ServiceException(response.status, response.statusText);
+}
 
 
-    /**
-     * Create a new session
-     * The session is identified by a session identifier, which must be unique.
-     * @param sessionId Session identifier
-     * @throws {ServiceException} Error in communicating with the service
-     */
-    public static async CreateSessionAsync(sessionId: string): Promise<Session>
-    {
-        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "PUT", headers: this.headers});
-        if (response.ok) {
-            return asSession(await response.json());
-        }
+/**
+ * Add a deck to a session
+ * @async
+ * @param sessionId Session identifier
+ * @param deck Deck to add
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function AddDeckAsync(sessionId: string, deck: Deck): Promise<void>
+{
+    const sessionCards = deck.cards.map((c) => asCardRequest(c));
+    const sessionDeck = {cards: sessionCards, noVote: asCardRequest(deck.noVote), notRevealed: asCardRequest(deck.hiddenVote), name: deck.name, type: deck.type};
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/deck`, {method: "PUT", headers: headers, body: JSON.stringify(sessionDeck)});
+    if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
-    }
-
-
-    /**
-     * Add a deck to a session
-     * @async
-     * @param sessionId Session identifier
-     * @param deck Deck to add
-     * @throws {ServiceException} Error in communicating with the service
-     */
-    public static async AddDeckAsync(sessionId: string, deck: Deck): Promise<void>
-    {
-        const sessionCards = deck.cards.map((c) => asCardRequest(c));
-        const sessionDeck = {cards: sessionCards, noVote: asCardRequest(deck.noVote), notRevealed: asCardRequest(deck.hiddenVote), name: deck.name, type: deck.type};
-        const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/deck`, {method: "PUT", headers: this.headers, body: JSON.stringify(sessionDeck)});
-        if (!response.ok) {
-            throw new ServiceException(response.status, response.statusText);
-        }
     }
 }
