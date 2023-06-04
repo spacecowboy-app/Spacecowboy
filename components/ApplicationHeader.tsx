@@ -23,7 +23,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link"
 
 import Logo from "@/images/logo.png";
-import ThemeSelector from "@/components/colortheme/colorThemeSelector";
+import ThemeSelector from "@/components/ThemeSelector";
 
 
 export default function ApplicationHeader(): JSX.Element
