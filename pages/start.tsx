@@ -28,7 +28,7 @@ import { useRouter } from "next/router";
 import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import Session from "../model/Session";
-import Service from "../service/Service";
+import { getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
 
 import heroImage from "../images/hero/place.png";
 
@@ -44,7 +44,7 @@ export default function StartGame(): JSX.Element {
     // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
     useEffect(() => {
         if (sessionId === undefined) {
-            Service.GetRandomSessionIdAsync()
+            getRandomSessionIdAsync()
             .then(result => {
                 log.debug(`Got random session name ${result}`);
                 setSessionId(result);
@@ -92,7 +92,7 @@ export default function StartGame(): JSX.Element {
             setSessionError(validationError);
         }
         else {
-            Service.SessionIdExistsAsync(id)
+            sessionIdExistsAsync(id)
                 .then((r) => setSessionError(r ? "Name cannot be used" : undefined))
                 .catch(() => { log.warn("Unable to connect to service"); });
         }
