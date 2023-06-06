@@ -20,6 +20,7 @@ import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
 
 import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/state/ThemeVariantContext";
+import { storeThemeState } from "@/state/PersistentState";
 
 
 /**
@@ -30,10 +31,22 @@ export default function ThemeSelector(): JSX.Element
     const theme = useContext(ThemeVariantContext);
     const dispatch = useContext(ThemeVariantDispatchContext);
 
+    if (theme === undefined) {
+        dispatch({ type: "set", value: "light" });
+    }
+
     return (
-        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch({ type: "toggle" }) } >
+        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => toggleTheme() } >
             {theme == "light" ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
+
+
+    function toggleTheme(): void
+    {
+        const newTheme = (theme === "light" ? "dark" : "light");
+        dispatch({ type: "set", value: newTheme });
+        storeThemeState(newTheme);
+    }
 
 }
