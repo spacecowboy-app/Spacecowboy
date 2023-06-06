@@ -14,12 +14,15 @@
     limitations under the License.
 */
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
+import log from "loglevel";
 
 import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/state/ThemeVariantContext";
+import { getThemeState, storeThemeState } from "@/state/PersistentState";
+
 
 
 /**
@@ -30,10 +33,27 @@ export default function ThemeSelector(): JSX.Element
     const theme = useContext(ThemeVariantContext);
     const dispatch = useContext(ThemeVariantDispatchContext);
 
+    /* If there is no theme variant set, attempt to retrieve theme variant from persistent storage. */
+    useEffect(() => {
+        if (!theme) {
+            const persistedTheme = getThemeState();
+            log.debug(`Got theme variant ${persistedTheme} from persistent storage.`);
+            dispatch({ type: "set", value: persistedTheme });
+        }
+    }, [theme, dispatch]);
+
     return (
-        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => dispatch({ type: "toggle" }) } >
+        <IconButton color="inherit" aria-label="theme toggle" onClick={ () => toggleTheme() } >
             {theme == "light" ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
+
+
+    function toggleTheme(): void
+    {
+        const newTheme = (theme === "light" ? "dark" : "light");
+        dispatch({ type: "set", value: newTheme });
+        storeThemeState(newTheme);
+    }
 
 }
