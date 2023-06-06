@@ -18,7 +18,7 @@ import { createContext, useReducer } from "react";
 import log from "loglevel";
 
 
-type ThemeVariant = "light"|"dark"|undefined;
+export type ThemeVariant = "light"|"dark"|undefined;
 
 export const ThemeVariantContext = createContext<ThemeVariant>(undefined);
 export const ThemeVariantDispatchContext = createContext<any>(null);
@@ -56,7 +56,7 @@ export function ThemeVariantProvider(props: Props): JSX.Element
 /**
  * Reducer function for the theme variant context.
  */
-function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVariantAction): ThemeVariant
+export function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVariantAction): ThemeVariant
 {
     switch (action.type) {
         case "toggle":
