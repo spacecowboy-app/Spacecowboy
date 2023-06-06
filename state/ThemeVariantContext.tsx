@@ -32,8 +32,25 @@ interface Props
 
 export interface ThemeVariantAction
 {
-    type: "toggle"
+    type: string
 }
+
+
+/** Action to toggle between light and dark theme. */
+export interface ThemeVariantToggleAction extends ThemeVariantAction
+{
+    type: "toggle",
+}
+
+
+/** Action to explicitly set the theme to light or dark. */
+export interface ThemeVariantSetAction extends ThemeVariantAction
+{
+    type: "set",
+    value: "light"|"dark",
+}
+
+
 
 
 /**
@@ -59,10 +76,20 @@ export function ThemeVariantProvider(props: Props): JSX.Element
 export function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVariantAction): ThemeVariant
 {
     switch (action.type) {
-        case "toggle":
+        case "toggle": {
             const newThemeVariant = themeVariant === "dark" ? "light" : "dark";
             log.debug(`Changed theme variant to ${newThemeVariant}`);
             return newThemeVariant;
+        }
+        case "set": {
+            const typedAction = action as ThemeVariantSetAction;
+            if (typedAction) {
+                const newThemeVariant = typedAction.value;
+                log.debug(`Changed theme variant to ${newThemeVariant}`);
+                return newThemeVariant;
+            }
+            throw Error("Invalid action type for set action");
+        }
         default:
             throw Error(`Unknown action ${action.type}`);
     }

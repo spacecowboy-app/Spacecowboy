@@ -16,7 +16,7 @@
 
 import { test, expect } from "@jest/globals";
 
-import { ThemeVariant, ThemeVariantAction, themeVariantReducer } from "../state/ThemeVariantContext";
+import { ThemeVariant, ThemeVariantSetAction, ThemeVariantAction, themeVariantReducer } from "../state/ThemeVariantContext";
 
 
 describe("Test theme variant dispatch actions", () => {
@@ -27,6 +27,16 @@ describe("Test theme variant dispatch actions", () => {
 
     test("toggle from dark theme results in light theme", () => {
         expect(themeVariantReducer("dark", { type: "toggle" } )).toBe("light");
+    })
+
+    test("set light theme results in light theme", () => {
+        const action: ThemeVariantSetAction = { type: "set", value: "light"};
+        expect(themeVariantReducer("dark", action)).toBe("light");
+    }),
+
+    test("set dark theme results in dark theme", () => {
+        const action: ThemeVariantSetAction = { type: "set", value: "dark"};
+        expect(themeVariantReducer("light", action )).toBe("dark");
     })
 
 });
