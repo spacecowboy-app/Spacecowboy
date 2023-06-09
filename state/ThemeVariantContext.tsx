@@ -18,9 +18,9 @@ import { createContext, useReducer } from "react";
 import log from "loglevel";
 
 
-export type ThemeVariant = "light"|"dark";
+export type ThemeVariant = "light"|"dark"|undefined;
 
-export const ThemeVariantContext = createContext<ThemeVariant>("light");
+export const ThemeVariantContext = createContext<ThemeVariant>(undefined);
 export const ThemeVariantDispatchContext = createContext<any>(null);
 
 
@@ -58,7 +58,7 @@ export interface ThemeVariantSetAction extends ThemeVariantAction
  */
 export function ThemeVariantProvider(props: Props): JSX.Element
 {
-    const [ themeVariant, dispatch ] = useReducer(themeVariantReducer, "light");
+    const [ themeVariant, dispatch ] = useReducer(themeVariantReducer, undefined);
 
     return (
         <ThemeVariantContext.Provider value={themeVariant}>
