@@ -38,22 +38,23 @@ export default function ThemeSelector(): JSX.Element
         if (!theme) {
             const persistedTheme = getThemeState();
             log.debug(`Got theme variant ${persistedTheme} from persistent storage.`);
-            dispatch({ type: "set", value: persistedTheme });
+            dispatch({ type: "set", value: persistedTheme ?? "light" });
         }
     }, [theme, dispatch]);
 
     return (
         <IconButton color="inherit" aria-label="theme toggle" onClick={ () => toggleTheme() } >
-            {theme == "light" ? <LightMode /> : <DarkMode /> }
+            { !theme || theme === "light" ? <LightMode /> : <DarkMode /> }
         </IconButton>
     );
 
 
     function toggleTheme(): void
     {
-        const newTheme = (theme === "light" ? "dark" : "light");
-        dispatch({ type: "set", value: newTheme });
+        const newTheme = ( !theme || theme === "light" ? "dark" : "light");
         storeThemeState(newTheme);
+        log.debug(`Persisted theme state ${ newTheme }.`);
+        dispatch({ type: "set", value: newTheme });
     }
 
 }
