@@ -110,7 +110,7 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
 
 function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
 {
-    const themeVariant = useContext(ThemeVariantContext);
+    const themeVariant = useContext(ThemeVariantContext) ?? "light";
 
     const theme = useMemo( () => createTheme(
         {
