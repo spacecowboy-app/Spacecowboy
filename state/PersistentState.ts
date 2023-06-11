@@ -28,7 +28,7 @@ const storageKeyTheme = storageKeyPrefix + "-theme";
 export function storeThemeState(theme: ThemeVariant)
 {
     try {
-        sessionStorage.setItem(storageKeyTheme, JSON.stringify(theme));
+        localStorage.setItem(storageKeyTheme, JSON.stringify(theme));
     }
     catch {
         log.warn("Unable to save theme state to browser storage.");
@@ -44,7 +44,7 @@ export function storeThemeState(theme: ThemeVariant)
 export function getThemeState(): ThemeVariant
 {
     try {
-        const state = sessionStorage.getItem(storageKeyTheme);
+        const state = localStorage.getItem(storageKeyTheme);
         return state === null ? null : JSON.parse(state);
     }
     catch {
