@@ -15,7 +15,7 @@
 */
 
 import Alert from "@mui/material/Alert";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
@@ -28,17 +28,20 @@ import { useRouter } from "next/router";
 import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import Session from "../model/Session";
-import { getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
+import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
+import { SessionDispatchContext } from "../state/SessionContext";
 
 import heroImage from "../images/hero/place.png";
 
 
 
-export default function StartGame(): JSX.Element {
+export default function StartGame(): JSX.Element
+{
     const [ sessionId, setSessionId ] = useState<string|undefined>();
     const [ sessionError, setSessionError ] = useState<string|undefined>();
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
+    const dispatch = useContext(SessionDispatchContext);
 
     // Get default session name and set as value for input field
     // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
@@ -106,7 +109,17 @@ export default function StartGame(): JSX.Element {
     function startSession(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        log.info(`Starting a new session ${sessionId}`);
-        router.push({ pathname:"/[session]", query: { session: sessionId } });
+        if (sessionId) {
+            log.info(`Starting a new session ${sessionId}`);
+            createSessionAsync(sessionId)
+                .then(() => {
+                    dispatch({ type: "setOwner", id: sessionId });
+                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                })
+                .catch((error) =>  {
+                    // TODO Proper error message in client window
+                    log.error(error);
+                });
+        }
     }
 }
