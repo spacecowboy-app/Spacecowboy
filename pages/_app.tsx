@@ -29,6 +29,7 @@ import "@fontsource/poppins/500.css";
 import Configuration from "@/Configuration";
 import Layout from "@/components/Layout";
 import { ThemeVariantProvider, ThemeVariantContext } from "@/state/ThemeVariantContext";
+import { SessionProvider, SessionContext } from "@/state/SessionContext";
 
 import "../styles/globals.css";
 
@@ -99,7 +100,9 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
             <main>
                 <StrictMode>
                     <ThemeVariantProvider>
-                        <StatefulApp Component={Component} router={router} pageProps={pageProps} />
+                        <SessionProvider>
+                            <StatefulApp Component={Component} router={router} pageProps={pageProps} />
+                        </SessionProvider>
                     </ThemeVariantProvider>
                 </StrictMode>
             </main>
