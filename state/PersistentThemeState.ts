@@ -15,10 +15,11 @@
 */
 
 import log from "loglevel";
+import Configuration from "@/Configuration";
 import { ThemeVariant } from "./ThemeVariantContext";
 
-const storageKeyPrefix = "spacecowboy1";
-const storageKeyTheme = storageKeyPrefix + "-theme";
+
+const storageKeyTheme = Configuration.BrowserStorageKeyPrefix + "-theme";
 
 
 /**
