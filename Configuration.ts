@@ -19,4 +19,7 @@ export default class Configuration
     public static readonly ApiBase?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE;
 
     public static readonly AppVersion?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_VERSION;
+
+    /** Prefix for all keys used when storing state in the browser using localStorage or sessionStorage. */
+    public static readonly BrowserStorageKeyPrefix = "spacecowboy1";
 }
