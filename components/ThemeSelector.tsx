@@ -21,7 +21,7 @@ import DarkMode from "@mui/icons-material/DarkMode";
 import log from "loglevel";
 
 import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/state/ThemeVariantContext";
-import { getThemeState, storeThemeState } from "@/state/PersistentState";
+import { getThemeState, storeThemeState } from "@/state/PersistentThemeState";
 
 
 
