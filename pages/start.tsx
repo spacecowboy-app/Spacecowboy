@@ -44,7 +44,6 @@ export default function StartGame(): JSX.Element
     const dispatch = useContext(SessionDispatchContext);
 
     // Get default session name and set as value for input field
-    // TODO: For some reason there are two calls to GetRandomSessionId() when loading this screen
     useEffect(() => {
         if (sessionId === undefined) {
             getRandomSessionIdAsync()
