@@ -14,8 +14,41 @@
     limitations under the License.
 */
 
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { getSessionState } from "@/state/PersistentSessionState";
+import { sessionIdExistsAsync } from "@/service/Service";
+import log from "loglevel";
 
+
+// TODO Add documentation
 export default function Session(): JSX.Element
 {
-    return (<>In a session</>);
+    const router = useRouter();
+    const sessionId = router.query.session as string;
+
+    // TODO Document purpose
+    useEffect(() => {
+        checkSession();
+
+        async function checkSession()
+        {
+            try {
+                const sessionState = getSessionState();
+                if (!sessionState) {
+                    if (await sessionIdExistsAsync(sessionId)) {
+                        // TODO handle this
+                    }
+                    else {
+                        router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                    }
+                }
+            }
+            catch {
+                log.error("Exception");
+            }
+        }
+    });
+
+    return (<>In session {router.query.session}</>);
 }
