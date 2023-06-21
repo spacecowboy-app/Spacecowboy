@@ -31,18 +31,18 @@ export interface SessionState {
 }
 
 
-/** Base class for all session actions. */
-export interface SessionAction
-{
-    type: string
+enum SessionActionTypes {
+    SET_OWNER = "SetOwner",
 }
 
 
-/** Set this user as the owner of the session. */
-export interface SetSessionOwnerAction extends SessionAction {
-    type: "setOwner",
-    id: string,
-}
+/**
+ * Set this user as the owner of the session.
+ * */
+export const setSessionOwnerAction = () =>
+    ({
+        type: SessionActionTypes.SET_OWNER,
+    } as const);
 
 
 
@@ -80,21 +80,15 @@ export function SessionProvider(props: Props): JSX.Element
 /**
  * Reducer function for the session state context
  */
-export function sessionStateReducer(session: SessionState, action: SessionAction): SessionState
+export function sessionStateReducer(session: SessionState, action: any): SessionState
 {
     switch (action.type) {
-        case "setOwner": {
-            const setOwnerAction = action as SetSessionOwnerAction;
-            if (setOwnerAction) {
-                log.debug(`Setting session owner status for session [${setOwnerAction.id}]`);
-                return {
-                    ...session,
-                    id: setOwnerAction.id,
-                    owner: true,
-                };
-            }
-            log.error("Invalid action type for session setOwner action");
-            return session;
+        case SessionActionTypes.SET_OWNER: {
+            log.debug(`Setting session owner status for session [${action.id}]`);
+            return {
+                ...session,
+                owner: true,
+            };
         }
         default:
             log.error(`Unknown action ${action.type}`);
