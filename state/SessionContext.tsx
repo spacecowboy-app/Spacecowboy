@@ -32,9 +32,20 @@ export interface SessionState {
 
 
 enum SessionActionTypes {
+    SET_SESSION_ID = "SetSessionId",
     SET_OWNER = "SetOwner",
 }
 
+
+/**
+ * Set the session id.  It is invalid to change an already set id.
+ * @param id New session id.
+ */
+export const setSessionIdAction = (id: string) =>
+    ({
+        type: SessionActionTypes.SET_SESSION_ID,
+        id : id,
+    } as const);
 
 /**
  * Set this user as the owner of the session.
@@ -83,13 +94,27 @@ export function SessionProvider(props: Props): JSX.Element
 export function sessionStateReducer(session: SessionState, action: any): SessionState
 {
     switch (action.type) {
+
+        case SessionActionTypes.SET_SESSION_ID: {
+            log.debug(`Setting session id to [${action.id}]`);
+            if (session.id && session.id !== action.id) {
+                log.warn(`The session id is already set to ${session.id} and cannot be changed to ${action.id}`);
+                return session;
+            }
+            return {
+                ...session,
+                id: action.id,
+            };
+        }
+
         case SessionActionTypes.SET_OWNER: {
-            log.debug(`Setting session owner status for session [${action.id}]`);
+            log.debug(`Setting session owner status for session`);
             return {
                 ...session,
                 owner: true,
             };
         }
+
         default:
             log.error(`Unknown action ${action.type}`);
             return session;
