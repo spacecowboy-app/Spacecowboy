@@ -33,17 +33,18 @@ describe("Session state actions", () => {
         expect(newSession.owner).toBeUndefined();
     }),
 
-    test("Reset session id fails", () => {
+    test("Override session id", () => {
         const session: SessionState =
         {
-            id: "foo",
+            id: undefined,
             owner: undefined,
         };
 
         const newSession = sessionStateReducer(session, setSessionIdAction("bar"));
 
-        expect(newSession.id).toBe("foo");
+        expect(newSession.id).toBe("bar");
         expect(newSession.owner).toBeUndefined();
+
     })
 
 });

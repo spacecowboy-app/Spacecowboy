@@ -38,7 +38,7 @@ enum SessionActionTypes {
 
 
 /**
- * Set the session id.  It is invalid to change an already set id.
+ * Set the session id, replacing the current session id if set.
  * @param id New session id.
  */
 export const setSessionIdAction = (id: string) =>
@@ -97,10 +97,6 @@ export function sessionStateReducer(session: SessionState, action: any): Session
 
         case SessionActionTypes.SET_SESSION_ID: {
             log.debug(`Setting session id to [${action.id}]`);
-            if (session.id && session.id !== action.id) {
-                log.warn(`The session id is already set to ${session.id} and cannot be changed to ${action.id}`);
-                return session;
-            }
             return {
                 ...session,
                 id: action.id,
