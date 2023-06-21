@@ -14,11 +14,12 @@
     limitations under the License.
 */
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
+import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/state/SessionContext";
 
 
 // TODO Add documentation
@@ -26,6 +27,8 @@ export default function Session(): JSX.Element
 {
     const router = useRouter();
     const sessionId = router.query.session as string;
+    const session = useContext(SessionContext);
+    const dispatch = useContext(SessionDispatchContext);
 
     // TODO Document purpose
     useEffect(() => {
@@ -37,7 +40,7 @@ export default function Session(): JSX.Element
                 const sessionState = getSessionState();
                 if (!sessionState) {
                     if (await sessionIdExistsAsync(sessionId)) {
-                        // TODO handle this
+                        dispatch(setSessionIdAction(sessionId));
                     }
                     else {
                         router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
@@ -48,7 +51,7 @@ export default function Session(): JSX.Element
                 log.error("Exception");
             }
         }
-    });
+    }, [dispatch, sessionId, router]);
 
     return (<>In session {router.query.session}</>);
 }
