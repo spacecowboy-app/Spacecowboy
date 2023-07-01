@@ -16,7 +16,7 @@
 
 import log from "loglevel";
 import Configuration from "@/Configuration";
-import { ThemeVariant } from "./ThemeVariantContext";
+import { ThemeVariant } from "@/model/context/ThemeVariantContext";
 
 
 const storageKeyTheme = Configuration.BrowserStorageKeyPrefix + "-theme";
