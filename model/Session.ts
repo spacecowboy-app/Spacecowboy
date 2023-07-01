@@ -23,12 +23,15 @@ import Participant from "./Participant";
 export default interface Session
 {
 
-    readonly id: string;
+    readonly id?: string;
     readonly participants: Participant[];
     readonly deck?: Deck;
-    readonly createTime: string;
-    readonly generation: number;
+    readonly createTime?: string;
+    readonly generation?: number;
     readonly votingCompleted: boolean;
+
+    /** Set if current user is the sesison owner. */
+    readonly owner?: boolean;
 }
 
 
