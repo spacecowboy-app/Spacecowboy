@@ -29,7 +29,7 @@ import "@fontsource/poppins/500.css";
 import Configuration from "@/Configuration";
 import Layout from "@/components/Layout";
 import { ThemeVariantProvider, ThemeVariantContext } from "@/state/ThemeVariantContext";
-import { SessionProvider, SessionContext } from "@/state/SessionContext";
+import { SessionProvider, SessionContext } from "@/model/context/SessionContext";
 
 import "../styles/globals.css";
 

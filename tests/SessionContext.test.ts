@@ -15,7 +15,7 @@
 */
 
 import { test, expect } from "@jest/globals";
-import { SessionState, sessionStateReducer, setSessionIdAction } from "../state/SessionContext";
+import { SessionState, sessionStateReducer, setSessionIdAction } from "@/model/context/SessionContext";
 
 
 describe("Session state actions", () => {

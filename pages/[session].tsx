@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
-import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/state/SessionContext";
+import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
 
 
 // TODO Add documentation

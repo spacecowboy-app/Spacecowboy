@@ -29,7 +29,7 @@ import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import {sessionIdIsValid} from "../model/Session";
 import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
-import { SessionDispatchContext, setSessionOwnerAction } from "../state/SessionContext";
+import { SessionDispatchContext, setSessionOwnerAction } from "@/model/context/SessionContext";
 
 import heroImage from "../images/hero/place.png";
 
