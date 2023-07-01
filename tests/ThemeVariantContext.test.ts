@@ -16,7 +16,7 @@
 
 import { test, expect } from "@jest/globals";
 
-import { ThemeVariant, ThemeVariantSetAction, ThemeVariantAction, themeVariantReducer } from "../state/ThemeVariantContext";
+import { ThemeVariantSetAction, themeVariantReducer } from "@/model/context/ThemeVariantContext";
 
 
 describe("Test theme variant dispatch actions", () => {

@@ -28,7 +28,7 @@ import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
 import Layout from "@/components/Layout";
-import { ThemeVariantProvider, ThemeVariantContext } from "@/state/ThemeVariantContext";
+import { ThemeVariantProvider, ThemeVariantContext } from "@/model/context/ThemeVariantContext";
 import { SessionProvider, SessionContext } from "@/model/context/SessionContext";
 
 import "../styles/globals.css";

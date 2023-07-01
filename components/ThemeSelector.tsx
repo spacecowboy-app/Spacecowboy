@@ -20,7 +20,7 @@ import LightMode from "@mui/icons-material/LightMode";
 import DarkMode from "@mui/icons-material/DarkMode";
 import log from "loglevel";
 
-import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/state/ThemeVariantContext";
+import { ThemeVariantContext, ThemeVariantDispatchContext } from "@/model/context/ThemeVariantContext";
 import { getThemeState, storeThemeState } from "@/state/PersistentThemeState";
 
 
