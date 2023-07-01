@@ -18,44 +18,39 @@ import Deck from "./Deck";
 import Participant from "./Participant";
 
 
+// TODO Document all properties
 /** Session information. */
-export default class Session {
+export default interface Session
+{
 
-    public id: string;
-    public participants: Participant[];
-    public deck?: Deck;
-    public createTime: string;
-    public generation: number;
-    public votingCompleted: boolean;
-
-    /** Constructor. */
-    public constructor(id: string, createTime: string, generation: number, votingCompleted: boolean)
-    {
-        this.id = id;
-        this.participants = [];
-        this.createTime = createTime;
-        this.generation = generation;
-        this.votingCompleted = votingCompleted;
-    }
+    readonly id: string;
+    readonly participants: Participant[];
+    readonly deck?: Deck;
+    readonly createTime: string;
+    readonly generation: number;
+    readonly votingCompleted: boolean;
+}
 
 
-    /** Validate a session identifier, returning  an error description if it is invalid. */
-    public static IsValidId(id: string): string|undefined
-    {
-        if (id.length == 0)
-            return "Please provide space name"
+/**
+ * Validate a session identifier, returning  an error description if it is invalid.
+ * @param id Session identifier
+ * @returns Error description (if invalid)
+ * */
+export function sessionIdIsValid(id: string): string|undefined
+{
+    if (id.length == 0)
+        return "Please provide space name"
 
-        if (id.length > 50)
-            return "Name too long";
+    if (id.length > 50)
+        return "Name too long";
 
-        if (!RegExp("^[a-zA-Z0-9\-]+$").test(id))
-            return "Name contains invalid characters"
+    if (!RegExp("^[a-zA-Z0-9\-]+$").test(id))
+        return "Name contains invalid characters"
 
-        const reservedIds = [ "about", "join", "start", "decks" ];
-        if (reservedIds.find(e => e == id.toLowerCase()))
-            return "Name is reserved";
+    const reservedIds = [ "about", "join", "start", "decks" ];
+    if (reservedIds.find(e => e == id.toLowerCase()))
+        return "Name is reserved";
 
-        return undefined;
-    }
-
+    return undefined;
 }
