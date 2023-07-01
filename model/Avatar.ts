@@ -18,13 +18,7 @@
 /**
  * An avatar representing a participant in the game
  */
-export default class Avatar {
-    name: string;
-    charm: string;
-
-    public constructor(name: string, charm: string)
-    {
-        this.name = name;
-        this.charm = charm;
-    }
+export default interface Avatar {
+    readonly name: string;
+    readonly charm: string;
 }
