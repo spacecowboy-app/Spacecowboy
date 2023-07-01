@@ -21,20 +21,21 @@ export type CardStyle = "value-image" | "image-value" | "centered-image";
 export type CardFont = "small" | "large";
 
 
+// TODO Document all properties
 /** A single card. */
 export default interface Card {
     /** Card identifier (uuid). */
-    id: string,
+    readonly id: string,
 
-    value?: string,
+    readonly value?: string,
 
     /** Color must be a color name defined as a CSS variable. */
-    color?: string,
+    readonly color?: string,
 
     /** An image path relative to Constants.CardsPath. */
-    image?: string,
+    readonly image?: string,
 
-    style?: CardStyle,
+    readonly style?: CardStyle,
 
-    font?: CardFont,
+    readonly font?: CardFont,
 }
