@@ -16,28 +16,14 @@
 
 import Avatar from "./Avatar";
 
-
+// TODO Document all properties
 /**
  * Information about the participants in a session and their vote.
  * Note that vote can refer to the noVote or notRevealed cards.
  */
-export default class Participant {
-    public id: string;
-    public avatar: Avatar;
-    public vote: string;
-    public idle: number;
-
-    public constructor(id: string, avatar: Avatar, vote: string, idle: number)
-    {
-        this.id = id;
-        this.avatar = avatar;
-        this.vote = vote;
-        this.idle = idle;
-    }
-
-    public IsIdle(): boolean
-    {
-        return false;
-        // return (this.idle > 10);
-    }
+export default interface Participant {
+    readonly id: string;
+    readonly avatar: Avatar;
+    readonly vote: string;
+    readonly idle: number;
 }
