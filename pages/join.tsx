@@ -24,7 +24,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 
 import HeroImage from "@/components/HeroImage";
-import Session from "@/model/Session";
+import {sessionIdIsValid} from "@/model/Session";
 
 import heroImage from "@/images/hero/join.png";
 
@@ -32,7 +32,7 @@ import heroImage from "@/images/hero/join.png";
 export default function JoinGame(): JSX.Element
 {
     const [ sessionId, setSessionId ] = useState<string>("");
-    const [ sessionError, setSessionError ] = useState<string|undefined>(Session.IsValidId(sessionId));
+    const [ sessionError, setSessionError ] = useState<string|undefined>(sessionIdIsValid(sessionId));
     const router = useRouter();
 
     return (
@@ -51,7 +51,7 @@ export default function JoinGame(): JSX.Element
     {
         const id = e.target.value.trim();
         setSessionId(id);
-        setSessionError(Session.IsValidId(id));
+        setSessionError(sessionIdIsValid(id));
     }
 
     /**
