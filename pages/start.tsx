@@ -27,9 +27,9 @@ import { useRouter } from "next/router";
 
 import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
-import Session from "../model/Session";
+import {sessionIdIsValid} from "../model/Session";
 import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
-import { SessionDispatchContext, setSessionOwnerAction } from "../state/SessionContext";
+import { SessionDispatchContext, setSessionOwnerAction } from "@/model/context/SessionContext";
 
 import heroImage from "../images/hero/place.png";
 
@@ -89,7 +89,7 @@ export default function StartGame(): JSX.Element
     {
         const id = e.target.value.trim();
         setSessionId(id);
-        const validationError = Session.IsValidId(id);
+        const validationError = sessionIdIsValid(id);
         if (validationError) {
             setSessionError(validationError);
         }

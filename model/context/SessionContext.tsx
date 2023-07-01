@@ -16,19 +16,7 @@
 
 import { createContext, useReducer } from "react";
 import log from "loglevel";
-
-
-/**
- * Context for keeping track of the current session state.
- */
-export interface SessionState {
-
-    /** Session identifier, undefined when no session information retrieved from service. */
-    readonly id: string|undefined;
-
-    /** Set if current user is the sesison owner. */
-    readonly owner: boolean|undefined;
-}
+import Session from "@/model/Session";
 
 
 enum SessionActionTypes {
@@ -57,12 +45,12 @@ export const setSessionOwnerAction = () =>
 
 
 
-const initialSessionState: SessionState = {
-    id: undefined,
-    owner: undefined,
+const initialSessionState: Session = {
+    participants: [],
+    votingCompleted: false,
 };
 
-export const SessionContext = createContext<SessionState>(initialSessionState);
+export const SessionContext = createContext<Session>(initialSessionState);
 export const SessionDispatchContext = createContext<any>(null);
 
 interface Props
@@ -91,7 +79,7 @@ export function SessionProvider(props: Props): JSX.Element
 /**
  * Reducer function for the session state context
  */
-export function sessionStateReducer(session: SessionState, action: any): SessionState
+export function sessionStateReducer(session: Session, action: any): Session
 {
     switch (action.type) {
 

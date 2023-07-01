@@ -16,7 +16,7 @@
 
 import { test, expect } from "@jest/globals";
 
-import Session from "../model/Session";
+import { sessionIdIsValid } from "@/model/Session";
 
 
 
@@ -32,7 +32,7 @@ describe("Validate session id", () => {
         [ "start", false ],     // reserved name
         [ "join", false ],      // reserved name
     ])("isValidId('%s') - %s", (input, expected) => {
-        const valid = Session.IsValidId(input) === undefined;
+        const valid = sessionIdIsValid(input) === undefined;
         expect(valid).toBe(expected);
     })
 

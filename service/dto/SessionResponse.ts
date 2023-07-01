@@ -33,8 +33,11 @@ export default interface SessionResponse {
 
 
 export function asSession(response: SessionResponse): Session {
-    const session = new Session(response.id, response.createTime, response.generation, response.votingCompleted);
-    session.participants = response.participants ? response.participants.map(p => asParticipant(p)) : [];
-    // TODO Map deck
-    return session;
+    return {
+        id: response.id,
+        createTime: response.createTime,
+        generation: response.generation,
+        votingCompleted: response.votingCompleted,
+        participants: response.participants ? response.participants.map(p => asParticipant(p)) : [],
+    };
 }

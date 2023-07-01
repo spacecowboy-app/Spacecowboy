@@ -18,8 +18,8 @@
 export default interface Charmset {
 
     /** Charmset name. */
-    name: string,
+    readonly name: string,
 
     /** List of URLs to charms in this set. */
-    charms: string[],
+    readonly charms: string[],
 }

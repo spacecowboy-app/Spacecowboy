@@ -15,16 +15,19 @@
 */
 
 import { test, expect } from "@jest/globals";
-import { SessionState, sessionStateReducer, setSessionIdAction } from "../state/SessionContext";
+import Session from "@/model/Session";
+import { sessionStateReducer, setSessionIdAction } from "@/model/context/SessionContext";
 
 
 describe("Session state actions", () => {
 
     test("Set session id", () => {
-        const session: SessionState =
+        const session: Session =
         {
             id: undefined,
             owner: undefined,
+            participants: [],
+            votingCompleted: false,
         };
 
         const newSession = sessionStateReducer(session, setSessionIdAction("foo"));
@@ -34,10 +37,12 @@ describe("Session state actions", () => {
     }),
 
     test("Override session id", () => {
-        const session: SessionState =
+        const session: Session =
         {
             id: undefined,
             owner: undefined,
+            participants: [],
+            votingCompleted: false,
         };
 
         const newSession = sessionStateReducer(session, setSessionIdAction("bar"));

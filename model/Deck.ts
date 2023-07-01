@@ -17,17 +17,18 @@
 import Card from "./Card";
 
 
+// TODO Document all properties
 /** A card deck. */
 export default interface Deck {
     /** Deck id (uuid). */
-    id: string,
+    readonly id: string,
 
-    name: string,
-    type: string,
-    cards: Card[],
-    flipped: Card,
-    notflipped: Card,
-    decktop: Card,
-    noVote: Card,
-    hiddenVote: Card,
+    readonly name: string,
+    readonly type: string,
+    readonly cards: Card[],
+    readonly flipped: Card,
+    readonly notflipped: Card,
+    readonly decktop: Card,
+    readonly noVote: Card,
+    readonly hiddenVote: Card,
 }
