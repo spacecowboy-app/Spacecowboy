@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import CardResponse from "./CardResponse";
+import CardResponse, { asCard } from "./CardResponse";
 import ParticipantResponse, { asParticipant } from "./ParticipantResponse";
 import Session from "../../model/Session";
 
@@ -39,5 +39,8 @@ export function asSession(response: SessionResponse): Session {
         generation: response.generation,
         votingCompleted: response.votingCompleted,
         participants: response.participants ? response.participants.map(p => asParticipant(p)) : [],
+        deck: response.cards ? response.cards.map(c => asCard(c)) : undefined,
+        noVote: response.noVote ? asCard(response.noVote) : undefined,
+        notRevealed: response.notRevealed ? asCard(response.notRevealed) : undefined,
     };
 }

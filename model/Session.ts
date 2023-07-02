@@ -14,21 +14,36 @@
     limitations under the License.
 */
 
-import Deck from "./Deck";
+import Card from "./Card";
 import Participant from "./Participant";
 
 
-// TODO Document all properties
-/** Session information. */
+/** Session information. Some of this information is managed by the service and shared with all participants. */
 export default interface Session
 {
-
+    /** Session identifier. */
     readonly id?: string;
+
+    /** Information about all session participants. */
     readonly participants: Participant[];
-    readonly deck?: Deck;
-    readonly createTime?: string;
-    readonly generation?: number;
+
+    /** The deck used for this session. */
+    readonly deck?: Card[];
+
+    /** Card to show for a participant that has not yet voted. */
+    readonly noVote?: Card;
+
+    /** Card to show for a participant that has voted when voting is not completed. */
+    readonly notRevealed?: Card;
+
+    /** Set when a round of voting is completed. */
     readonly votingCompleted: boolean;
+
+    /** Timestamp for when the session was created. */
+    readonly createTime?: string;
+
+    /** Session generation, monotonically increasing number. */
+    readonly generation?: number;
 
     /** Set if current user is the sesison owner. */
     readonly owner?: boolean;
