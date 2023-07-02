@@ -37,6 +37,7 @@
     "@emotion/styled": "^11.10.6",
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
+    "@microsoft/signalr": "^7.0.7",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
     "@next/font": "13.1.6",

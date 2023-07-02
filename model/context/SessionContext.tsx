@@ -17,13 +17,40 @@
 import { createContext, useReducer } from "react";
 import log from "loglevel";
 import Session from "@/model/Session";
+import SessionResponse, {asSession} from "@/service/dto/SessionResponse";
+import SessionContextException from "./SessionContextException";
 
 
 enum SessionActionTypes {
+    CLEAR_SESSION = "ClearSession",
+    CLEAR_VOTES = "ClearVotes",
+    SET_SESSION = "SetSession",
     SET_SESSION_ID = "SetSessionId",
     SET_OWNER = "SetOwner",
 }
 
+/** Clear current session information. */
+export const clearSessionAction = () =>
+    ({
+        type: SessionActionTypes.CLEAR_SESSION,
+    } as const);
+
+/** Clear votes. */
+export const clearVotesAction = () =>
+    ({
+        type: SessionActionTypes.CLEAR_VOTES,
+    } as const);
+
+
+/**
+ * Action to update the session with a session update received from the service.
+ * @param session Updated session from service.
+ */
+export const setSessionAction = (session: SessionResponse) =>
+    ({
+        type: SessionActionTypes.SET_SESSION,
+        session: session,
+    } as const);
 
 /**
  * Set the session id, replacing the current session id if set.
@@ -44,6 +71,13 @@ export const setSessionOwnerAction = () =>
     } as const);
 
 
+export type SessionActions =
+    | ReturnType<typeof clearSessionAction>
+    | ReturnType<typeof clearVotesAction>
+    | ReturnType<typeof setSessionAction>
+    | ReturnType<typeof setSessionIdAction>
+    | ReturnType<typeof setSessionOwnerAction>
+
 
 const initialSessionState: Session = {
     participants: [],
@@ -51,7 +85,7 @@ const initialSessionState: Session = {
 };
 
 export const SessionContext = createContext<Session>(initialSessionState);
-export const SessionDispatchContext = createContext<any>(null);
+export const SessionDispatchContext = createContext<(a: SessionActions) => void>(() => {});
 
 interface Props
 {
@@ -79,9 +113,41 @@ export function SessionProvider(props: Props): JSX.Element
 /**
  * Reducer function for the session state context
  */
-export function sessionStateReducer(session: Session, action: any): Session
+export function sessionStateReducer(session: Session, action: SessionActions): Session
 {
     switch (action.type) {
+
+        case SessionActionTypes.CLEAR_SESSION: {
+            log.debug("Clear current session");
+            return initialSessionState;
+        }
+
+        case SessionActionTypes.CLEAR_VOTES: {
+            log.debug("Clear votes");
+            return {
+                ...session,
+                votingCompleted: false,
+            }
+        }
+
+        case SessionActionTypes.SET_SESSION: {
+            log.debug("Update session");
+            const s = asSession(action.session);
+            if (session.id && session.id != s.id) {
+                throw new SessionContextException(`Trying to change the session id from ${session.id} to ${s.id}`);
+            }
+            return {
+                ...session,
+                id: s.id,
+                participants: s.participants,
+                deck: s.deck,
+                noVote: s.noVote,
+                notRevealed: s.notRevealed,
+                createTime: s.createTime,
+                generation: s.generation,
+                votingCompleted: s.votingCompleted,
+            };
+        }
 
         case SessionActionTypes.SET_SESSION_ID: {
             log.debug(`Setting session id to [${action.id}]`);
@@ -100,7 +166,7 @@ export function sessionStateReducer(session: Session, action: any): Session
         }
 
         default:
-            log.error(`Unknown action ${action.type}`);
+            log.error(`Unknown action: ${JSON.stringify(action)}`);
             return session;
     }
 }
