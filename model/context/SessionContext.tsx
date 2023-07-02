@@ -44,6 +44,10 @@ export const setSessionOwnerAction = () =>
     } as const);
 
 
+export type SessionActions =
+    | ReturnType<typeof setSessionIdAction>
+    | ReturnType<typeof setSessionOwnerAction>
+
 
 const initialSessionState: Session = {
     participants: [],
@@ -51,7 +55,7 @@ const initialSessionState: Session = {
 };
 
 export const SessionContext = createContext<Session>(initialSessionState);
-export const SessionDispatchContext = createContext<any>(null);
+export const SessionDispatchContext = createContext<(a: SessionActions) => void>(() => {});
 
 interface Props
 {
@@ -79,7 +83,7 @@ export function SessionProvider(props: Props): JSX.Element
 /**
  * Reducer function for the session state context
  */
-export function sessionStateReducer(session: Session, action: any): Session
+export function sessionStateReducer(session: Session, action: SessionActions): Session
 {
     switch (action.type) {
 
@@ -100,7 +104,7 @@ export function sessionStateReducer(session: Session, action: any): Session
         }
 
         default:
-            log.error(`Unknown action ${action.type}`);
+            log.error(`Unknown action: ${JSON.stringify(action)}`);
             return session;
     }
 }
