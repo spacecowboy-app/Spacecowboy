@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import Deck from "./Deck";
+import Card from "./Card";
 import Participant from "./Participant";
 
 
@@ -28,16 +28,22 @@ export default interface Session
     readonly participants: Participant[];
 
     /** The deck used for this session. */
-    readonly deck?: Deck;
+    readonly deck?: Card[];
+
+    /** Card to show for a participant that has not yet voted. */
+    readonly noVote?: Card;
+
+    /** Card to show for a participant that has voted when voting is not completed. */
+    readonly notRevealed?: Card;
+
+    /** Set when a round of voting is completed. */
+    readonly votingCompleted: boolean;
 
     /** Timestamp for when the session was created. */
     readonly createTime?: string;
 
     /** Session generation, monotonically increasing number. */
     readonly generation?: number;
-
-    /** Set when a round of voting is completed. */
-    readonly votingCompleted: boolean;
 
     /** Set if current user is the sesison owner. */
     readonly owner?: boolean;
