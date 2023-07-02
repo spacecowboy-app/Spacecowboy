@@ -23,6 +23,7 @@ import SessionContextException from "./SessionContextException";
 
 enum SessionActionTypes {
     CLEAR_SESSION = "ClearSession",
+    CLEAR_VOTES = "ClearVotes",
     SET_SESSION = "SetSession",
     SET_SESSION_ID = "SetSessionId",
     SET_OWNER = "SetOwner",
@@ -33,6 +34,13 @@ export const clearSessionAction = () =>
     ({
         type: SessionActionTypes.CLEAR_SESSION,
     } as const);
+
+/** Clear votes. */
+export const clearVotesAction = () =>
+    ({
+        type: SessionActionTypes.CLEAR_VOTES,
+    } as const);
+
 
 /**
  * Action to update the session with a session update received from the service.
@@ -65,6 +73,7 @@ export const setSessionOwnerAction = () =>
 
 export type SessionActions =
     | ReturnType<typeof clearSessionAction>
+    | ReturnType<typeof clearVotesAction>
     | ReturnType<typeof setSessionAction>
     | ReturnType<typeof setSessionIdAction>
     | ReturnType<typeof setSessionOwnerAction>
@@ -111,6 +120,14 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         case SessionActionTypes.CLEAR_SESSION: {
             log.debug("Clear current session");
             return initialSessionState;
+        }
+
+        case SessionActionTypes.CLEAR_VOTES: {
+            log.debug("Clear votes");
+            return {
+                ...session,
+                votingCompleted: false,
+            }
         }
 
         case SessionActionTypes.SET_SESSION: {
