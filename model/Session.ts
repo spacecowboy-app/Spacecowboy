@@ -18,16 +18,25 @@ import Deck from "./Deck";
 import Participant from "./Participant";
 
 
-// TODO Document all properties
-/** Session information. */
+/** Session information. Some of this information is managed by the service and shared with all participants. */
 export default interface Session
 {
-
+    /** Session identifier. */
     readonly id?: string;
+
+    /** Information about all session participants. */
     readonly participants: Participant[];
+
+    /** The deck used for this session. */
     readonly deck?: Deck;
+
+    /** Timestamp for when the session was created. */
     readonly createTime?: string;
+
+    /** Session generation, monotonically increasing number. */
     readonly generation?: number;
+
+    /** Set when a round of voting is completed. */
     readonly votingCompleted: boolean;
 
     /** Set if current user is the sesison owner. */
