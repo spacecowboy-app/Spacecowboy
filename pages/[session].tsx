@@ -20,6 +20,7 @@ import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
 import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
+import ServiceEvents from "@/service/ServiceEvents";
 
 
 // TODO Add documentation
@@ -52,6 +53,22 @@ export default function Session(): JSX.Element
             }
         }
     }, [dispatch, sessionId, router]);
+
+    // Initialize service for listening for service events
+    useEffect(() => {
+        if (session?.id === sessionId) {
+            const events = new ServiceEvents(dispatch);
+            log.debug(`Attempting to connect to event hub for session ${sessionId}.`);
+            events.Connect(sessionId)
+                .then(() => {
+                    log.debug(`Connected to event hub for session ${sessionId}.`);
+                });
+            return (() => {
+                events.Disconnect();
+                log.debug(`Disconnected from event hub for session ${sessionId}.`);
+            });
+        }
+    }, [sessionId, session.id, dispatch]);
 
     return (<>In session {router.query.session}</>);
 }
