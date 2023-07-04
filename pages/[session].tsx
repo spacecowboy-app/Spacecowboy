@@ -14,13 +14,19 @@
     limitations under the License.
 */
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
 import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
+
+
+enum ServiceConnectionState {
+    NotConnected,
+    Connected
+}
 
 
 // TODO Add documentation
@@ -30,6 +36,7 @@ export default function Session(): JSX.Element
     const sessionId = router.query.session as string;
     const session = useContext(SessionContext);
     const dispatch = useContext(SessionDispatchContext);
+    const [connectionState, setConnectionState] = useState<ServiceConnectionState>(ServiceConnectionState.NotConnected);
 
     // TODO Document purpose
     useEffect(() => {
@@ -62,13 +69,26 @@ export default function Session(): JSX.Element
             events.Connect(sessionId)
                 .then(() => {
                     log.debug(`Connected to event hub for session ${sessionId}.`);
+                    setConnectionState(ServiceConnectionState.Connected);
                 });
             return (() => {
                 events.Disconnect();
+                setConnectionState(ServiceConnectionState.NotConnected);
                 log.debug(`Disconnected from event hub for session ${sessionId}.`);
             });
         }
     }, [sessionId, session.id, dispatch]);
+
+    /* No session information available yet. Wait until the session update listener has fired at least once. */
+    if (session?.id === null) {
+        return (<p>Waiting for data from the server...</p>);
+    }
+
+    if (connectionState !== ServiceConnectionState.Connected) {
+        return (<p>Waiting for connection to service...</p>);
+    }
+
+
 
     return (<>In session {router.query.session}</>);
 }
