@@ -21,6 +21,7 @@ import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
 import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
+import AvatarCreator from "@/components/AvatarCreator";
 
 
 enum ServiceConnectionState {
@@ -88,7 +89,10 @@ export default function Session(): JSX.Element
         return (<p>Waiting for connection to service...</p>);
     }
 
-
+    /* Create avatar and register in this session. */
+    if (!session.participantId) {
+        return (<AvatarCreator/>);
+    }
 
     return (<>In session {router.query.session}</>);
 }
