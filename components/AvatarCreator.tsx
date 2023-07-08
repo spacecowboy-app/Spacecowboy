@@ -22,6 +22,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
+import CharmSelector from "./CharmSelector";
+
 
 // TODO Proper documentation of this component. How does it interact with the rest of the application?
 /**
@@ -38,6 +40,7 @@ export default function AvatarCreator(): JSX.Element
                 <Stack spacing={2} alignItems="center">
                     <Typography variant="h1">select your charm</Typography>
                     <TextField id="avatar-name" value={avatarName ?? ""} autoFocus={true} label="make your name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
+                    <CharmSelector />
                     <Button variant="contained" type="submit">arrive with charm</Button>
                 </Stack>
             </Box>
