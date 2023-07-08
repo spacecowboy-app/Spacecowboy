@@ -45,6 +45,9 @@ export default interface Session
     /** Session generation, monotonically increasing number. */
     readonly generation?: number;
 
+    /** The participant identifier for the current user. */
+    readonly participantId?: string;
+
     /** Set if current user is the sesison owner. */
     readonly owner?: boolean;
 }
