@@ -24,7 +24,7 @@ import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
 import CharmGallery from "./CharmGallery";
-import CharmSetSelector from "./CharmSetSelector";
+import CategorySelector from "./CategorySelector";
 import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Charmset from "@/model/Charmset";
@@ -72,7 +72,7 @@ export default function AvatarCreator(props: Props): JSX.Element
                 <Typography variant="h1">select your charm</Typography>
                 <Image src={`${Constants.CharmsPath}/${avatarCharm}`} alt="" width={250} height={250} />
                 <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
-                <CharmSetSelector charmSets={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} charmSetSelected={(name) => setCurrentCharmSet(name)} />
+                <CategorySelector categories={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} categorySelected={(name) => setCurrentCharmSet(name)} />
                 <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />
                 <Button variant="contained" type="submit" disabled={avatarNameError !== undefined || avatarName === undefined}>arrive with charm</Button>
             </Stack>
