@@ -15,6 +15,7 @@
 */
 
 import React, { useState } from "react";
+import Image, { StaticImageData } from "next/image";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -23,28 +24,35 @@ import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
 import CharmSelector from "./CharmSelector";
+import Constants from "@/constants";
+import Avatar from "@/model/Avatar";
+
+
+interface Props {
+    /** Callback for creating an avatar. */
+    avatarCreated?: (avatar: Avatar) => void,
+}
 
 
 // TODO Proper documentation of this component. How does it interact with the rest of the application?
 /**
  * Avatar creator component.
  */
-export default function AvatarCreator(): JSX.Element
+export default function AvatarCreator(props: Props): JSX.Element
 {
-    const [avatarName, setAvatarName] = useState<string|undefined>();
-    const [avatarCharm, setAvatarCharm] = useState<string|undefined>();
+    const [avatarName, setAvatarName] = useState<string|undefined>();       // Avatar name
+    const [avatarCharm, setAvatarCharm] = useState<string|undefined>();     // Path to avatar charm, relative to `Constants.CharmsPath`.
 
     return (
-        <>
-            <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
-                <Stack spacing={2} alignItems="center">
-                    <Typography variant="h1">select your charm</Typography>
-                    <TextField id="avatar-name" value={avatarName ?? ""} autoFocus={true} label="make your name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
-                    <CharmSelector />
-                    <Button variant="contained" type="submit">arrive with charm</Button>
-                </Stack>
-            </Box>
-        </>
+        <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
+            <Stack spacing={2} alignItems="center">
+                <Typography variant="h1">select your charm</Typography>
+                <Image src={`${Constants.CharmsPath}/${avatarCharm}`} alt="" width={250} height={250} />
+                <TextField id="avatar-name" value={avatarName ?? ""} autoFocus={true} label="make your name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
+                <CharmSelector charmSelected={(charmPath) => setAvatarCharm(charmPath)} />
+                <Button variant="contained" type="submit">arrive with charm</Button>
+            </Stack>
+        </Box>
     );
 
 
@@ -59,7 +67,13 @@ export default function AvatarCreator(): JSX.Element
     function setAvatar(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        // TODO Implement avatar selection
-        log.warn("Avatar selection not implemented yet");
+        if (props.avatarCreated) {
+            if (avatarName && avatarCharm) {
+                props.avatarCreated({ name: avatarName, charm: avatarCharm});
+            }
+            else {
+                log.error("Attempting to create avatar with undefined name or charm.");
+            }
+        }
     }
 }
