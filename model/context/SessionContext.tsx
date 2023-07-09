@@ -24,6 +24,7 @@ import SessionContextException from "./SessionContextException";
 enum SessionActionTypes {
     CLEAR_SESSION = "ClearSession",
     CLEAR_VOTES = "ClearVotes",
+    SET_PARTICIPANT = "SetParticipant",
     SET_SESSION = "SetSession",
     SET_SESSION_ID = "SetSessionId",
     SET_OWNER = "SetOwner",
@@ -39,6 +40,17 @@ export const clearSessionAction = () =>
 export const clearVotesAction = () =>
     ({
         type: SessionActionTypes.CLEAR_VOTES,
+    } as const);
+
+
+/**
+ * Action to set the current participant id in the session.
+ * @param participantId Participant id
+ */
+export const setParticipantAction = (participantId: string) =>
+    ({
+        type: SessionActionTypes.SET_PARTICIPANT,
+        participantId: participantId,
     } as const);
 
 
@@ -74,6 +86,7 @@ export const setSessionOwnerAction = () =>
 export type SessionActions =
     | ReturnType<typeof clearSessionAction>
     | ReturnType<typeof clearVotesAction>
+    | ReturnType<typeof setParticipantAction>
     | ReturnType<typeof setSessionAction>
     | ReturnType<typeof setSessionIdAction>
     | ReturnType<typeof setSessionOwnerAction>
@@ -128,6 +141,14 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
                 ...session,
                 votingCompleted: false,
             }
+        }
+
+        case SessionActionTypes.SET_PARTICIPANT: {
+            log.debug(`Set current participant id to ${action.participantId}`);
+            return {
+                ...session,
+                participantId: action.participantId,
+            };
         }
 
         case SessionActionTypes.SET_SESSION: {
