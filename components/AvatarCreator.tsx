@@ -47,6 +47,7 @@ export default function AvatarCreator(props: Props): JSX.Element
     const [currentCharmSet, setCurrentCharmSet] = useState<string|undefined>();     // Name of currently selected charm set
     const [avatarName, setAvatarName] = useState<string|undefined>();       // Avatar name
     const [avatarCharm, setAvatarCharm] = useState<string|undefined>();     // Path to avatar charm, relative to `Constants.CharmsPath`.
+    const [avatarNameError, setAvatarNameError] = useState<string|undefined>();
 
     /* Get all charm sets. */
     useEffect(() => {
@@ -71,10 +72,10 @@ export default function AvatarCreator(props: Props): JSX.Element
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">select your charm</Typography>
                 <Image src={`${Constants.CharmsPath}/${avatarCharm}`} alt="" width={250} height={250} />
-                <TextField id="avatar-name" value={avatarName ?? ""} autoFocus={true} label="make your name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
+                <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
                 <CharmSetSelector charmSets={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} charmSetSelected={(name) => setCurrentCharmSet(name)} />
                 <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />
-                <Button variant="contained" type="submit">arrive with charm</Button>
+                <Button variant="contained" type="submit" disabled={avatarNameError !== undefined || avatarName === undefined}>arrive with charm</Button>
             </Stack>
         </Box>
     );
@@ -84,6 +85,12 @@ export default function AvatarCreator(props: Props): JSX.Element
     function updateAvatarName(e: React.ChangeEvent<HTMLInputElement>): void
     {
         setAvatarName(e.target.value);
+        if (e.target.value.trim() === "") {
+            setAvatarNameError("Please specify a name");
+        }
+        else {
+            setAvatarNameError(undefined);
+        }
     }
 
 
@@ -91,9 +98,15 @@ export default function AvatarCreator(props: Props): JSX.Element
     function setAvatar(e: React.SyntheticEvent): void
     {
         e.preventDefault();
+
+        if (!avatarName || avatarName.trim() === "") {
+            setAvatarNameError("Please specify a name");
+            return;
+        }
+
         if (props.avatarCreated) {
             if (avatarName && avatarCharm) {
-                props.avatarCreated({ name: avatarName, charm: avatarCharm});
+                props.avatarCreated({ name: avatarName.trim(), charm: avatarCharm});
             }
             else {
                 log.error("Attempting to create avatar with undefined name or charm.");
