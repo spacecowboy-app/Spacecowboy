@@ -14,7 +14,9 @@
     limitations under the License.
 */
 
-import { useContext, useEffect, useState } from "react";
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
+import Alert from "@mui/material/Alert";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import { useRouter } from "next/router";
 import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
@@ -24,6 +26,7 @@ import ServiceEvents from "@/service/ServiceEvents";
 import AvatarCreator from "@/components/AvatarCreator";
 import Avatar from "@/model/Avatar";
 import { AddParticipant } from "@/service/Service";
+import Constants from "@/constants";
 
 
 enum ServiceConnectionState {
@@ -35,6 +38,7 @@ enum ServiceConnectionState {
 // TODO Add documentation
 export default function Session(): JSX.Element
 {
+    const [ avatarCreatorErrorOpen, setAvatarCreatorErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
     const sessionId = router.query.session as string;
     const session = useContext(SessionContext);
@@ -93,10 +97,30 @@ export default function Session(): JSX.Element
 
     /* Create avatar and register in this session. */
     if (!session.participantId) {
-        return (<AvatarCreator avatarCreated={registerParticipant} />);
+        return (
+            <>
+                <AvatarCreator avatarCreated={registerParticipant} />
+                <Snackbar open={avatarCreatorErrorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleAvatarCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
+                    <Alert severity="error">
+                        Unable to communicate with Space Cowboy service to register participant.
+                    </Alert>
+                </Snackbar>
+            </>
+        );
     }
 
     return (<>In session {router.query.session}</>);
+
+
+    /** Callback for closing the error snackbar. */
+    function handleAvatarCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    {
+        if (reason == "clickaway") {
+            return;
+        }
+        setAvatarCreatorErrorOpen(false);
+    }
+
 
 
     /**
@@ -111,7 +135,7 @@ export default function Session(): JSX.Element
                 dispatch(setParticipantAction(p.id));
             })
             .catch(() => {
-                // TODO Add proper error handling
+                setAvatarCreatorErrorOpen(true);
                 log.error("Unable to add participant to session");
             })
     }
