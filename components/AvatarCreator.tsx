@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -23,9 +23,12 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
-import CharmSelector from "./CharmSelector";
+import CharmGallery from "./CharmGallery";
+import CharmSetSelector from "./CharmSetSelector";
 import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
+import Charmset from "@/model/Charmset";
+import {getCharmsAsync} from "@/service/Service";
 
 
 interface Props {
@@ -40,8 +43,28 @@ interface Props {
  */
 export default function AvatarCreator(props: Props): JSX.Element
 {
+    const [charmSets, setCharmSets] = useState<Charmset[]|undefined>();     // All available charm sets
+    const [currentCharmSet, setCurrentCharmSet] = useState<string|undefined>();     // Name of currently selected charm set
     const [avatarName, setAvatarName] = useState<string|undefined>();       // Avatar name
     const [avatarCharm, setAvatarCharm] = useState<string|undefined>();     // Path to avatar charm, relative to `Constants.CharmsPath`.
+
+    /* Get all charm sets. */
+    useEffect(() => {
+        if (!charmSets) {
+            getCharmsAsync()
+                .then(result => {
+                    setCharmSets(result);
+                    setCurrentCharmSet(result[0].name);
+                    setAvatarCharm(result[0].charms[0]);
+                    log.debug(`Got ${result.length} charm sets.`);
+                })
+                .catch(() => log.error("Unable to get any charm sets."));
+        }
+    }, [charmSets]);
+
+    if (!charmSets || !currentCharmSet || charmSets.length === 0) {
+        return (<></>);
+    }
 
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
@@ -49,7 +72,8 @@ export default function AvatarCreator(props: Props): JSX.Element
                 <Typography variant="h1">select your charm</Typography>
                 <Image src={`${Constants.CharmsPath}/${avatarCharm}`} alt="" width={250} height={250} />
                 <TextField id="avatar-name" value={avatarName ?? ""} autoFocus={true} label="make your name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
-                <CharmSelector charmSelected={(charmPath) => setAvatarCharm(charmPath)} />
+                <CharmSetSelector charmSets={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} charmSetSelected={(name) => setCurrentCharmSet(name)} />
+                <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />
                 <Button variant="contained" type="submit">arrive with charm</Button>
             </Stack>
         </Box>
