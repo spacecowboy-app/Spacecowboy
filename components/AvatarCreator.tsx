@@ -37,9 +37,8 @@ interface Props {
 }
 
 
-// TODO Proper documentation of this component. How does it interact with the rest of the application?
 /**
- * Avatar creator component.
+ * Avatar creator component.  Calls the `avatarCreated` callback when an avatar has been created.
  */
 export default function AvatarCreator(props: Props): JSX.Element
 {
@@ -47,7 +46,7 @@ export default function AvatarCreator(props: Props): JSX.Element
     const [currentCharmSet, setCurrentCharmSet] = useState<string|undefined>();     // Name of currently selected charm set
     const [avatarName, setAvatarName] = useState<string|undefined>();       // Avatar name
     const [avatarCharm, setAvatarCharm] = useState<string|undefined>();     // Path to avatar charm, relative to `Constants.CharmsPath`.
-    const [avatarNameError, setAvatarNameError] = useState<string|undefined>();
+    const [avatarNameError, setAvatarNameError] = useState<string|undefined>();     // Validation message for avatar name, or `undefined` when no error
 
     /* Get all charm sets. */
     useEffect(() => {
