@@ -19,11 +19,13 @@ import log from "loglevel";
 
 import Charmset from "@/model/Charmset";
 import {getCharmsAsync} from "@/service/Service";
+import CharmGallery from "./CharmGallery";
 import CharmSetSelector from "./CharmSetSelector";
 
 
 interface Props {
-
+    /** Callback for selecting a charm.  The parameter is the relative path to the charm image. */
+    charmSelected?: (name: string) => void,
 }
 
 
@@ -49,9 +51,11 @@ export default function CharmSelector(props: Props): JSX.Element
         return (<></>);
     }
 
+    // TODO Fix hardcoded charm set to show in the gallery
     return (
         <>
-            <CharmSetSelector charmSets={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} />
+            <CharmSetSelector charmSets={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} charmSetSelected={(name) => setCurrentCharmSet(name)} />
+            <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => { if (props.charmSelected) props.charmSelected(name) } } />
         </>
-    );
+        );
 }
