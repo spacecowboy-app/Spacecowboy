@@ -22,6 +22,7 @@ import log from "loglevel";
 import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
 import AvatarCreator from "@/components/AvatarCreator";
+import Avatar from "@/model/Avatar";
 
 
 enum ServiceConnectionState {
@@ -91,8 +92,15 @@ export default function Session(): JSX.Element
 
     /* Create avatar and register in this session. */
     if (!session.participantId) {
-        return (<AvatarCreator/>);
+        return (<AvatarCreator avatarCreated={registerParticipant} />);
     }
 
     return (<>In session {router.query.session}</>);
+
+
+    // TODO Implement function
+    function registerParticipant(avatar: Avatar): void
+    {
+        log.debug(`Registering participant not implemented: ${JSON.stringify(avatar)}`);
+    }
 }
