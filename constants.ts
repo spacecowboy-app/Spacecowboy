@@ -28,4 +28,6 @@ export default class Constants
     /** Path to decks assets. */
     public static readonly CardsPath = "/assets/decks/";
 
+    /** Path to charm assets. */
+    public static readonly CharmsPath = "/assets/charms";
 }
