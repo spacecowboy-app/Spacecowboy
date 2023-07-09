@@ -22,8 +22,11 @@ import charms from "@/charms";
 import decks from "@/decks";
 import ServiceException from "./ServiceException";
 import Session from "@/model/Session";
+import Avatar from "@/model/Avatar";
+import Participant from "@/model/Participant";
 import { asSession } from "@/service/dto/SessionResponse";
 import { asCardRequest } from "@/service/dto/CardRequest";
+import { asParticipant } from "./dto/ParticipantResponse";
 
 
 const headers = {
@@ -128,4 +131,23 @@ export async function addDeckAsync(sessionId: string, deck: Deck): Promise<void>
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
+}
+
+
+/**
+ * Add a participant to a session
+ * @async
+ * @param {string} sessionId Session identifier
+ * @param {ParticipantAddRequest} participant Participant information
+ * @returns {Participant} Participant information
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function AddParticipant(sessionId: string, participant: Avatar): Promise<Participant>
+{
+    const body = {name: participant.name, avatar: participant.charm};
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant`, {method: "POST", headers: headers, body: JSON.stringify(body)});
+    if (!response.ok) {
+        throw new ServiceException(response.status, response.statusText);
+    }
+    return asParticipant(await response.json());
 }
