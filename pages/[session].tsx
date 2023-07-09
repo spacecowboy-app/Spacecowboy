@@ -19,10 +19,11 @@ import { useRouter } from "next/router";
 import { getSessionState } from "@/state/PersistentSessionState";
 import { sessionIdExistsAsync } from "@/service/Service";
 import log from "loglevel";
-import { SessionContext, SessionDispatchContext, setSessionIdAction } from "@/model/context/SessionContext";
+import { SessionContext, SessionDispatchContext, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
 import AvatarCreator from "@/components/AvatarCreator";
 import Avatar from "@/model/Avatar";
+import { AddParticipant } from "@/service/Service";
 
 
 enum ServiceConnectionState {
@@ -98,9 +99,20 @@ export default function Session(): JSX.Element
     return (<>In session {router.query.session}</>);
 
 
-    // TODO Implement function
+    /**
+     * Callback for the `AvatarCreator` component.  Adds the participant to the session and updates the session
+     * context with the id of the participant.
+     * @param avatar Participant avatar.
+     */
     function registerParticipant(avatar: Avatar): void
     {
-        log.debug(`Registering participant not implemented: ${JSON.stringify(avatar)}`);
+        AddParticipant(sessionId, avatar)
+            .then((p) => {
+                dispatch(setParticipantAction(p.id));
+            })
+            .catch(() => {
+                // TODO Add proper error handling
+                log.error("Unable to add participant to session");
+            })
     }
 }
