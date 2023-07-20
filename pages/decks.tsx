@@ -21,6 +21,6 @@ import decks from "@/decks";
 export default function DeckGallery(): JSX.Element
 {
     return (
-        <Deck cards={ decks.map(d => ({ ...d.decktop, color: "decktop" }) ) } />
+        <Deck cards={ decks.decks.map(d => ({ ...d.decktop, color: "decktop" }) ) } />
     );
 }
