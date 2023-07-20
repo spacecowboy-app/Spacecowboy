@@ -15,6 +15,8 @@
 */
 
 import Deck from "@/model/Deck";
+import DeckCategoryFilter from "./model/DeckCategoryFilter";
+import DecksCollection from "./model/DecksCollection";
 
 
 const decks: Deck[] = [
@@ -44,4 +46,23 @@ const decks: Deck[] = [
     }
 ];
 
-export default decks;
+
+const deckFilters: DeckCategoryFilter[] = [
+    {
+        name: "All",
+        decks: [ "901c8c95-c4cd-43dc-9341-1fe076443307" ]
+    },
+    {
+        name: "Fibonacci",
+        decks: [ "901c8c95-c4cd-43dc-9341-1fe076443307" ]
+    }
+];
+
+
+const decksCollection: DecksCollection = {
+    decks: decks,
+    deckFilters: deckFilters,
+}
+
+
+export default decksCollection;
