@@ -17,6 +17,7 @@
 import Configuration from "@/Configuration";
 import Charmset from "@/model/Charmset";
 import Deck from "@/model/Deck";
+import DecksCollection from "@/model/DecksCollection";
 import log from "loglevel";
 import charms from "@/charms";
 import decks from "@/decks";
@@ -73,7 +74,7 @@ export function getCharmsAsync(): Promise<Charmset[]>
  * Return all available decks.
  * @returnsAn array of decks.
  */
-export function getDecksAsync(): Promise<Deck[]>
+export function getDecksAsync(): Promise<DecksCollection>
 {
     return new Promise((resolve) => resolve(decks));
 }
