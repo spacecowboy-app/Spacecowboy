@@ -25,12 +25,12 @@ interface Props {
 }
 
 
+// TODO Deprecated: This component is probably redundant, a duplicate of DeckGallery.
 export default function Deck(props: Props): JSX.Element
 {
-    // TODO Use a proper key for the card components.
     return (
         <Grid container>
-            { props.cards.map(c => <Grid key={c.value}><Card key={c.value} card={c}/></Grid>) }
+            { props.cards.map(c => <Grid key={c.value}><Card key={c.id} card={c}/></Grid>) }
         </Grid>
     );
 }
