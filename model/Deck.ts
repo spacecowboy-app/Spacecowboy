@@ -24,7 +24,10 @@ export default interface Deck {
     readonly id: string,
 
     readonly name: string,
+
+    // TODO Deprecated: Replaced with the introduction of DecksCollection.
     readonly type: string,
+
     readonly cards: Card[],
     readonly flipped: Card,
     readonly notflipped: Card,
