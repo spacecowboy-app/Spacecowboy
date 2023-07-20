@@ -56,7 +56,7 @@ export default function Card(props: Props): JSX.Element
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (
-        <div className={cn(styles.card, props.card.font && fontStyles[props.card.font])} style={ { backgroundColor: cardBackground }} >
+        <div className={cn(styles.card, props.card.font && fontStyles[props.card.font])} style={ { backgroundColor: cardBackground }} onClick={() => { if (props.handleClick) props.handleClick(props.card.id); }} >
             { layoutFunction(props.card) }
         </div>
     );
