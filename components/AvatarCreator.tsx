@@ -15,17 +15,18 @@
 */
 
 import React, { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
 import log from "loglevel";
 
+import Charm from "./Charm";
 import CharmGallery from "./CharmGallery";
 import CategorySelector from "./CategorySelector";
-import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Charmset from "@/model/Charmset";
 import {getCharmsAsync} from "@/service/Service";
@@ -62,7 +63,7 @@ export default function AvatarCreator(props: Props): JSX.Element
         }
     }, [charmSets]);
 
-    if (!charmSets || !currentCharmSet || charmSets.length === 0) {
+    if (!charmSets || !currentCharmSet || charmSets.length === 0 || !avatarCharm) {
         return (<></>);
     }
 
@@ -70,7 +71,7 @@ export default function AvatarCreator(props: Props): JSX.Element
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">select your charm</Typography>
-                <Image src={`${Constants.CharmsPath}/${avatarCharm}`} alt="" width={250} height={250} />
+                <Charm charm={avatarCharm} size={250} />
                 <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
                 <CategorySelector categories={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} categorySelected={(name) => setCurrentCharmSet(name)} />
                 <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />
