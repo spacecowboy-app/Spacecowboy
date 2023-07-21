@@ -15,7 +15,10 @@
 */
 
 import { createContext, useReducer } from "react";
+
 import log from "loglevel";
+
+import Deck from "@/model/Deck";
 import Session from "@/model/Session";
 import SessionResponse, {asSession} from "@/service/dto/SessionResponse";
 import SessionContextException from "./SessionContextException";
@@ -24,6 +27,7 @@ import SessionContextException from "./SessionContextException";
 enum SessionActionTypes {
     CLEAR_SESSION = "ClearSession",
     CLEAR_VOTES = "ClearVotes",
+    SET_DECK = "SetDeck",
     SET_PARTICIPANT = "SetParticipant",
     SET_SESSION = "SetSession",
     SET_SESSION_ID = "SetSessionId",
@@ -40,6 +44,17 @@ export const clearSessionAction = () =>
 export const clearVotesAction = () =>
     ({
         type: SessionActionTypes.CLEAR_VOTES,
+    } as const);
+
+
+/**
+ * Action to set the deck for the session.
+ * @param deck Session deck.
+ */
+export const setDeckAction = (deck: Deck) =>
+    ({
+        type: SessionActionTypes.SET_DECK,
+        deck: deck,
     } as const);
 
 
@@ -86,6 +101,7 @@ export const setSessionOwnerAction = () =>
 export type SessionActions =
     | ReturnType<typeof clearSessionAction>
     | ReturnType<typeof clearVotesAction>
+    | ReturnType<typeof setDeckAction>
     | ReturnType<typeof setParticipantAction>
     | ReturnType<typeof setSessionAction>
     | ReturnType<typeof setSessionIdAction>
@@ -141,6 +157,14 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
                 ...session,
                 votingCompleted: false,
             }
+        }
+
+        case SessionActionTypes.SET_DECK: {
+            log.debug(`Set the session deck to ${action.deck.name}`);
+            return {
+                ...session,
+                deck: action.deck.cards,
+            };
         }
 
         case SessionActionTypes.SET_PARTICIPANT: {

@@ -14,23 +14,34 @@
     limitations under the License.
 */
 
-import Grid from "@mui/material/Unstable_Grid2";
+import React, { useEffect, useState } from "react";
 
-import Card from "@/components/Card";
+import Grid from '@mui/material/Unstable_Grid2';
+
+import log from "loglevel";
+
+import Card from "./Card";
 import CardModel from "@/model/Card";
 
 
 interface Props {
+
+    /** Cards to show in the gallery. */
     cards: CardModel[],
-}
+
+    /** Callback handling selection of a specific card.  The parameter is the selected card id. */
+    selectCard?: (id: string) => void
+};
 
 
-// TODO Deprecated: This component is probably redundant, a duplicate of DeckGallery.
-export default function Deck(props: Props): JSX.Element
+/**
+ * Presents a set of cards.
+ */
+export default function DeckGallery(props: Props): JSX.Element
 {
     return (
-        <Grid container>
-            { props.cards.map(c => <Grid key={c.value}><Card key={c.id} card={c}/></Grid>) }
+        <Grid container spacing={2} >
+            { props.cards.map(c => <Card key={c.id} card={c} handleClick={() => { if (props.selectCard) props.selectCard(c.id); }} /> ) }
         </Grid>
     );
 }

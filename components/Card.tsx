@@ -14,13 +14,14 @@
     limitations under the License.
 */
 
-import cn from "classnames";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+
 import Image from "next/image";
 
-import CardModel, { CardFont, CardStyle } from "@/model/Card";
+import CardModel, { CardStyle } from "@/model/Card";
 import Constants from "@/constants";
-
-import styles from "@/styles/Card.module.css";
 
 
 interface Props {
@@ -39,6 +40,16 @@ interface Props {
 /** Render a card. */
 export default function Card(props: Props): JSX.Element
 {
+    const cardSx = {
+        width: "6rem",
+        height: "9.7rem",
+        margin: "8px",
+        border: "0px",
+        borderRadius: "7px",
+        padding: "4px",
+        color: "black",
+    }
+
     // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
         "value-image": CardValueAndImage,
@@ -46,19 +57,18 @@ export default function Card(props: Props): JSX.Element
         "centered-image": CardCenteredImage,
     };
 
-    // TODO Handle bug if trying to lookup a card font that is not defined here in a good way
-    const fontStyles: Record<CardFont, string> = {
-        "small": styles.cardfontSmall,
-        "large": styles.cardfontLarge,
-    };
+    const fontStyles = {
+        "small": { fontSize: "1rem" },
+        "large": { fontSize: "2rem", fontWeight: "bold" },
+    }
 
     const cardBackground = `var(--${props.card.color})`;
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (
-        <div className={cn(styles.card, props.card.font && fontStyles[props.card.font])} style={ { backgroundColor: cardBackground }} >
+        <Box sx={{...cardSx, background: cardBackground}} onClick={() => { if (props.handleClick) props.handleClick(props.card.id); }}>
             { layoutFunction(props.card) }
-        </div>
+        </Box>
     );
 
 
@@ -66,10 +76,10 @@ export default function Card(props: Props): JSX.Element
     function CardValueAndImage(card: CardModel): JSX.Element
     {
         return (
-            <div className={styles.cardlayout} >
-                <div className={styles.cardvalue}>{card.value}</div>
-                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
-            </div>
+            <Stack alignItems="center" justifyContent="center">
+                <Typography sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
+                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
+            </Stack>
         );
     }
 
@@ -77,10 +87,10 @@ export default function Card(props: Props): JSX.Element
     function CardImageAndValue(card: CardModel): JSX.Element
     {
         return (
-            <div className={styles.cardlayout}>
-                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
-                <div className={styles.cardvalue}>{card.value}</div>
-            </div>
+            <Stack alignItems="center" justifyContent="center">
+                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
+                <Typography sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
+            </Stack>
         );
     }
 
@@ -89,9 +99,9 @@ export default function Card(props: Props): JSX.Element
     function CardCenteredImage(card: CardModel): JSX.Element
     {
         return (
-            <div className={styles.cardCenteredItem}>
-                <Image className={styles.cardimage} src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
-            </div>
+            <Stack alignItems="center" justifyContent="center">
+                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
+            </Stack>
         );
     }
 

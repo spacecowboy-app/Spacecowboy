@@ -15,18 +15,24 @@
 */
 
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
+
 import Alert from "@mui/material/Alert";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
+
 import { useRouter } from "next/router";
-import { getSessionState } from "@/state/PersistentSessionState";
-import { sessionIdExistsAsync } from "@/service/Service";
+
 import log from "loglevel";
-import { SessionContext, SessionDispatchContext, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
+
+import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
+import Avatar from "@/model/Avatar";
+import Deck from "@/model/Deck";
 import ServiceEvents from "@/service/ServiceEvents";
 import AvatarCreator from "@/components/AvatarCreator";
-import Avatar from "@/model/Avatar";
-import { AddParticipant } from "@/service/Service";
+import { addDeckAsync, AddParticipant } from "@/service/Service";
 import Constants from "@/constants";
+import DeckCreator from "@/components/DeckCreator";
+import { getSessionState } from "@/state/PersistentSessionState";
+import { sessionIdExistsAsync } from "@/service/Service";
 
 
 enum ServiceConnectionState {
@@ -39,6 +45,7 @@ enum ServiceConnectionState {
 export default function Session(): JSX.Element
 {
     const [ avatarCreatorErrorOpen, setAvatarCreatorErrorOpen ] = useState<boolean>(false);
+    const [ deckCreatorErrorOpen, setDeckCreatorErrorOpen ] = useState<boolean>(false);
     const router = useRouter();
     const sessionId = router.query.session as string;
     const session = useContext(SessionContext);
@@ -95,6 +102,20 @@ export default function Session(): JSX.Element
         return (<p>Waiting for connection to service...</p>);
     }
 
+    /* Let the owner of the session select the deck to use. */
+    if ((!session.deck || session.deck.length === 0) && session.owner) {
+        return (
+            <>
+                <DeckCreator deckCreated={registerDeck} />
+                <Snackbar open={deckCreatorErrorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleDeckCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
+                    <Alert severity="error">
+                        Unable to communicate with Space Cowboy service to register cards.
+                    </Alert>
+                </Snackbar>
+            </>
+        );
+    }
+
     /* Create avatar and register in this session. */
     if (!session.participantId) {
         return (
@@ -122,6 +143,16 @@ export default function Session(): JSX.Element
     }
 
 
+    /** Callback for closing the deck creator error snackbar. */
+    function handleDeckCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    {
+        if (reason == "clickaway") {
+            return;
+        }
+        setDeckCreatorErrorOpen(false);
+    }
+
+
 
     /**
      * Callback for the `AvatarCreator` component.  Adds the participant to the session and updates the session
@@ -137,6 +168,23 @@ export default function Session(): JSX.Element
             .catch(() => {
                 setAvatarCreatorErrorOpen(true);
                 log.error("Unable to add participant to session");
+            });
+    }
+
+
+    /**
+     * Callback for the DeckCreator component.  Adds the deck to the session and updates the session context.
+     * @param deck Selected deck.
+     */
+    function registerDeck(deck: Deck): void
+    {
+        addDeckAsync(sessionId, deck)
+            .then((p) => {
+                dispatch(setDeckAction(deck));
             })
+            .catch(() => {
+                setDeckCreatorErrorOpen(true);
+                log.error("Unable to add deck to session");
+            });
     }
 }
