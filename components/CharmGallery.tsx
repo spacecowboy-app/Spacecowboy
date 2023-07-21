@@ -14,12 +14,11 @@
     limitations under the License.
 */
 
-import Image, { StaticImageData } from "next/image";
 import Grid from '@mui/material/Unstable_Grid2';
 import log from "loglevel";
 
 import Charmset from "@/model/Charmset";
-import Constants from "@/constants";
+import Charm from "./Charm";
 
 
 interface Props {
@@ -37,7 +36,7 @@ export default function CharmGallery(props: Props): JSX.Element
         <Grid container spacing={2} >
             { props.charms.charms.map(c =>
                 <Grid key={c} onClick={() => selectCharm(c)} >
-                    <Image src={`${Constants.CharmsPath}/${c}`} alt="" width={100} height={100} />
+                    <Charm charm={c} size={100} />
                 </Grid>)
             }
         </Grid>
