@@ -29,7 +29,7 @@ import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import {sessionIdIsValid} from "../model/Session";
 import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
-import { SessionDispatchContext, setSessionOwnerAction } from "@/model/context/SessionContext";
+import { SessionDispatchContext, clearSessionAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 
 import heroImage from "../images/hero/place.png";
 
@@ -112,6 +112,7 @@ export default function StartGame(): JSX.Element
             log.info(`Starting a new session ${sessionId}`);
             createSessionAsync(sessionId)
                 .then(() => {
+                    dispatch(clearSessionAction());
                     dispatch(setSessionOwnerAction());
                     router.push({ pathname:"/[session]", query: { session: sessionId } });
                 })
