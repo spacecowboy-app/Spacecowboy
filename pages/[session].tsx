@@ -41,7 +41,14 @@ enum ServiceConnectionState {
 }
 
 
-// TODO Add documentation
+/**
+ * This is the session management page, visible at https://host/session-name.  Based on the state of the session, this page
+ * will render different components.  It manages the following steps of a session:
+ *      1.  Creating a deck (by session owner).
+ *      2.  Creating an avatar.
+ *      3.  Voting.
+ *      4.  Voting results.
+ */
 export default function Session(): JSX.Element
 {
     const [ avatarCreatorErrorOpen, setAvatarCreatorErrorOpen ] = useState<boolean>(false);
@@ -52,7 +59,7 @@ export default function Session(): JSX.Element
     const dispatch = useContext(SessionDispatchContext);
     const [connectionState, setConnectionState] = useState<ServiceConnectionState>(ServiceConnectionState.NotConnected);
 
-    // TODO Document purpose
+    // Check that the session actually exists and update state with session id.  If not, redirect to "not found" page.
     useEffect(() => {
         checkSession();
 
