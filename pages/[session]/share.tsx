@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useState, SyntheticEvent } from "react";
+import React, { useEffect, useState, SyntheticEvent } from "react";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -39,10 +39,19 @@ import heroImage from "@/images/hero/place.png";
  */
 export default function ShareSessionPage(): JSX.Element
 {
-    const [ infoOpen, setInfoOpen ] = useState<boolean>(false);
+    const [ sessionUrl, setSessionLink ] = useState<string|undefined>();    // Complete URL to the session, e.g. https://spacecowboy.app/foobar
+    const [ infoOpen, setInfoOpen ] = useState<boolean>(false);             // True when the copy link info snackbar is open
     const router = useRouter();
     const sessionId = router.query.session as string;
-    const sessionLink = `${document.location.origin}/${sessionId}`;
+
+    // Set sessionUrl from effect hook to ensure client evaluation
+    useEffect(() => {
+        setSessionLink(`${document.location.origin}/${sessionId}`);
+    }, [ setSessionLink, sessionId] );
+
+    if (!sessionUrl) {
+        return (<></>);
+    }
 
     return (
         <>
@@ -51,8 +60,8 @@ export default function ShareSessionPage(): JSX.Element
                 <Typography variant="h1">Share your place</Typography>
                 <Typography variant="h3">Invite more Space Cowboys</Typography>
                 <Typography variant="h3">Copy, paste and send the link</Typography>
-                <TextField value={sessionLink} />
-                <Button variant="contained" onClick={handleButtonClick} >Copy link</Button>
+                <TextField value={sessionUrl} />
+                <Button variant="contained" onClick={handleButtonClick} >Copy link and return</Button>
             </Stack>
             <Snackbar open={infoOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleInfoClose} anchorOrigin={Constants.SnackbarAnchor}>
                 <Alert severity="info" >
@@ -62,22 +71,24 @@ export default function ShareSessionPage(): JSX.Element
         </>
     );
 
+
+    /** Handle button click by copying session URL to clipboard and opening the info snackbar.  */
     function handleButtonClick(): void
     {
-        navigator.clipboard.writeText(sessionLink);
+        navigator.clipboard.writeText(sessionUrl!);
         setInfoOpen(true);
-        log.info(`Copied session link to clipboard: ${sessionLink}`);
+        log.info(`Copied session link to clipboard: ${sessionUrl}`);
     }
 
 
-    /** Callback for closing the error snackbar. */
+    /** Callback for closing the error snackbar and redirect back to the main session screen. */
     function handleInfoClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
         }
         setInfoOpen(false);
-        router.push({ pathname:"/[session]", query: { session: sessionId } });
+        router.replace({ pathname:"/[session]", query: { session: sessionId } });
     }
 
 }
