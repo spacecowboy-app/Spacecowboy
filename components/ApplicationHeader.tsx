@@ -14,13 +14,17 @@
     limitations under the License.
 */
 
+import React from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Image from "next/image";
 import Toolbar from "@mui/material/Toolbar";
+
+import Image from "next/image";
 import Link from "next/link"
+import { useRouter } from "next/router";
 
 import Logo from "@/images/logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -28,6 +32,9 @@ import ThemeSelector from "@/components/ThemeSelector";
 
 export default function ApplicationHeader(): JSX.Element
 {
+    const router = useRouter();
+    const sessionId = router.query.session as string;
+
     return (
         <>
             <Box sx={{ flexGrow: 1}} >
@@ -37,6 +44,7 @@ export default function ApplicationHeader(): JSX.Element
                             <Image src={Logo} width={32} alt="Logo" />
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
+                        { sessionId && <Button color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Share</Button> }
                         <Button color="inherit" href="/about" LinkComponent={Link}>About</Button>
                         <ThemeSelector />
                     </Toolbar>
