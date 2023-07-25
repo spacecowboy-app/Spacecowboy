@@ -38,4 +38,7 @@ export default interface Card {
     readonly style?: CardStyle,
 
     readonly font?: CardFont,
+
+    /** Set for a card that is disabled. */
+    readonly isDisabled?: boolean,
 }
