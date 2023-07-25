@@ -46,6 +46,7 @@ interface Props {
 export default function DeckCustomize(props: Props): JSX.Element
 {
     const [cards, setCards] = useState<Card[]>(props.deck.cards.map(c => ({...c, isDisabled: false})));
+    const allCardsDisabled: boolean = !cards.some(c => !c.isDisabled);
 
     return (
         <Box>
@@ -55,11 +56,12 @@ export default function DeckCustomize(props: Props): JSX.Element
                 <DeckGallery cards={cards} selectCard={toggleCard} />
                 <Stack spacing={2} direction="row">
                     { props.deckReselect && <Button variant="contained" onClick={props.deckReselect} >back to decks</Button> }
-                    <Button variant="contained" onClick={selectCards} >go with it</Button>
+                    <Button variant="contained" onClick={selectCards} disabled={allCardsDisabled} >go with it</Button>
                 </Stack>
             </Stack>
         </Box>
     );
+
 
     /**
      * Callback toggling the enabled state of the identified card.
