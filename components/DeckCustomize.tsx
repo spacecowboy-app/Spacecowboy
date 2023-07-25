@@ -39,20 +39,13 @@ interface Props {
 };
 
 
-/** Type that extends the Card model with a flag indicathing whether the card is enabled or disabled. */
-interface OptionalCard extends Card {
-
-    /** Set when a card is enabled. */
-    isEnabled: boolean;
-}
-
 
 /**
  * Component to allow customization of a deck.  Tap a card to exclude or include a given card in the deck.
  */
 export default function DeckCustomize(props: Props): JSX.Element
 {
-    const [cards, setCards] = useState<OptionalCard[]>(props.deck.cards.map((c) => ({...c, isEnabled: true })));
+    const [cards, setCards] = useState<Card[]>(props.deck.cards.map(c => ({...c, isDisabled: false})));
 
     return (
         <Box>
@@ -68,20 +61,19 @@ export default function DeckCustomize(props: Props): JSX.Element
         </Box>
     );
 
-
     /**
      * Callback toggling the enabled state of the identified card.
      * @param {string} cardId Card id.
      * */
     function toggleCard(cardId: string): void
     {
-        setCards(cards.map(c => c.id == cardId ? {...c, isEnabled: !c.isEnabled} : c));
+        setCards(cards.map(c => c.id == cardId ? {...c, isDisabled: !c.isDisabled} : c));
     }
 
 
     /** Callback returning a deck containing only the enabled cards from that deck. */
     function selectCards(): void
     {
-        props.deckCustomized({...props.deck, cards: cards.filter(c => c.isEnabled).map(c => c as Card)});
+        props.deckCustomized({...props.deck, cards: cards.filter(c => !c.isDisabled).map(c => c as Card)});
     }
 }
