@@ -16,18 +16,13 @@
 
 import React, { useEffect, useState } from "react";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-
 import log from "loglevel";
 
+import DeckCustomize from "./DeckCustomize";
 import DeckSelector from "./DeckSelector";
 import Deck from "@/model/Deck";
 import DeckCategoryFilter from "@/model/DeckCategoryFilter";
 import { getDecksAsync } from "@/service/Service";
-import DeckGallery from "@/components/DeckGallery";
 
 
 interface Props {
@@ -68,29 +63,16 @@ export default function DeckCreator(props: Props): JSX.Element
     }
 
     /* A deck has been selected.  Show the deck cards and allow for customization. */
-    if (selectedDeck?.cards) {
-        return (
-            <Box>
-                <Stack spacing={2} alignItems="center">
-                    <Typography variant="h1">customize cards</Typography>
-                    <Typography variant="h3">Tap a card to modify the deck</Typography>
-                    <DeckGallery cards={selectedDeck?.cards} />
-                    <Stack spacing={2} direction="row">
-                        <Button variant="contained" onClick={() => setSelectedDeck(undefined)} >back to decks</Button>
-                        <Button variant="contained" onClick={selectCards} >go with it</Button>
-                    </Stack>
-                </Stack>
-            </Box>
-        );
-    }
+    return (
+        <DeckCustomize
+            deck={selectedDeck}
+            deckCustomized={(deck) => props.deckCreated && props.deckCreated(deck)}
+            deckReselect={() => setSelectedDeck(undefined)}
+        />
+    );
 
-    // TODO Handle this error better
-    log.error("Illegal state in deck selector");
-    return (<>Something went wrong</>);
 
-    /**
-     * Callback handling the player selecting a deck by clicking on it.
-     */
+    /** Callback handling the player selecting a deck by clicking on it. */
     function selectDeck(decktopId: string): void
     {
         const deck = decks?.find(d => d.decktop.id == decktopId);
@@ -103,12 +85,4 @@ export default function DeckCreator(props: Props): JSX.Element
         }
     }
 
-
-    function selectCards(): void
-    {
-        log.info("A card deck was selected");
-        if (props.deckCreated && selectedDeck) {
-            props.deckCreated(selectedDeck);
-        }
-    }
 }
