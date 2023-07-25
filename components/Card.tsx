@@ -29,9 +29,6 @@ interface Props {
     /** The card to render. */
     card: CardModel,
 
-    /* If set, the card is rendered as disabled. */
-    disabled?: boolean;
-
     /* Callback for handling clicking a card.  Passes the card id. */
     handleClick?: (id: string) => void;
 }
@@ -48,7 +45,9 @@ export default function Card(props: Props): JSX.Element
         borderRadius: "7px",
         padding: "4px",
         color: "black",
-    }
+        background: `var(--${props.card.color})`,
+        opacity: props.card.isDisabled ? 0.2 : 1,
+    };
 
     // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
@@ -62,11 +61,11 @@ export default function Card(props: Props): JSX.Element
         "large": { fontSize: "2rem", fontWeight: "bold" },
     }
 
-    const cardBackground = `var(--${props.card.color})`;
+    const cardColor = `var(--${props.card.color})`;
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (
-        <Box sx={{...cardSx, background: cardBackground}} onClick={() => { if (props.handleClick) props.handleClick(props.card.id); }}>
+        <Box sx={cardSx} onClick={() => { if (props.handleClick) props.handleClick(props.card.id); }}>
             { layoutFunction(props.card) }
         </Box>
     );
