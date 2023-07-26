@@ -152,3 +152,26 @@ export async function AddParticipant(sessionId: string, participant: Avatar): Pr
     }
     return asParticipant(await response.json());
 }
+
+
+
+/**
+ * Cast a vote on behalf of the given participant
+ * @async
+ * @param {string} sessionId Session identifier
+ * @param {string} participantId Participant identifier
+ * @param {string} voteId Vote card identifier
+ * @returns {boolean} True if the vote was accepted, false if the vote was rejected as voting is not open.
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function castVoteAsync(sessionId: string, participantId: string, voteId: string): Promise<boolean>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/vote/${participantId}/${voteId}`, {method: "PUT", headers: headers});
+    if (!response.ok) {
+        if (response.status === 409) {
+            return false;
+        }
+        throw new ServiceException(response.status, response.statusText);
+    }
+    return true;
+}
