@@ -23,16 +23,16 @@ import { useRouter } from "next/router";
 
 import log from "loglevel";
 
-import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
+import AvatarCreator from "@/components/AvatarCreator";
+import DeckCreator from "@/components/DeckCreator";
+import Voting from "@/components/Voting";
+import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
+import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
-import AvatarCreator from "@/components/AvatarCreator";
-import { addDeckAsync, AddParticipant } from "@/service/Service";
-import Constants from "@/constants";
-import DeckCreator from "@/components/DeckCreator";
+import { addDeckAsync, AddParticipant, sessionIdExistsAsync } from "@/service/Service";
 import { getSessionState } from "@/state/PersistentSessionState";
-import { sessionIdExistsAsync } from "@/service/Service";
 
 
 enum ServiceConnectionState {
@@ -137,8 +137,12 @@ export default function Session(): JSX.Element
         );
     }
 
-    return (<>In session {router.query.session}</>);
+    /* Accept votes until voting is completed. */
+    if (!session.votingCompleted) {
+        return (<Voting />);
+    }
 
+    return (<>Voting completed</>);
 
     /** Callback for closing the error snackbar. */
     function handleAvatarCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
