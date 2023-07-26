@@ -26,6 +26,7 @@ import log from "loglevel";
 import AvatarCreator from "@/components/AvatarCreator";
 import DeckCreator from "@/components/DeckCreator";
 import Voting from "@/components/Voting";
+import VotingResult from "@/components/VotingResult";
 import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
@@ -142,7 +143,7 @@ export default function Session(): JSX.Element
         return (<Voting />);
     }
 
-    return (<>Voting completed</>);
+    return (<VotingResult />);
 
     /** Callback for closing the error snackbar. */
     function handleAvatarCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
