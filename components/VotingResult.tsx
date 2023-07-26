@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 
 import log from "loglevel";
 
+import VotingResultList from "./VotingResultList";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { resetVotesAsync } from "@/service/Service";
@@ -39,6 +40,7 @@ export default function VotingResult(): JSX.Element
         <>
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">Voting results</Typography>
+                <VotingResultList />
                 <Button variant="contained" onClick={startNextRound} >next round</Button>
             </Stack>
             <Snackbar open={serviceErrorMessage !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorMessage(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
