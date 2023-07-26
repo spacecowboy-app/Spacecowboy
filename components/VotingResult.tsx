@@ -33,7 +33,7 @@ import { resetVotesAsync } from "@/service/Service";
 export default function VotingResult(): JSX.Element
 {
     const session = useContext(SessionContext);
-    const [ serviceErrorOpen, setServiceErrorOpen ] = useState<string|undefined>();         // Set when service error alert is visible.  Value is error message.
+    const [ serviceErrorMessage, setServiceErrorMessage ] = useState<string|undefined>();         // Set when service error alert is visible.  Value is error message.
 
     return (
         <>
@@ -41,9 +41,9 @@ export default function VotingResult(): JSX.Element
                 <Typography variant="h1">Voting results</Typography>
                 <Button variant="contained" onClick={startNextRound} >next round</Button>
             </Stack>
-            <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
+            <Snackbar open={serviceErrorMessage !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorMessage(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
-                    { serviceErrorOpen }
+                    { serviceErrorMessage }
                 </Alert>
             </Snackbar>
         </>
@@ -55,6 +55,6 @@ export default function VotingResult(): JSX.Element
     {
         resetVotesAsync(session.id!)
             .then(() => log.info("Reset votes"))
-            .catch(() => setServiceErrorOpen("Unable to clear vote with remote service to start a new round."));
+            .catch(() => setServiceErrorMessage("Unable to clear vote with remote service to start a new round."));
     }
 }
