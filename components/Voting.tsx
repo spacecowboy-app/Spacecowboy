@@ -52,7 +52,7 @@ export default function Voting(): JSX.Element
 
     return (
         <>
-            <Stack>
+            <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">Place your vote</Typography>
                 <DeckGallery cards={session.deck} selectCard={placeVote} />
             </Stack>
