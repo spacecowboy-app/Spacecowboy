@@ -16,9 +16,10 @@
 
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import log from "loglevel";
+
+import SessionResponse from "./dto/SessionResponse";
 import Configuration from "@/Configuration";
 import { SessionActions, clearSessionAction, clearVotesAction, setSessionAction } from "@/model/context/SessionContext";
-import SessionResponse from "./dto/SessionResponse";
 
 
 enum EventTypes {
@@ -67,9 +68,11 @@ export default class ServiceEvents {
         this.connection.on(EventTypes.SessionUpdated, (sessionresponse: SessionResponse) => {
             if (sessionresponse.id) {
                 this.dispatch(setSessionAction(sessionresponse));
+                log.debug(`Got an update for session ${sessionresponse.id}`);
             }
             else {
                 this.dispatch(clearSessionAction());
+                log.debug(`Got an update to clear the session`);
             }
 
         });
@@ -77,6 +80,7 @@ export default class ServiceEvents {
         this.connection.on(EventTypes.SessionVotesCleared, () =>
         {
             this.dispatch(clearVotesAction());
+            log.debug("God at update to clear votes");
         });
 
         try {
