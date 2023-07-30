@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
 import DeckGallery from "./DeckGallery";
+import VotingParticipants from "./VotingParticipants";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { castVoteAsync } from "@/service/Service";
@@ -33,6 +34,7 @@ import { castVoteAsync } from "@/service/Service";
 export default function Voting(): JSX.Element
 {
     const session = useContext(SessionContext);
+    const [ vote, setVote ] = useState<string|undefined>();                                              // Card id of current players vote
     const [ serviceErrorOpen, setServiceErrorOpen ] = useState<string|undefined>();         // Set when service error alert is visible.  Value is error message.
 
     if (!session?.deck) {
@@ -54,7 +56,8 @@ export default function Voting(): JSX.Element
         <>
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">Place your vote</Typography>
-                <DeckGallery cards={session.deck} selectCard={placeVote} />
+                <DeckGallery cards={session.deck.map(c => vote == c.id ? {...c, isDisabled: true} : c )} selectCard={placeVote} />
+                <VotingParticipants />
             </Stack>
             <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
@@ -69,7 +72,10 @@ export default function Voting(): JSX.Element
     function placeVote(cardId: string): void
     {
         castVoteAsync(session.id!, session.participantId!, cardId)
-            .then(() => log.info(`Cast vote with id ${cardId}`))
+            .then(() => {
+                setVote(cardId);
+                log.info(`Cast vote with id ${cardId}`);
+            })
             .catch(() => setServiceErrorOpen("Unable to place vote with remote service."));
     }
 }
