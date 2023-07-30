@@ -33,7 +33,7 @@ export default function VotingParticipants(): JSX.Element
 
     // Function to return an avatar for a participant.
     const getAvatar = (p: Participant) => (
-        <Stack alignItems="center">
+        <Stack key={p.id} alignItems="center">
             <Charm charm={p.avatar.charm} size={64} />
             <Typography>{p.avatar.name}</Typography>
         </Stack>
