@@ -14,9 +14,10 @@
     limitations under the License.
 */
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
-import Grid from '@mui/material/Unstable_Grid2';
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 import Card from "./Card";
 import Charm from "./Charm";
@@ -35,15 +36,17 @@ export default function VotingResultList(): JSX.Element
 
     const voteCard = (p: Participant) => session.deck!.find(c => c.id == p.vote);
 
-    const renderParticipantVote = (p: Participant, v?: CardModel): JSX.Element[] => ([
-        <Grid key={`${p.id}-charm`} ><Charm charm={p.avatar.charm} size={64} /></Grid>,
-        <Grid key={`${p.id}-name`} >{p.avatar.name}</Grid>,
-        <Grid key={`${p.id}-vote`} >{v ? <Card card={v} /> : <></>}</Grid>
-    ]);
+    const renderParticipantVote = (p: Participant, v?: CardModel): JSX.Element => (
+        <Stack id={p.id} alignItems="center">
+            { v ? <Card card={v} /> : <></> }
+            <Charm charm={p.avatar.charm} size={64} />
+            <Typography>{p.avatar.name}</Typography>
+        </Stack>
+    );
 
     return (
-        <Grid container spacing={2} columns={3} >
+        <Stack spacing={2} direction="row" >
             { session.participants.map(p => renderParticipantVote(p, voteCard(p)))}
-        </Grid>
+        </Stack>
     );
 }
