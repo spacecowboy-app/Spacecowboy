@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -24,6 +24,7 @@ import Link from "next/link";
 
 import HeroImage from "@/components/HeroImage";
 import heroImage from "@/images/hero/welcome.png";
+import { SessionContext, SessionDispatchContext, clearSessionAction, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
 
 
 /**
@@ -31,6 +32,16 @@ import heroImage from "@/images/hero/welcome.png";
  */
 export default function Home(): JSX.Element
 {
+    const session = useContext(SessionContext);
+    const dispatch = useContext(SessionDispatchContext);
+
+    // TODO Send service request to leave the session
+    useEffect(() => {
+        if (session.id) {
+            dispatch(clearSessionAction());
+        }
+    }), [dispatch, session];
+
     return (
         <Stack spacing={2} alignItems="center">
             <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
