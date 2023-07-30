@@ -44,8 +44,9 @@ export default function ApplicationHeader(): JSX.Element
                             <Image src={Logo} width={32} alt="Logo" />
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
-                        { sessionId && <Button color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Share</Button> }
-                        <Button color="inherit" href="/about" LinkComponent={Link}>About</Button>
+                        { sessionId && <Button key="share" color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Share</Button> }
+                        { sessionId && <Button key="leave" color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Leave</Button> }
+                        { !sessionId && <Button key="about" color="inherit" href="/about" LinkComponent={Link}>About</Button> }
                         <ThemeSelector />
                     </Toolbar>
                 </AppBar>
