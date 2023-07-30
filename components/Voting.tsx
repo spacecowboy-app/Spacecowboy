@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import log from "loglevel";
 
 import DeckGallery from "./DeckGallery";
+import VotingParticipants from "./VotingParticipants";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { castVoteAsync } from "@/service/Service";
@@ -55,6 +56,7 @@ export default function Voting(): JSX.Element
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">Place your vote</Typography>
                 <DeckGallery cards={session.deck} selectCard={placeVote} />
+                <VotingParticipants />
             </Stack>
             <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
