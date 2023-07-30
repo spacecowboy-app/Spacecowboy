@@ -14,17 +14,23 @@
     limitations under the License.
 */
 
+import React from "react";
+
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
 import Link from "next/link";
 
 import HeroImage from "@/components/HeroImage";
-
 import heroImage from "@/images/hero/welcome.png";
 
 
-export default function Home(): JSX.Element {
+/**
+ * The application home page.
+ */
+export default function Home(): JSX.Element
+{
     return (
         <Stack spacing={2} alignItems="center">
             <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
