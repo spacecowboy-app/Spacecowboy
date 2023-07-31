@@ -26,7 +26,7 @@ export default class Constants
     public static readonly SnackbarDurationShortMs = 1000;
 
     /** Position for all snackbar messages. */
-    public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "bottom", horizontal: "center" };
+    public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "top", horizontal: "center" };
 
     /** Path to decks assets. */
     public static readonly CardsPath = "/assets/decks/";
