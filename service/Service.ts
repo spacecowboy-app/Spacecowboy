@@ -143,8 +143,7 @@ export async function addDeckAsync(sessionId: string, deck: Deck): Promise<void>
  * @returns {Participant} Participant information
  * @throws {ServiceException} Error in communicating with the service
  */
-// TODO Function name is not compliant with the general pattern
-export async function AddParticipant(sessionId: string, participant: Avatar): Promise<Participant>
+export async function addParticipantAsync(sessionId: string, participant: Avatar): Promise<Participant>
 {
     const body = {name: participant.name, avatar: participant.charm};
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant`, {method: "POST", headers: headers, body: JSON.stringify(body)});

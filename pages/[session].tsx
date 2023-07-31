@@ -32,7 +32,7 @@ import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
 import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
 import ServiceEvents from "@/service/ServiceEvents";
-import { addDeckAsync, AddParticipant, sessionIdExistsAsync } from "@/service/Service";
+import { addDeckAsync, addParticipantAsync, sessionIdExistsAsync } from "@/service/Service";
 import { getSessionState } from "@/state/PersistentSessionState";
 
 
@@ -173,7 +173,7 @@ export default function Session(): JSX.Element
      */
     function registerParticipant(avatar: Avatar): void
     {
-        AddParticipant(sessionId, avatar)
+        addParticipantAsync(sessionId, avatar)
             .then((p) => {
                 dispatch(setParticipantAction(p.id));
             })
