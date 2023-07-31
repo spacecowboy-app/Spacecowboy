@@ -24,7 +24,7 @@ import Link from "next/link";
 
 import HeroImage from "@/components/HeroImage";
 import heroImage from "@/images/hero/welcome.png";
-import { SessionContext, SessionDispatchContext, clearSessionAction, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
+import { SessionContext, SessionDispatchContext, clearSessionAction } from "@/model/context/SessionContext";
 
 
 /**
