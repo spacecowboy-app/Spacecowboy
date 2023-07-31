@@ -143,8 +143,7 @@ export async function addDeckAsync(sessionId: string, deck: Deck): Promise<void>
  * @returns {Participant} Participant information
  * @throws {ServiceException} Error in communicating with the service
  */
-// TODO Function name is not compliant with the general pattern
-export async function AddParticipant(sessionId: string, participant: Avatar): Promise<Participant>
+export async function addParticipantAsync(sessionId: string, participant: Avatar): Promise<Participant>
 {
     const body = {name: participant.name, avatar: participant.charm};
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant`, {method: "POST", headers: headers, body: JSON.stringify(body)});
@@ -185,6 +184,23 @@ export async function castVoteAsync(sessionId: string, participantId: string, vo
 export async function resetVotesAsync(sessionId: string): Promise<void>
 {
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/vote`, {method: "DELETE", headers: headers});
+    if (!response.ok) {
+        throw new ServiceException(response.status, response.statusText);
+    }
+}
+
+
+
+/**
+ * Remove a participant from a session
+ * @async
+ * @param {string} sessionId Session identifier
+ * @param {string} participantId Participant identifier
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function removeParticipantAsync(sessionId: string, participantId: string): Promise<void>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant/${participantId}`, {method: "DELETE", headers: headers});
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
