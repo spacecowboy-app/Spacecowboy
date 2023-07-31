@@ -43,7 +43,7 @@ export default function VotingResult(): JSX.Element
                 <VotingResultList />
                 <Button variant="contained" onClick={startNextRound} >next round</Button>
             </Stack>
-            <Snackbar open={serviceErrorMessage !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorMessage(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
+            <Snackbar open={serviceErrorMessage !== undefined} autoHideDuration={Constants.SnackbarDurationMs} onClose={() => setServiceErrorMessage(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
                     { serviceErrorMessage }
                 </Alert>

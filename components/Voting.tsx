@@ -59,7 +59,7 @@ export default function Voting(): JSX.Element
                 <DeckGallery cards={session.deck.map(c => vote == c.id ? {...c, isDisabled: true} : c )} selectCard={placeVote} />
                 <VotingParticipants />
             </Stack>
-            <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
+            <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDurationMs} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
                     { serviceErrorOpen }
                 </Alert>

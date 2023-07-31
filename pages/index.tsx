@@ -69,7 +69,7 @@ export default function Home(): JSX.Element
                     <Button variant="contained" href="/join" LinkComponent={Link}>join a game</Button>
                 </Stack>
             </Stack>
-            <Snackbar open={errorOpen !== undefined} autoHideDuration={Constants.SnackbarDuration} onClose={() => setErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
+            <Snackbar open={errorOpen !== undefined} autoHideDuration={Constants.SnackbarDurationMs} onClose={() => setErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
                     <Typography>{ errorOpen }</Typography>
                 </Alert>

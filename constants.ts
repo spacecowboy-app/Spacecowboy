@@ -19,8 +19,8 @@ import { SnackbarOrigin } from "@mui/material/Snackbar";
 
 export default class Constants
 {
-    /** Duration for all snackbar messages */
-    public static readonly SnackbarDuration = 6000;
+    /** Duration for all snackbar messages (milliseconds). */
+    public static readonly SnackbarDurationMs = 6000;
 
     /** Position for all snackbar messages. */
     public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "bottom", horizontal: "center" };

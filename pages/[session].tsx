@@ -115,7 +115,7 @@ export default function Session(): JSX.Element
         return (
             <>
                 <DeckCreator deckCreated={registerDeck} />
-                <Snackbar open={deckCreatorErrorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleDeckCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
+                <Snackbar open={deckCreatorErrorOpen} autoHideDuration={Constants.SnackbarDurationMs} onClose={handleDeckCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
                     <Alert severity="error">
                         Unable to communicate with Space Cowboy service to register cards.
                     </Alert>
@@ -129,7 +129,7 @@ export default function Session(): JSX.Element
         return (
             <>
                 <AvatarCreator avatarCreated={registerParticipant} />
-                <Snackbar open={avatarCreatorErrorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleAvatarCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
+                <Snackbar open={avatarCreatorErrorOpen} autoHideDuration={Constants.SnackbarDurationMs} onClose={handleAvatarCreatorErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
                     <Alert severity="error">
                         Unable to communicate with Space Cowboy service to register participant.
                     </Alert>

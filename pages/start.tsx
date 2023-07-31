@@ -65,7 +65,7 @@ export default function StartGame(): JSX.Element
                     <Button variant="contained" type="submit" disabled={sessionError != undefined} >take this place</Button>
                 </Stack>
             </Box>
-            <Snackbar open={errorOpen} autoHideDuration={Constants.SnackbarDuration} onClose={handleErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
+            <Snackbar open={errorOpen} autoHideDuration={Constants.SnackbarDurationMs} onClose={handleErrorClose} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
                     Unable to communicate with Space Cowboy service
                 </Alert>
