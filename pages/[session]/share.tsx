@@ -63,7 +63,7 @@ export default function ShareSessionPage(): JSX.Element
                 <TextField value={sessionUrl} />
                 <Button variant="contained" onClick={handleButtonClick} >Copy link and return</Button>
             </Stack>
-            <Snackbar open={infoOpen} autoHideDuration={Constants.SnackbarDurationMs} onClose={handleInfoClose} anchorOrigin={Constants.SnackbarAnchor}>
+            <Snackbar open={infoOpen} autoHideDuration={Constants.SnackbarDurationShortMs} onClose={handleInfoClose} anchorOrigin={Constants.SnackbarAnchor}>
                 <Alert severity="info" >
                     Place name copied to clipboard.
                 </Alert>

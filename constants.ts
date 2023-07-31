@@ -22,6 +22,9 @@ export default class Constants
     /** Duration for all snackbar messages (milliseconds). */
     public static readonly SnackbarDurationMs = 6000;
 
+    /** Duration for short snackbar messages (milliseconds). */
+    public static readonly SnackbarDurationShortMs = 1000;
+
     /** Position for all snackbar messages. */
     public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "bottom", horizontal: "center" };
 
