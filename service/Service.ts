@@ -189,3 +189,20 @@ export async function resetVotesAsync(sessionId: string): Promise<void>
         throw new ServiceException(response.status, response.statusText);
     }
 }
+
+
+
+/**
+ * Remove a participant from a session
+ * @async
+ * @param {string} sessionId Session identifier
+ * @param {string} participantId Participant identifier
+ * @throws {ServiceException} Error in communicating with the service
+ */
+export async function removeParticipantAsync(sessionId: string, participantId: string): Promise<void>
+{
+    const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant/${participantId}`, {method: "DELETE", headers: headers});
+    if (!response.ok) {
+        throw new ServiceException(response.status, response.statusText);
+    }
+}
