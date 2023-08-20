@@ -30,7 +30,7 @@ export default class Service {
     private static readonly APIBASE = Configuration.ApiBase;
 
     private static readonly headers = {
-        "User-Agent": "PlanningPoker",
+        "User-Agent": `spacecowboy/${Configuration.Version}`,
         "Content-Type": "application/json"
     };
 
