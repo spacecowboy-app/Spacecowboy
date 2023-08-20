@@ -43,7 +43,11 @@ namespace Spacecowboy.Service.Controllers
     [ApiController]
     public class SessionController : ControllerBase
     {
-        private static readonly Counter sessionsCreated = Metrics.CreateCounter("spacecowboy_sessions_total", "Accumulated number of session creatied");
+        private static readonly Counter sessionsCreated = Metrics.CreateCounter("spacecowboy_sessions_total", "Accumulated number of session creatied",
+            new CounterConfiguration
+            {
+                LabelNames = new[] { "client_name", "client_version" }
+            });
         private static readonly Gauge sessionsCurrent = Metrics.CreateGauge("spacecowboy_sessions_current", "Number of active sessions");
         private static readonly Counter participantsTotal = Metrics.CreateCounter("spacecowboy_participants_total", "Accumulated number of participants across all sessions created",
             new CounterConfiguration
@@ -218,7 +222,8 @@ namespace Spacecowboy.Service.Controllers
             {
                 await repository.AddSessionAsync(new Session(sessionId));
                 log.LogInformation("Created session {SessionId}", sessionId);
-                sessionsCreated.Inc();
+                var clientInfo = new ClientInfo(HttpContext?.Request?.Headers?.UserAgent);
+                sessionsCreated.WithLabels(clientInfo.Name, clientInfo.Version).Inc();
                 sessionsCurrent.Inc();
                 return Created("", new SessionResponse(await repository.GetSessionAsync(sessionId)));
             }
@@ -603,5 +608,31 @@ namespace Spacecowboy.Service.Controllers
         /// <param name="cardId">Identifier of card attempted to be cast as a vote</param>
         private ActionResult VotingCompleted(string sessionId, Guid participantId, Guid cardId) =>
             Conflict(new ConflictErrorDetails("Vote rejected because voting is finished") { SessionId = sessionId, ParticipantId = participantId, CardId = cardId });
+    }
+
+
+    public struct ClientInfo
+    {
+        public string Name;
+        public string Version;
+
+        public ClientInfo(string userAgent)
+        {
+            if (userAgent == null) {
+                Name = "";
+                Version = "";
+            }
+            else {
+                var separatorPos = userAgent.LastIndexOf('/');
+                if (separatorPos < 1) {
+                    Name = userAgent;
+                    Version = "";
+                }
+                else {
+                    Name = userAgent.Substring(0, separatorPos);
+                    Version = userAgent.Substring(separatorPos + 1);
+                }
+            }
+        }
     }
 }
