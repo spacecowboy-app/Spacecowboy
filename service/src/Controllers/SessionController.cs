@@ -52,7 +52,7 @@ namespace Spacecowboy.Service.Controllers
         private static readonly Counter participantsTotal = Metrics.CreateCounter("spacecowboy_participants_total", "Accumulated number of participants across all sessions created",
             new CounterConfiguration
             {
-                LabelNames = new[] { "avatar" }
+                LabelNames = new[] { "avatar", "client_name", "client_version" }
             });
         private static readonly Counter decksTotal = Metrics.CreateCounter("spacecowboy_decks_created_total", "Accumulated number of decks added to a session",
             new CounterConfiguration
@@ -350,7 +350,8 @@ namespace Spacecowboy.Service.Controllers
                 var sessionResponse = new SessionResponse(await repository.UpdateSessionAsync(session));
                 await repository.ParticipantHeartbeatAsync(sessionId, p.Id);
                 await SessionHub.SendSessionUpdated(sessionHub, sessionResponse);
-                participantsTotal.WithLabels(string.IsNullOrWhiteSpace(participant.Avatar) ? "-" : participant.Avatar).Inc();
+                var clientInfo = new ClientInfo(HttpContext?.Request?.Headers?.UserAgent);
+                participantsTotal.WithLabels(string.IsNullOrWhiteSpace(participant.Avatar) ? "-" : participant.Avatar, clientInfo.Name, clientInfo.Version).Inc();
                 log.LogInformation("Add participant {Participant} to session {SessionId}", p, sessionId);
                 return Ok(p);
             }
