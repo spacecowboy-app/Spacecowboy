@@ -16,6 +16,8 @@
     <Authors>Rolf Michelsen and Tami Weiss</Authors>
 
     <Copyright>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Copyright>
+
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
