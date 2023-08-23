@@ -66,7 +66,7 @@ namespace Spacecowboy.Service.Test.Controller
 
             var options = new ServiceOptions();
 
-            controller = new SessionController(logger, repository, mapper, Options.Create<ServiceOptions>(options), null);
+            controller = new SessionController(logger, repository, mapper, null);
         }
 
 

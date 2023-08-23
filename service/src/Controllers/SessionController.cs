@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Prometheus;
 using Spacecowboy.Service.Controllers.DTO;
 using Spacecowboy.Service.Controllers.DTO.Errors;
@@ -62,15 +61,13 @@ namespace Spacecowboy.Service.Controllers
 
         private readonly ILogger<SessionController> log;
         private readonly IMapper map;
-        private readonly ServiceOptions options;
         private readonly ISessionRepository repository;
         private readonly IHubContext<SessionHub> sessionHub;
 
-        public SessionController(ILogger<SessionController> log, ISessionRepository repository, IMapper map, IOptions<ServiceOptions> options, IHubContext<SessionHub> hub)
+        public SessionController(ILogger<SessionController> log, ISessionRepository repository, IMapper map, IHubContext<SessionHub> hub)
         {
             this.log = log ?? throw new ArgumentNullException(nameof(log));
             this.map = map ?? throw new ArgumentNullException(nameof(map));
-            this.options = options.Value ?? throw new ArgumentNullException(nameof(options));
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.sessionHub = hub;
 
