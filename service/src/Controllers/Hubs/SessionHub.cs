@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Spacecowboy.Service.Controllers.DTO;
@@ -33,14 +32,12 @@ namespace Spacecowboy.Service.Controllers.Hubs
 
         private readonly ILogger<SessionHub> log;
         private readonly ISessionRepository repo;
-        private readonly IMapper map;
 
 
-        public SessionHub(ILogger<SessionHub> log, ISessionRepository repo, IMapper map)
+        public SessionHub(ILogger<SessionHub> log, ISessionRepository repo)
         {
             this.log = log;
             this.repo = repo;
-            this.map = map;
         }
 
 
