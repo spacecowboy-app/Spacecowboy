@@ -36,7 +36,7 @@ namespace Spacecowboy.Service.Controllers.DTO.Errors
         /// <summary>
         /// The session identifier related to this problem, or <code>null</code>
         /// </summary>
-        public string SessionId { get; init; }
+        public string? SessionId { get; init; }
 
         /// <summary>
         /// The participant identifier related to this problem, or <code>null</code>

@@ -19,7 +19,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Spacecowboy.Service.Controllers;
 using Spacecowboy.Service.Controllers.DTO;
 using Spacecowboy.Service.Controllers.DTO.Errors;
@@ -61,7 +60,7 @@ namespace Spacecowboy.Service.Test.Controller
 
             var options = new ServiceOptions();
 
-            controller = new SessionController(logger, repository, mapper, Options.Create<ServiceOptions>(options), null);
+            controller = new SessionController(logger, repository, mapper, null);
         }
 
 

@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Spacecowboy.Service.Controllers.DTO;
@@ -33,14 +32,12 @@ namespace Spacecowboy.Service.Controllers.Hubs
 
         private readonly ILogger<SessionHub> log;
         private readonly ISessionRepository repo;
-        private readonly IMapper map;
 
 
-        public SessionHub(ILogger<SessionHub> log, ISessionRepository repo, IMapper map)
+        public SessionHub(ILogger<SessionHub> log, ISessionRepository repo)
         {
             this.log = log;
             this.repo = repo;
-            this.map = map;
         }
 
 
@@ -54,7 +51,7 @@ namespace Spacecowboy.Service.Controllers.Hubs
 
 
         /// <inheritdoc/>
-        public override async Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await Clients.Caller.SendAsync(EventMessage, "Disconnected from service hub");
             await base.OnDisconnectedAsync(exception);
@@ -116,8 +113,8 @@ namespace Spacecowboy.Service.Controllers.Hubs
         /// Return session information to a client
         /// </summary>
         /// <param name="sessionId">Session identifier</param>
-        /// <returns>Session information or null on error</returns>
-        public async Task<SessionResponse> GetSession(string sessionId)
+        /// <returns>Session information or <code>null</code> on error</returns>
+        public async Task<SessionResponse?> GetSession(string sessionId)
         {
             if (repo == null)
             {

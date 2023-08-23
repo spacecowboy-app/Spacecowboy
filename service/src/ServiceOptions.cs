@@ -16,7 +16,10 @@
 
 namespace Spacecowboy.Service
 {
-    public class ServiceOptions
+    /// <summary>
+    /// Service configuration options.
+    /// </summary>
+    public record ServiceOptions
     {
         public const string Service = "Spacecowboy";
 
@@ -26,11 +29,11 @@ namespace Spacecowboy.Service
         /// <remarks>
         /// Valid values are "redis" and "memory".
         /// </remarks>
-        public string RepositoryType { get; set; }
+        public string? RepositoryType { get; init; }
 
         /// <summary>
         /// Name of this instance of the service.  Each running instance has a unique name.
         /// </summary>
-        public string InstanceName { get; set; }
+        public string? InstanceName { get; init; }
     }
 }
