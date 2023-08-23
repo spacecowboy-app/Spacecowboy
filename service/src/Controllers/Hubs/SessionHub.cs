@@ -54,7 +54,7 @@ namespace Spacecowboy.Service.Controllers.Hubs
 
 
         /// <inheritdoc/>
-        public override async Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await Clients.Caller.SendAsync(EventMessage, "Disconnected from service hub");
             await base.OnDisconnectedAsync(exception);
@@ -116,8 +116,8 @@ namespace Spacecowboy.Service.Controllers.Hubs
         /// Return session information to a client
         /// </summary>
         /// <param name="sessionId">Session identifier</param>
-        /// <returns>Session information or null on error</returns>
-        public async Task<SessionResponse> GetSession(string sessionId)
+        /// <returns>Session information or <code>null</code> on error</returns>
+        public async Task<SessionResponse?> GetSession(string sessionId)
         {
             if (repo == null)
             {
