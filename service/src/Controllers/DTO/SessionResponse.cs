@@ -21,42 +21,42 @@ using System.Linq;
 
 namespace Spacecowboy.Service.Controllers.DTO
 {
-    public class SessionResponse
+    public record SessionResponse
     {
         /// <summary>
         /// Globally unique session identifier
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; init; }
 
         /// <summary>
         /// Participants registered in session
         /// </summary>
-        public ParticipantResponse[] Participants { get; set; }
+        public ParticipantResponse[]? Participants { get; init; }
 
         /// <summary>
         /// Cards registered in session
         /// </summary>
-        public CardResponse[] Cards { get; set; }
+        public CardResponse[]? Cards { get; init; }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been cast
         /// </summary>
-        public CardResponse NoVote { get; set; }
+        public CardResponse? NoVote { get; init; }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been revealed
         /// </summary>
-        public CardResponse NotRevealed { get; set; }
+        public CardResponse? NotRevealed { get; init; }
 
         /// <summary>
         /// Time when this session was created
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public DateTime CreateTime { get; init; }
 
         /// <summary>
         /// Time when the session was last updated
         /// </summary>
-        public DateTime UpdateTime { get; set; }
+        public DateTime UpdateTime { get; init; }
 
         /// <summary>
         /// Generation counter
@@ -65,13 +65,13 @@ namespace Spacecowboy.Service.Controllers.DTO
         /// The generation counter is a monotonically increasing value that is automatically updated every time the session object is updated.
         /// It can be used to quickly check for a changed session.
         /// </remarks>
-        public int Generation { get; private set; }
+        public int Generation { get; private init; }
 
 
         /// <summary>
         /// Indicates that all participants have cast their vote and that voting is thus completed
         /// </summary>
-        public bool VotingCompleted { get; private set; }
+        public bool VotingCompleted { get; private init; }
 
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Spacecowboy.Service.Controllers.DTO
             UpdateTime = session.UpdateTime;
             Generation = session.Generation;
 
-            NoVote = session.NotRevealed == null ? null : new CardResponse(session.NoVote);
+            NoVote = session.NoVote == null ? null : new CardResponse(session.NoVote);
             NotRevealed = session.NotRevealed == null ? null : new CardResponse(session.NotRevealed);
             Cards = session.GetCards()?.Select(c => new CardResponse(c)).ToArray();
             Participants = session.GetParticipantsVotes(false, participantId).Select(v => new ParticipantResponse(v.Participant, v.Card.Id)).ToArray();

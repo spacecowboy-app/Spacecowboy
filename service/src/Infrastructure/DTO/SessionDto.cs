@@ -26,18 +26,18 @@ namespace Spacecowboy.Service.Infrastructure.DTO
     /// </summary>
     public class SessionDto
     {
-        public string Id { get; set; }
+        public required string Id { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         public int Generation { get; set; }
-        public IEnumerable<ParticipantDto> Participants { get; set; }
-        public IEnumerable<CardDto> Cards { get; set; }
-        public IEnumerable<SimpleVote> SimpleVotes { get; set; }
-        public CardDto NoVote { get; set; }
-        public CardDto NotRevealed { get; set; }
         public int ParticipantCountMax { get; set; }
         public int VoteCount { get; set; }
-        public string DeckName { get; set; }
-        public string DeckType { get; set; }
+        public IEnumerable<ParticipantDto>? Participants { get; set; }
+        public IEnumerable<CardDto>? Cards { get; set; }
+        public IEnumerable<SimpleVote>? SimpleVotes { get; set; }
+        public CardDto? NoVote { get; set; }
+        public CardDto? NotRevealed { get; set; }
+        public string? DeckName { get; set; }
+        public string? DeckType { get; set; }
     }
 }

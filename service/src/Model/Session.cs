@@ -56,25 +56,29 @@ namespace Spacecowboy.Service.Model
         public DateTime CreateTime { get; private set; }
 
         /// <summary>
+        /// Time when the session was last updated
+        /// </summary>
+        public DateTime UpdateTime { get; private set; }
+
+        /// <summary>
         /// A card used to represent a vote that has not yet been cast
         /// </summary>
-        public Card NoVote { get; set; }
+        public Card? NoVote { get; set; }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been revealed
         /// </summary>
-        public Card NotRevealed { get; set; }
+        public Card? NotRevealed { get; set; }
 
         /// <summary>
         /// Name of card deck used in session
         /// </summary>
-        public string DeckName { get; set; }
+        public string? DeckName { get; set; }
 
         /// <summary>
         /// Type of card deck used in session
         /// </summary>
-        public string DeckType { get; set; }
-
+        public string? DeckType { get; set; }
 
         /// <summary>
         /// All participants in this session
@@ -84,7 +88,6 @@ namespace Spacecowboy.Service.Model
             get => GetParticipants();
             private set { AddParticipants(value); }
         }
-
 
         /// <summary>
         /// All cards in this session
@@ -101,7 +104,6 @@ namespace Spacecowboy.Service.Model
             private set { AddVotes(value); }
         }
 
-
         /// <summary>
         /// Generation counter
         /// </summary>
@@ -112,24 +114,15 @@ namespace Spacecowboy.Service.Model
         /// </remarks>
         public int Generation { get; private set; }
 
-
-        /// <summary>
-        /// Time when the session was last updated
-        /// </summary>
-        public DateTime UpdateTime { get; private set; }
-
-
         /// <summary>
         /// Total number of votes cast in this session
         /// </summary>
-        public int VoteCount { get; private set; }
-
+        public int VoteCount { get; private set; } = 0;
 
         /// <summary>
         /// The maximum number of participants in this session
         /// </summary>
-        public int ParticipantCountMax { get; private set; }
-
+        public int ParticipantCountMax { get; private set; } = 0;
 
         /// <summary>
         /// The number of participants currently in the session
@@ -137,14 +130,19 @@ namespace Spacecowboy.Service.Model
         public int ParticipantCount => participants.Count;
 
 
+        /// <summary>
+        /// Constructur.
+        /// </summary>
+        /// <param name="id">Session id</param>
+        /// <exception cref="ArgumentException">Provided session id is null or whitespace.</exception>
+        /// <exception cref="InvalidSessionIdException">Provides session id is not valid.</exception>
         public Session(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) throw new ArgumentException("Argument cannot be null or whitespace", nameof(id));
             if (!IsValidId(id)) throw new InvalidSessionIdException(nameof(id));
             Id = id;
             CreateTime = DateTime.UtcNow;
-            VoteCount = 0;
-            ParticipantCountMax = 0;
+            UpdateTime = CreateTime;
         }
 
 
@@ -385,6 +383,7 @@ namespace Spacecowboy.Service.Model
         /// <returns></returns>
         public Card GetParticipantVoteCard(Guid participantId, bool revealVotes)
         {
+            if (NotRevealed == null || NoVote == null) { throw new InvalidOperationException("Attempting to retrieve votes before a deck has been set on the session."); }
             return votes.ContainsKey(participantId) ? (revealVotes ? cards[votes[participantId].CardId] : NotRevealed) : NoVote;
         }
 
@@ -393,8 +392,8 @@ namespace Spacecowboy.Service.Model
         /// Return the vote cast by a given participant
         /// </summary>
         /// <param name="participant">Participant whose vote to return</param>
-        /// <returns>Vote or null if no vote has been cast</returns>
-        public Card GetVote(Participant participant)
+        /// <returns>Vote or <code>null</code> if no vote has been cast</returns>
+        public Card? GetVote(Participant participant)
         {
             if (participant == null) throw new ArgumentNullException(nameof(participant));
             return GetVote(participant.Id);
@@ -405,8 +404,8 @@ namespace Spacecowboy.Service.Model
         /// Return the vote cast by a given participant
         /// </summary>
         /// <param name="participantId">Participant whose vote to return</param>
-        /// <returns>Vote or null if no vote has been cast</returns>
-        public Card GetVote(Guid participantId)
+        /// <returns>Vote or <code>null</code> if no vote has been cast</returns>
+        public Card? GetVote(Guid participantId)
         {
             return votes.ContainsKey(participantId) ? cards[votes[participantId].CardId] : null;
         }
@@ -451,7 +450,7 @@ namespace Spacecowboy.Service.Model
         /// </summary>
         /// <remarks>
         /// It is permitted for a participant to cast multiple votes, in which case the last vote will count.
-        /// Votes will be rejected if the voting is complete.        
+        /// Votes will be rejected if the voting is complete.
         /// </remarks>
         /// <param name="participant">Participant</param>
         /// <param name="card">Card cast as vote</param>
