@@ -81,15 +81,15 @@ namespace Spacecowboy.Service.Model
         }
 
 
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             if (!(other is Participant)) return false;
             return Equals((Participant) other);
         }
 
-        public bool Equals(Participant other)
+        public bool Equals(Participant? other)
         {
-            return Id.Equals(other.Id);
+            return Id.Equals(other?.Id);
         }
 
         public override int GetHashCode()
