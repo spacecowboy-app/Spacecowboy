@@ -59,15 +59,15 @@ namespace Spacecowboy.Service.Controllers.DTO
             public string ParticipantAvatar { get; set; }
             public VoteStatus VoteStatus { get; set; }
             public Guid? CardId { get; set; }
-            public string CardValue { get; set; }
-            public string CardImage { get; set; }
+            public string? CardValue { get; set; }
+            public string? CardImage { get; set; }
 
-            internal VoteResponse(Participant participant, VoteStatus voteStatus, Card card)
+            internal VoteResponse(Participant participant, VoteStatus voteStatus, Card? card)
             {
                 VoteStatus = voteStatus;
                 ParticipantName = participant.Name;
                 ParticipantAvatar = participant.Avatar;
-                if (voteStatus == VoteStatus.Revealed)
+                if (card != null && voteStatus == VoteStatus.Revealed)
                 {
                     CardId = card.Id;
                     CardValue = card.Value;
