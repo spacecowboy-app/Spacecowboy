@@ -35,7 +35,7 @@ namespace Spacecowboy.Service.Infrastructure
     public class MemorySessionRepository : ISessionRepository
     {
         private readonly IMapper map;
-        private readonly ILogger<MemorySessionRepository> log;
+        private readonly ILogger<MemorySessionRepository>? log;
 
         /// <summary>
         /// Used for concurrency control for the repository
@@ -59,7 +59,7 @@ namespace Spacecowboy.Service.Infrastructure
         private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
 
 
-        public MemorySessionRepository(ILogger<MemorySessionRepository> log, IMapper map)
+        public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
         {
             this.map = map ?? throw new ArgumentNullException(nameof(map));
             this.log = log;
