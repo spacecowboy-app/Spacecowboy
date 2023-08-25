@@ -48,12 +48,12 @@ namespace Spacecowboy.Service.Model
         /// The service does not use this property for anything. It is intended for the client to use as a reference to
         /// the participant's avatar.  It is up to the client to define the format of this reference.
         /// </remarks>
-        public string Avatar { get; }
+        public string? Avatar { get; }
 
         /// <summary>
         /// Avatar color
         /// </summary>
-        public string Color { get; }
+        public string? Color { get; }
 
         /// <summary>
         /// The time this participant was last active
@@ -71,10 +71,10 @@ namespace Spacecowboy.Service.Model
         /// <param name="name">Participant's name or nick (mandatory)</param>
         /// <param name="avatar">Participant's avatar reference (optional)</param>
         /// <param name="color">Participant's avatar color</param>
-        public Participant(string name, string avatar, string color)
+        public Participant(string name, string? avatar, string? color)
         {
             Id = Guid.NewGuid();
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name;
             Avatar = avatar;
             Color = color;
             LastActive = DateTime.UtcNow;
@@ -99,7 +99,7 @@ namespace Spacecowboy.Service.Model
 
         public override string ToString()
         {
-            return $"Participant (Id=\"{Id}\" Name=\"{Name}\" Avatar=\"{Avatar}\" Color=\"{Color}\")";
+            return $"Participant (Id=\"{Id}\" Name=\"{Name}\" Avatar=\"{Avatar ?? ""}\" Color=\"{Color ?? ""}\")";
         }
     }
 }

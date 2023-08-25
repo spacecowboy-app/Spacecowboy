@@ -53,14 +53,14 @@ namespace Spacecowboy.Service.Controllers.DTO
             Revealed = 2,
         }
 
-        public class VoteResponse
+        public record VoteResponse
         {
-            public string ParticipantName { get; set; }
-            public string ParticipantAvatar { get; set; }
-            public VoteStatus VoteStatus { get; set; }
-            public Guid? CardId { get; set; }
-            public string? CardValue { get; set; }
-            public string? CardImage { get; set; }
+            public string ParticipantName { get; init; }
+            public string? ParticipantAvatar { get; init; }
+            public VoteStatus VoteStatus { get; init; }
+            public Guid? CardId { get; init; }
+            public string? CardValue { get; init; }
+            public string? CardImage { get; init; }
 
             internal VoteResponse(Participant participant, VoteStatus voteStatus, Card? card)
             {
