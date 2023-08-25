@@ -39,7 +39,7 @@ namespace Spacecowboy.Service.Model
         /// <summary>
         /// The cards in this deck
         /// </summary>
-        public IReadOnlyCollection<Card> Cards { get => cards.AsReadOnly(); private set => cards = new List<Card>(value); }
+        public IReadOnlyCollection<Card> Cards { get => cards.AsReadOnly(); }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been cast
@@ -65,9 +65,9 @@ namespace Spacecowboy.Service.Model
         {
             Name = name;
             Type = type;
-            Cards = new List<Card>(cards);
             NoVote = noVote;
             NotRevealed = notRevealed;
+            this.cards = new List<Card>(cards);
         }
     }
 }

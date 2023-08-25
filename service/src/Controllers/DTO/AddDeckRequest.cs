@@ -14,37 +14,43 @@
     limitations under the License.
 */
 
+using System.ComponentModel.DataAnnotations;
 
 namespace Spacecowboy.Service.Controllers.DTO
 {
     /// <summary>
     /// Add a deck of cards to a session
     /// </summary>
-    public class AddDeckRequest
+    public record AddDeckRequest
     {
         /// <summary>
         /// Cards in this deck
         /// </summary>
-        public CreateCardRequest[] Cards { get; set; }
+        [Required]
+        public required CreateCardRequest[] Cards { get; init; }
 
         /// <summary>
         /// A card used when no vote has been cast
         /// </summary>
-        public CreateCardRequest NoVote { get; set; }
+        [Required]
+        public required CreateCardRequest NoVote { get; init; }
 
         /// <summary>
         /// A card representing a vote that has not yet been revealed
         /// </summary>
-        public CreateCardRequest NotRevealed { get; set; }
+        [Required]
+        public required CreateCardRequest NotRevealed { get; init; }
 
         /// <summary>
         /// The name of the deck
         /// </summary>
-        public string Name { get; set; }
+        [Required]
+        public required string Name { get; init; }
 
         /// <summary>
         /// The type of deck
         /// </summary>
-        public string Type { get; set; }
+        [Required]
+        public required string Type { get; init; }
     }
 }
