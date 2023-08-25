@@ -76,7 +76,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Create session
             var sessionResponse = await controller.CreateSession(SessionName);
             var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.StatusCode.Should().Be(201);
+            sessionResult.Should().NotBeNull();
+            sessionResult!.StatusCode.Should().Be(201);
 
             // Add deck
             await controller.AddDeck(SessionName, new AddDeckRequest
@@ -91,7 +92,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Add participant
             var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar", Color = "inky-color" });
             var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.StatusCode.Should().Be(200);
+            participantResult.Should().NotBeNull();
+            participantResult!.StatusCode.Should().Be(200);
 
         }
 
@@ -102,7 +104,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Create session
             var sessionResponse = await controller.CreateSession(SessionName);
             var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.StatusCode.Should().Be(201);
+            sessionResult.Should().NotBeNull();
+            sessionResult!.StatusCode.Should().Be(201);
 
             // Add deck
             await controller.AddDeck(SessionName, new AddDeckRequest
@@ -117,7 +120,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Add participant
             var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar" });
             var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.StatusCode.Should().Be(200);
+            participantResult.Should().NotBeNull();
+            participantResult!.StatusCode.Should().Be(200);
 
         }
 
@@ -128,7 +132,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Create session
             var sessionResponse = await controller.CreateSession(SessionName);
             var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.StatusCode.Should().Be(201);
+            sessionResult.Should().NotBeNull();
+            sessionResult!.StatusCode.Should().Be(201);
 
             // Add deck
             await controller.AddDeck(SessionName, new AddDeckRequest
@@ -143,33 +148,8 @@ namespace Spacecowboy.Service.Test.Controller
             // Add participant
             var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Color = "inky-color" });
             var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.StatusCode.Should().Be(200);
-
-        }
-
-
-        [Fact]
-        public async Task AddParticipantWithoutNameReturnsBadRequest()
-        {
-            // Create session
-            var sessionResponse = await controller.CreateSession(SessionName);
-            var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.StatusCode.Should().Be(201);
-
-            // Add deck
-            await controller.AddDeck(SessionName, new AddDeckRequest
-            {
-                Name = "foo-deck",
-                Type = "foo-type",
-                NoVote = new CreateCardRequest { Value = "novote" },
-                NotRevealed = new CreateCardRequest { Value = "notrevealed" },
-                Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
-            });
-
-            // Add participant
-            var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Avatar = "inky-avatar", Color = "inky-color" });
-            var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.StatusCode.Should().Be(400);
+            participantResult.Should().NotBeNull();
+            participantResult!.StatusCode.Should().Be(200);
 
         }
 

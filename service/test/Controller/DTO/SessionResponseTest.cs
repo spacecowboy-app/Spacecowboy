@@ -65,7 +65,7 @@ namespace Spacecowboy.Service.Test.Controller.DTO
             response.Cards.Should().HaveCount(2);
             response.Participants.Should().HaveCount(2);
             response.Cards.Should().HaveCount(2);
-            response.Participants.Where(p => p.Vote == novote.Id).Should().HaveCount(2);
+            response.Participants?.Where(p => p.Vote == novote.Id).Should().HaveCount(2);
         }
 
 
@@ -83,8 +83,8 @@ namespace Spacecowboy.Service.Test.Controller.DTO
             session.AddVote(participant2.Id, card2.Id);
 
             var response = new SessionResponse(session);
-            response.Participants.Where(p => (p.Id == participant1.Id && p.Vote == card1.Id)).Should().HaveCount(1);
-            response.Participants.Where(p => (p.Id == participant2.Id && p.Vote == card2.Id)).Should().HaveCount(1);
+            response.Participants?.Where(p => (p.Id == participant1.Id && p.Vote == card1.Id)).Should().HaveCount(1);
+            response.Participants?.Where(p => (p.Id == participant2.Id && p.Vote == card2.Id)).Should().HaveCount(1);
         }
 
 
@@ -101,8 +101,8 @@ namespace Spacecowboy.Service.Test.Controller.DTO
             session.AddVote(participant1.Id, card1.Id);
 
             var response = new SessionResponse(session);
-            response.Participants.Where(p => (p.Id == participant1.Id && p.Vote == notrevealed.Id)).Should().HaveCount(1);
-            response.Participants.Where(p => (p.Id == participant2.Id && p.Vote == novote.Id)).Should().HaveCount(1);
+            response.Participants?.Where(p => (p.Id == participant1.Id && p.Vote == notrevealed.Id)).Should().HaveCount(1);
+            response.Participants?.Where(p => (p.Id == participant2.Id && p.Vote == novote.Id)).Should().HaveCount(1);
         }
 
     }

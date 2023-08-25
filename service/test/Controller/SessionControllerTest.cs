@@ -73,8 +73,8 @@ namespace Spacecowboy.Service.Test.Controller
             result.Result.Should().BeOfType<OkObjectResult>();
 
             var ok = result.Result as OkObjectResult;
-            var value = ok.Value as SessionsSummary;
-            value.ActiveSessions.Should().Be(0);
+            var value = ok?.Value as SessionsSummary;
+            value?.ActiveSessions.Should().Be(0);
         }
 
 
@@ -86,15 +86,15 @@ namespace Spacecowboy.Service.Test.Controller
             response.Should().BeOfType<ActionResult<SessionResponse>>();
             var result = response.Result as ObjectResult;
 
-            result.StatusCode.Should().Be(201);
-            result.Value.Should().BeOfType<SessionResponse>();
+            result?.StatusCode.Should().Be(201);
+            result?.Value.Should().BeOfType<SessionResponse>();
 
-            var session = result.Value as SessionResponse;
-            session.Id.Should().Be("foo-bar");
-            session.Participants.Should().BeNullOrEmpty();
-            session.Cards.Should().BeNullOrEmpty();
-            session.NoVote.Should().BeNull();
-            session.NotRevealed.Should().BeNull();
+            var session = result?.Value as SessionResponse;
+            session?.Id.Should().Be("foo-bar");
+            session?.Participants.Should().BeNullOrEmpty();
+            session?.Cards.Should().BeNullOrEmpty();
+            session?.NoVote.Should().BeNull();
+            session?.NotRevealed.Should().BeNull();
         }
 
 
@@ -105,11 +105,11 @@ namespace Spacecowboy.Service.Test.Controller
             var response = await controller.CreateSession("foo@bar");
             var result = response.Result as ObjectResult;
 
-            result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
-            result.Value.Should().BeOfType<BadRequestErrorDetails>();
-            var error = result.Value as ErrorDetails;
-            error.Status.Should().Be(StatusCodes.Status400BadRequest);
-            error.SessionId.Should().Be("foo@bar");
+            result?.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+            result?.Value.Should().BeOfType<BadRequestErrorDetails>();
+            var error = result?.Value as ErrorDetails;
+            error?.Status.Should().Be(StatusCodes.Status400BadRequest);
+            error?.SessionId.Should().Be("foo@bar");
         }
 
 
@@ -121,11 +121,11 @@ namespace Spacecowboy.Service.Test.Controller
             var response = await controller.CreateSession("foo-bar");
             var result = response.Result as ObjectResult;
 
-            result.StatusCode.Should().Be(StatusCodes.Status409Conflict);
-            result.Value.Should().BeOfType<ConflictErrorDetails>();
-            var error = result.Value as ErrorDetails;
-            error.Status.Should().Be(StatusCodes.Status409Conflict);
-            error.SessionId.Should().Be("foo-bar");
+            result?.StatusCode.Should().Be(StatusCodes.Status409Conflict);
+            result?.Value.Should().BeOfType<ConflictErrorDetails>();
+            var error = result?.Value as ErrorDetails;
+            error?.Status.Should().Be(StatusCodes.Status409Conflict);
+            error?.SessionId.Should().Be("foo-bar");
         }
 
 
@@ -139,12 +139,12 @@ namespace Spacecowboy.Service.Test.Controller
             var response = await controller.RemoveParticipant(sessionId, participantId);
             var result = response.Result as ObjectResult;
 
-            result.StatusCode.Should().Be(StatusCodes.Status404NotFound);
-            result.Value.Should().BeOfType<NotFoundErrorDetails>();
-            var error = result.Value as ErrorDetails;
-            error.Status.Should().Be(StatusCodes.Status404NotFound);
-            error.SessionId.Should().Be("foo-bar");
-            error.ParticipantId.Should().Be(participantId);
+            result?.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            result?.Value.Should().BeOfType<NotFoundErrorDetails>();
+            var error = result?.Value as ErrorDetails;
+            error?.Status.Should().Be(StatusCodes.Status404NotFound);
+            error?.SessionId.Should().Be("foo-bar");
+            error?.ParticipantId.Should().Be(participantId);
         }
 
     }

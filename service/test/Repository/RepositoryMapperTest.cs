@@ -78,8 +78,7 @@ namespace Spacecowboy.Service.Test.Repository
         [Fact]
         public void ConvertDtoToSession()
         {
-            var sessionDto = new SessionDto();
-            sessionDto.Id = "foo-bar";
+            var sessionDto = new SessionDto { Id = "foo-bar" };
             sessionDto.CreateTime = sessionDto.UpdateTime = DateTime.UtcNow;
             sessionDto.Generation = 1;
 
