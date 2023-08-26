@@ -23,34 +23,35 @@ namespace Spacecowboy.Service.Controllers.DTO
     /// <summary>
     /// Information about the session to be created
     /// </summary>
-    public class CreateSessionRequest
+    public record CreateSessionRequest
     {
         /// <summary>
         /// Globally unique session identifier
         /// </summary>
         [Required]
-        public string Id { get; set; }
+        public required string Id { get; init; }
 
         /// <summary>
         /// List of session participants
         /// </summary>
-        public CreateParticipantRequest[] Participants { get; set; }
+        public CreateParticipantRequest[]? Participants { get; init; }
 
 
         /// <summary>
         /// List of session cards
         /// </summary>
-        public CreateCardRequest[] Cards { get; set; }
+        public CreateCardRequest[]? Cards { get; init; }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been cast
         /// </summary>
-        public Card NoVote { get; set; }
+        public Card? NoVote { get; init; }
 
         /// <summary>
         /// A card used to represent a vote that has not yet been revealed
         /// </summary>
-        public Card NotRevealed { get; set; }
+        public Card? NotRevealed { get; init; }
+
 
         // TODO: This method should be replaced with a proper Automapper configuration
         public Session GetSession()
@@ -62,7 +63,7 @@ namespace Spacecowboy.Service.Controllers.DTO
         }
 
 
-        private void AddParticipants(Session session, CreateParticipantRequest[] participants)
+        private void AddParticipants(Session session, CreateParticipantRequest[]? participants)
         {
             if (participants != null)
             {
@@ -74,7 +75,7 @@ namespace Spacecowboy.Service.Controllers.DTO
         }
 
 
-        private void AddCards(Session session, CreateCardRequest[] cards)
+        private void AddCards(Session session, CreateCardRequest[]? cards)
         {
             if (cards != null)
             {

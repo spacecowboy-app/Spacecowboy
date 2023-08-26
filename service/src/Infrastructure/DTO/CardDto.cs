@@ -22,13 +22,13 @@ namespace Spacecowboy.Service.Infrastructure.DTO
     /// <summary>
     /// Represents a card as stored in a repository
     /// </summary>
-    public class CardDto
+    public record CardDto
     {
-        public Guid Id { get; set; }
-        public string Value { get; set; }
-        public string Image { get; set; }
-        public string Color { get; set; }
-        public string Font { get; set; }
-        public string Style { get; set; }
+        public required Guid Id { get; init; }
+        public string? Value { get; init; }
+        public string? Image { get; init; }
+        public string? Color { get; init; }
+        public string? Font { get; init; }
+        public string? Style { get; init; }
     }
 }

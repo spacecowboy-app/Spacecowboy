@@ -25,6 +25,7 @@ namespace Spacecowboy.Service.Model
     /// <remarks>
     /// A session contains a set of voting cards.  Each vote must be one of the permitted voting cards.
     /// </remarks>
+    // TODO Convert this class to a record.
     public class Card
     {
         /// <summary>
@@ -36,33 +37,33 @@ namespace Spacecowboy.Service.Model
         /// <summary>
         /// Vote card value
         /// </summary>
-        public string Value { get; private set; }
+        public string? Value { get; private set; }
 
 
         /// <summary>
         /// Reference to image associated with this card
         /// </summary>
-        public string Image { get; private set; }
+        public string? Image { get; private set; }
 
 
         /// <summary>
         /// Reference to card color
         /// </summary>
-        public string Color { get; private set; }
+        public string? Color { get; private set; }
 
 
         /// <summary>
         /// Reference to card font
         /// </summary>
-        public string Font { get; private set; }
+        public string? Font { get; private set; }
 
 
         /// <summary>
         /// Card style identifier
         /// </summary>
-        public string Style { get; private set; }
+        public string? Style { get; private set; }
 
-        public Card(string value, string image, string color, string font, string style)
+        public Card(string? value, string? image, string? color, string? font, string? style)
         {
             Id = Guid.NewGuid();
             Value = value;
@@ -75,7 +76,7 @@ namespace Spacecowboy.Service.Model
 
         public override string ToString()
         {
-            return $"Card (Value={Value})";
+            return $"Card (Value={Value ?? "-"})";
         }
     }
 }

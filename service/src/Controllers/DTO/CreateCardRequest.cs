@@ -20,31 +20,31 @@ namespace Spacecowboy.Service.Controllers.DTO
     /// <summary>
     /// Create a card in a session
     /// </summary>
-    public class CreateCardRequest
+    public record CreateCardRequest
     {
         /// <summary>
         /// Card value
         /// </summary>
-        public string Value { get; set; }
+        public string? Value { get; init; }
 
         /// <summary>
         /// Reference to an image representing the card
         /// </summary>
-        public string Image { get; set; }
+        public string? Image { get; init; }
 
         /// <summary>
         /// Reference to a color for the card
         /// </summary>
-        public string Color { get; set; }
+        public string? Color { get; init; }
 
         /// <summary>
         /// Reference to a font for the card
         /// </summary>
-        public string Font { get; set; }
+        public string? Font { get; init; }
 
         /// <summary>
         /// Card style identifier
         /// </summary>
-        public string Style { get; set; }
+        public string? Style { get; init; }
     }
 }

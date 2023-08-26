@@ -23,6 +23,7 @@ namespace Spacecowboy.Service.Controllers.DTO
     /// <summary>
     /// A card that can be used for casing a vote
     /// </summary>
+    // TODO Convert this class to a record.
     public class CardResponse
     {
         /// <summary>
@@ -33,28 +34,28 @@ namespace Spacecowboy.Service.Controllers.DTO
         /// <summary>
         /// Card value
         /// </summary>
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         /// <summary>
         /// Reference to an image representing the card
         /// </summary>
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
         /// <summary>
         /// Reference to a color for the card
         /// </summary>
-        public string Color { get; set; }
+        public string? Color { get; set; }
 
         /// <summary>
         /// Reference to card font
         /// </summary>
-        public string Font { get; set; }
+        public string? Font { get; set; }
 
 
         /// <summary>
         /// Card style identifier
         /// </summary>
-        public string Style { get; set; }
+        public string? Style { get; set; }
 
         /// <summary>
         /// Default constructor

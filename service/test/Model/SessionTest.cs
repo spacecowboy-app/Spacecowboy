@@ -37,14 +37,6 @@ namespace Spacecowboy.Service.Test.Model
 
 
         [Fact]
-        public void Create_NullSessionName_ThrowsException()
-        {
-            Action act = () => new Session(null);
-            act.Should().Throw<ArgumentException>();
-        }
-
-
-        [Fact]
         public void Create_EmptySessionName_ThrowsException()
         {
             Action act = () => new Session(" ");

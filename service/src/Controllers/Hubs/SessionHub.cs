@@ -140,13 +140,13 @@ namespace Spacecowboy.Service.Controllers.Hubs
             }
         }
 
-        
+
         /// <summary>
         /// Sends updated session information to all clients subscribed to the session's group
         /// </summary>
         /// <param name="hub">Hub context</param>
         /// <param name="session">Session information</param>
-        public static async Task SendSessionUpdated(IHubContext<SessionHub> hub, SessionResponse session)
+        public static async Task SendSessionUpdated(IHubContext<SessionHub>? hub, SessionResponse session)
         {
             if (hub != null)
             {
@@ -161,7 +161,7 @@ namespace Spacecowboy.Service.Controllers.Hubs
         /// </summary>
         /// <param name="hub">Hub context</param>
         /// <param name="sessionId">Session identifier</param>
-        public static async Task SendSessionVotesCleared(IHubContext<SessionHub> hub, string sessionId)
+        public static async Task SendSessionVotesCleared(IHubContext<SessionHub>? hub, string sessionId)
         {
             if (hub != null)
             {

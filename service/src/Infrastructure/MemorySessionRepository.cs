@@ -35,7 +35,7 @@ namespace Spacecowboy.Service.Infrastructure
     public class MemorySessionRepository : ISessionRepository
     {
         private readonly IMapper map;
-        private readonly ILogger<MemorySessionRepository> log;
+        private readonly ILogger<MemorySessionRepository>? log;
 
         /// <summary>
         /// Used for concurrency control for the repository
@@ -59,7 +59,7 @@ namespace Spacecowboy.Service.Infrastructure
         private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
 
 
-        public MemorySessionRepository(ILogger<MemorySessionRepository> log, IMapper map)
+        public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
         {
             this.map = map ?? throw new ArgumentNullException(nameof(map));
             this.log = log;
@@ -204,11 +204,13 @@ namespace Spacecowboy.Service.Infrastructure
             }
             var timestamps = participantsTimestamps[session.Id];
 
-            foreach (var p in session.Participants)
-            {
-                if (timestamps.ContainsKey(p.Id))
+            if (session.Participants != null) {
+                foreach (var p in session.Participants)
                 {
-                    p.LastActive = timestamps[p.Id];
+                    if (timestamps.ContainsKey(p.Id))
+                    {
+                        p.LastActive = timestamps[p.Id];
+                    }
                 }
             }
         }
@@ -251,7 +253,7 @@ namespace Spacecowboy.Service.Infrastructure
         private class SessionGeneration
         {
             public int Generation = 0;
-            public DateTime LastModified = DateTime.UtcNow; 
+            public DateTime LastModified = DateTime.UtcNow;
 
             public SessionGeneration Update()
             {

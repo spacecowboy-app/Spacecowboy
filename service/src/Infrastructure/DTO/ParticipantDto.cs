@@ -24,10 +24,10 @@ namespace Spacecowboy.Service.Infrastructure.DTO
     /// </summary>
     public class ParticipantDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Avatar { get; set; }
-        public string Color { get; set; }
+        public Guid Id { get; init; }
+        public required string Name { get; init; }
+        public string? Avatar { get; init; }
+        public string? Color { get; init; }
         public DateTime LastActive { get; set; }
     }
 }

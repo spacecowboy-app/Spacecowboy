@@ -20,35 +20,35 @@ using System;
 
 namespace Spacecowboy.Service.Controllers.DTO
 {
-    public class ParticipantResponse
+    public record ParticipantResponse
     {
         /// <summary>
         /// Globally unique participant identifier
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Participant name
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; init; }
 
 
         /// <summary>
         /// Participant avatar
         /// </summary>
-        public string Avatar { get; set; }
+        public string? Avatar { get; init; }
 
 
         /// <summary>
         /// Participant color
         /// </summary>
-        public string Color { get; set; }
+        public string? Color { get; init; }
 
 
         /// <summary>
         /// Participant idle time (in seconds)
         /// </summary>
-        public double Idle { get; set; }
+        public double Idle { get; init; }
 
 
         /// <summary>
@@ -58,12 +58,13 @@ namespace Spacecowboy.Service.Controllers.DTO
         /// This ID will always reference a card that exists in the session.  It can be the novote or notrevealed cards.
         /// It can be <c>null</c> if cards have not been defined for the session, yet.
         /// </remarks>
-        public Guid? Vote { get; set; }
+        public Guid? Vote { get; init; }
 
 
         /// <summary>
         /// Create a ParticipantReponse from Participant, adding an explicit vote
         /// </summary>
+        // TODO Consider removing the constructor and use initializers instead.
         public ParticipantResponse(Participant participant, Guid? vote)
         {
             Id = participant.Id;

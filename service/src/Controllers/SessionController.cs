@@ -62,9 +62,9 @@ namespace Spacecowboy.Service.Controllers
         private readonly ILogger<SessionController> log;
         private readonly IMapper map;
         private readonly ISessionRepository repository;
-        private readonly IHubContext<SessionHub> sessionHub;
+        private readonly IHubContext<SessionHub>? sessionHub;
 
-        public SessionController(ILogger<SessionController> log, ISessionRepository repository, IMapper map, IHubContext<SessionHub> hub)
+        public SessionController(ILogger<SessionController> log, ISessionRepository repository, IMapper map, IHubContext<SessionHub>? hub)
         {
             this.log = log ?? throw new ArgumentNullException(nameof(log));
             this.map = map ?? throw new ArgumentNullException(nameof(map));
@@ -614,7 +614,7 @@ namespace Spacecowboy.Service.Controllers
         public string Name;
         public string Version;
 
-        public ClientInfo(string userAgent)
+        public ClientInfo(string? userAgent)
         {
             if (userAgent == null) {
                 Name = "";

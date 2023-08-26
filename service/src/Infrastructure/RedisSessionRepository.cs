@@ -28,27 +28,27 @@ using System.Threading.Tasks;
 
 
 /*  The Redis repository uses the following keys:
- *  
+ *
  *  sessions (hash)
  *      The keys of this hash are the session indeitifiers.  Each value is a JSON serialized
  *      SessionDto object.
- *      
+ *
  *  sessions:generation (hash)
  *      The keys are session identifiers.  Each value is an integer representing the generation
  *      for that session.
- * 
+ *
  *  sessions:lastupdated (hash)
  *      The keys are session identifiers.  Each value is a timestamps represented as the number
  *      of ticks.
- * 
+ *
  *  sessions:participantsactive:sessionId (hash)
  *      The keys are participant IDs. Each value is a timestamp represented as the
  *      number of ticks.
- *      
+ *
  *  sessions:metrics (hash)
  *      Metrics collected across all sessions.  The following keys exists:
  *      TotalSessions: Total number of sessions ever created
- *      
+ *
  *  sessions:log (stream)
  *      Stream with information about the last sessions.  Information is added to the stream when a
  *      session is deleted.  Each stream entry has the following fields:
@@ -161,10 +161,12 @@ namespace Spacecowboy.Service.Infrastructure
         {
             var db = redis.GetDatabase();
             var session = await db.HashGetAsync(keySessions, id);
-            if (session.IsNull) throw new SessionNotFoundException(id);
+            string? sessionJson = session;
+            if (sessionJson == null) throw new SessionNotFoundException(id);
             try
             {
-                var sessionDto = JsonSerializer.Deserialize<SessionDto>(session);
+                var sessionDto = JsonSerializer.Deserialize<SessionDto>(sessionJson);
+                if (sessionDto == null) { throw new JsonException("Got null response from JSON deserializer."); }
                 await PopulateGenerationAsync(sessionDto);
                 await PopulateParticipantsLastActiveTimestampAsync(sessionDto);
                 return map.Map<Session>(sessionDto);
@@ -182,7 +184,8 @@ namespace Spacecowboy.Service.Infrastructure
         {
             var db = redis.GetDatabase();
             var keys = await db.HashKeysAsync(keySessions);
-            return keys.Select(k => (string)k);
+            var result = keys.Select(k => k.ToString()).Where(k => k != null);
+            return result;
         }
 
 
@@ -193,7 +196,7 @@ namespace Spacecowboy.Service.Infrastructure
             var sessions = await db.HashValuesAsync(keySessions);
             try
             {
-                return sessions.Select(s => map.Map<Session>(JsonSerializer.Deserialize<SessionDto>(s)));
+                return sessions.Select(s => s.ToString()).Where(s => s != null).Select(s => map.Map<Session>(JsonSerializer.Deserialize<SessionDto>(s)));
             }
             catch (JsonException ex)
             {
@@ -252,10 +255,12 @@ namespace Spacecowboy.Service.Infrastructure
         {
             var db = redis.GetDatabase();
             var key = keySessionParticipantsActiveTime + session.Id;
-            foreach (var p in session.Participants)
-            {
-                var participantLastActive = await db.HashGetAsync(key, p.Id.ToString());
-                p.LastActive = new DateTime((long)participantLastActive, DateTimeKind.Utc);
+            if (session.Participants != null) {
+                foreach (var p in session.Participants)
+                {
+                    var participantLastActive = await db.HashGetAsync(key, p.Id.ToString());
+                    p.LastActive = new DateTime((long)participantLastActive, DateTimeKind.Utc);
+                }
             }
         }
 

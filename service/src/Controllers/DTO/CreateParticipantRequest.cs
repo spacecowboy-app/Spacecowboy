@@ -19,7 +19,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Spacecowboy.Service.Controllers.DTO
 {
-    public class CreateParticipantRequest
+    public record CreateParticipantRequest
     {
         /// <summary>
         /// Participant name
@@ -29,7 +29,7 @@ namespace Spacecowboy.Service.Controllers.DTO
         /// displayed nick or name associated with the participant.
         /// </remarks>
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; init; }
 
 
         /// <summary>
@@ -39,13 +39,13 @@ namespace Spacecowboy.Service.Controllers.DTO
         /// The service does not use this property for anything. It is intended for the client to use as a reference to
         /// the participant's avatar.  It is up to the client to define the format of this reference.
         /// </remarks>
-        public string Avatar { get; set;  }
+        public string? Avatar { get; init;  }
 
 
         /// <summary>
         ///  Avatar color
         /// </summary>
-        public string Color { get; set; }
+        public string? Color { get; init; }
 
     }
 }
