@@ -17,7 +17,7 @@
 "use client";
 
 import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import log from "loglevel";
@@ -27,56 +27,16 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 
 import Configuration from "@/Configuration";
+import createAppTheme from "@/theme";
 import Layout from "@/components/Layout";
 import { ThemeVariantProvider, ThemeVariantContext } from "@/model/context/ThemeVariantContext";
-import { SessionProvider, SessionContext } from "@/model/context/SessionContext";
+import { SessionProvider } from "@/model/context/SessionContext";
 
 import "../styles/globals.css";
 
 
 // TODO: Fix hardcoded loglevel
 log.setLevel(log.levels.TRACE);
-
-const baseTheme: ThemeOptions = {
-    typography: {
-        fontFamily: [
-            '"Poppins"',
-            'Helvetica',
-            'sans-serif'
-        ].join(","),
-        h1: {
-            fontSize: "32px",
-            fontWeight: "500",
-            textTransform: "lowercase",
-        },
-        h2: {
-            fontSize: "22px",
-            fontWeight: "500",
-        },
-        h3: {
-            fontSize: "14px",
-            fontWeight: "500",
-        },
-        h4: {
-            fontSize: "110%",
-            fontWeight: "bold",
-        },
-        subtitle1: {
-            fontSize: "80%",
-        },
-    },
-};
-
-const colorThemes = {
-    light: {
-        primary: {
-            main: "#000000",
-        },
-    },
-    dark: {},
-};
-
-
 
 log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
@@ -114,16 +74,7 @@ export default function App({ Component, router, pageProps }: AppProps): JSX.Ele
 function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
 {
     const themeVariant = useContext(ThemeVariantContext) ?? "light";
-
-    const theme = useMemo( () => createTheme(
-        {
-            ...baseTheme,
-            palette: {
-                mode: themeVariant,
-                ...(themeVariant === "light" ? colorThemes.light : colorThemes.dark)
-            },
-        }
-    ), [ themeVariant ]);
+    const theme = useMemo(() => createAppTheme(themeVariant), [ themeVariant ]);
 
     return (
         <ThemeProvider theme={theme}>
