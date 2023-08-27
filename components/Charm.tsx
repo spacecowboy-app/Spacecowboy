@@ -40,7 +40,7 @@ interface Props {
 export default function Charm(props: Props): JSX.Element
 {
     return (
-        <Stack borderRadius="50%" bgcolor="primary.main" >
+        <Stack borderRadius="50%" bgcolor="primary.light" >
             <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={props.size} height={props.size} />
         </Stack>
     );
