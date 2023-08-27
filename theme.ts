@@ -52,7 +52,9 @@ const baseTheme: ThemeOptions = {
 const colorThemes = {
     light: {
         primary: {
-            main: "#000000",
+            light: "#bbbbbb",
+            main:  "#000000",
+            dark:  "#000000",
         },
     },
     dark: {},
