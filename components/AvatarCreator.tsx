@@ -71,7 +71,7 @@ export default function AvatarCreator(props: Props): JSX.Element
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">select your charm</Typography>
-                <Charm charm={avatarCharm} size={250} />
+                <Charm charm={avatarCharm} variant="large" />
                 <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
                 <CategorySelector categories={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} categorySelected={(name) => setCurrentCharmSet(name)} />
                 <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />

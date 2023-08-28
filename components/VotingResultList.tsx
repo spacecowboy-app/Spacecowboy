@@ -39,7 +39,7 @@ export default function VotingResultList(): JSX.Element
     const renderParticipantVote = (p: Participant, v?: CardModel): JSX.Element => (
         <Stack id={p.id} alignItems="center">
             { v ? <Card card={v} /> : <></> }
-            <Charm charm={p.avatar.charm} size={64} />
+            <Charm charm={p.avatar.charm} variant="small" />
             <Typography>{p.avatar.name}</Typography>
         </Stack>
     );
