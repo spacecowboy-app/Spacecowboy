@@ -17,6 +17,8 @@
 import React from "react";
 
 import Stack from "@mui/material/Stack";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 import Image from "next/image";
 
@@ -29,7 +31,7 @@ interface Props {
     charm: string,
 
     /** Charm size. */
-    size: number,
+    variant: "small"|"large",
 
 };
 
@@ -39,9 +41,16 @@ interface Props {
  */
 export default function Charm(props: Props): JSX.Element
 {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up("md"));
+
+    const smallSize = matches ? 64 : 48;
+    const largeSize = matches ? 200 : 128;
+    const size = props.variant == "large" ? largeSize : smallSize;
+
     return (
-        <Stack borderRadius="50%" bgcolor="primary.light" >
-            <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={props.size} height={props.size} />
+        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" >
+            <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={size * 1.5} height={size * 1.5} />
         </Stack>
     );
 }
