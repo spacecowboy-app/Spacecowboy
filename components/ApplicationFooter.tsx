@@ -18,13 +18,13 @@
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import Image from "next/image";
-import Link from "next/link"
 
 import Configuration from "@/Configuration";
 
@@ -55,10 +55,8 @@ export default function ApplicationFooter(): JSX.Element
                     <Box>
                         <Typography variant="h4">Send feedback</Typography>
                         <Typography variant="body1" pt={1}>Space Cowboy HQ</Typography>
-                        <Typography variant="body1" >OSLO NORWAY</Typography>
-                        <Link href="mailto:howdy@spacecowboy.app">
-                            <Typography variant="body1" pt={1}>howdy@spacecowboy.app</Typography>
-                        </Link>
+                        <Typography variant="body1" pb={1}>OSLO NORWAY</Typography>
+                        <Link href="mailto:howdy@spacecowboy.app" variant="body1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
                         <Box pt={0.8}>
                             <Link href="https://github.com/spacecowboy-app" >
                                 <Image src={Github} alt="Github repository" width={32} />
@@ -76,9 +74,7 @@ export default function ApplicationFooter(): JSX.Element
                 <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023</Typography>
                 <Typography variant="subtitle1" pt={0} pb={0}>Rolf Michelsen and Tami Weiss</Typography>
                 <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
-                <Link href="mailto:howdy@spacecowboy.app">
-                    <Typography variant="subtitle1" pt={1}>howdy@spacecowboy.app</Typography>
-                </Link>
+                <Link href="mailto:howdy@spacecowboy.app" variant="subtitle1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
             </Stack>
         );
     }
