@@ -14,8 +14,13 @@
     limitations under the License.
 */
 
-import Container from "@mui/material/Container";
+"use client";
+
 import React from "react";
+
+import { usePathname } from "next/navigation";
+
+import Container from "@mui/material/Container";
 
 import ApplicationFooter from "./ApplicationFooter";
 import ApplicationHeader from "./ApplicationHeader";
@@ -32,13 +37,15 @@ interface Props {
  */
 export default function Layout(props: Props): JSX.Element
 {
+    const pathname = usePathname();
+
     return (
         <div style={{ display: "grid", minHeight: "98vh", gridTemplateRows: "auto 1fr auto", gap: 16 }} >
             <ApplicationHeader />
             <Container maxWidth="xl">
                 { props.children }
             </Container>
-            <ApplicationFooter />
+            { pathname == "/" ? <ApplicationFooter /> : <></> }
         </div>
     );
 }

@@ -14,45 +14,68 @@
     limitations under the License.
 */
 
+"use client";
+
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 import Image from "next/image";
-import Link from "next/link"
 
 import Configuration from "@/Configuration";
 
 import Github from "@/images/GitHub-Mark-64px.png";
 
 
+/**
+ * Render the application footer.  The footer is responsive and will not be too prominent on small screens.
+ */
 export default function ApplicationFooter(): JSX.Element
 {
-    return (
-        <Grid container spacing={2} borderTop={1} mt={6} pt={1} pb={1} pl={2} pr={2}>
-            <Grid flexGrow={1}>
-                <Box>
-                    <Typography variant="h4">Space Cowboy</Typography>
-                    <Typography pt={1}>The place in space for fast decisions <br/> and great collaboration on the world wild web and the galaxy</Typography>
-                    <Typography pt={1}>No warranty. No personal data collected.</Typography>
-                    <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
-                    <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
-                </Box>
-            </Grid>
-            <Grid>
-                <Box>
-                    <Typography variant="h4">Send feedback</Typography>
-                    <Typography pt={1}>Space Cowboy HQ</Typography>
-                    <Typography>OSLO NORWAY</Typography>
-                    <Link href="mailto:howdy@spacecowboy.app">
-                        <Typography pt={1}>howdy@spacecowboy.app</Typography>
-                    </Link>
-                    <Box pt={0.8}>
-                        <Link href="https://github.com/spacecowboy-app" >
-                            <Image src={Github} alt="Github repository" width={32} />
-                        </Link>
+    const theme = useTheme();
+    const isLargeFooter = useMediaQuery(theme.breakpoints.up("md"));
+
+    if (isLargeFooter) {
+        return (
+            <Grid container spacing={2} borderTop={1} mt={6} pt={1} pb={1} pl={2} pr={2}>
+                <Grid flexGrow={1}>
+                    <Box>
+                        <Typography variant="h4">Space Cowboy</Typography>
+                        <Typography variant="body1" pt={1}>The place in space for fast decisions <br/> and great collaboration on the world wild web and the galaxy</Typography>
+                        <Typography variant="body1" pt={1}>No warranty. No personal data collected.</Typography>
+                        <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                        <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
                     </Box>
-                </Box>
+                </Grid>
+                <Grid>
+                    <Box>
+                        <Typography variant="h4">Send feedback</Typography>
+                        <Typography variant="body1" pt={1}>Space Cowboy HQ</Typography>
+                        <Typography variant="body1" pb={1}>OSLO NORWAY</Typography>
+                        <Link href="mailto:howdy@spacecowboy.app" variant="body1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
+                        <Box pt={0.8}>
+                            <Link href="https://github.com/spacecowboy-app" >
+                                <Image src={Github} alt="Github repository" width={32} />
+                            </Link>
+                        </Box>
+                    </Box>
+                </Grid>
             </Grid>
-        </Grid>
-    );
+        );
+    }
+    else {
+        return (
+            <Stack borderTop={1} mt={6} pt={1} pl={2} pr={2}>
+                <Typography variant="h4">Space Cowboy</Typography>
+                <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023</Typography>
+                <Typography variant="subtitle1" pt={0} pb={0}>Rolf Michelsen and Tami Weiss</Typography>
+                <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
+                <Link href="mailto:howdy@spacecowboy.app" variant="subtitle1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
+            </Stack>
+        );
+    }
 }
