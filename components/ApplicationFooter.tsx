@@ -28,7 +28,8 @@ import Image from "next/image";
 
 import Configuration from "@/Configuration";
 
-import Github from "@/images/GitHub-Mark-64px.png";
+import GithubLight from "@/images/GitHub-Mark-64px.png";
+import GitHubDark from "@/images/GitHub-Mark-64px-white.png";
 
 
 /**
@@ -38,6 +39,7 @@ export default function ApplicationFooter(): JSX.Element
 {
     const theme = useTheme();
     const isLargeFooter = useMediaQuery(theme.breakpoints.up("md"));
+    const logo = theme.palette.mode == "dark" ? GitHubDark : GithubLight;
 
     if (isLargeFooter) {
         return (
@@ -59,7 +61,7 @@ export default function ApplicationFooter(): JSX.Element
                         <Link href="mailto:howdy@spacecowboy.app" variant="body1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
                         <Box pt={0.8}>
                             <Link href="https://github.com/spacecowboy-app" >
-                                <Image src={Github} alt="Github repository" width={32} />
+                                <Image src={logo} alt="Github repository" width={32} />
                             </Link>
                         </Box>
                     </Box>
