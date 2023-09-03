@@ -39,7 +39,7 @@ export default function Card(props: Props): JSX.Element
 {
     const cardSx = {
         width: "96px",
-        height: "156px",
+        height: "128px",
         margin: "8px",
         border: "0px",
         borderRadius: "7px",
