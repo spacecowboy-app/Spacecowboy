@@ -38,8 +38,8 @@ interface Props {
 export default function Card(props: Props): JSX.Element
 {
     const cardSx = {
-        width: "6rem",
-        height: "9.7rem",
+        width: "96px",
+        height: "156px",
         margin: "8px",
         border: "0px",
         borderRadius: "7px",
@@ -57,8 +57,8 @@ export default function Card(props: Props): JSX.Element
     };
 
     const fontStyles = {
-        "small": { fontSize: "1rem" },
-        "large": { fontSize: "2rem", fontWeight: "bold" },
+        "small": { fontSize: "16px" },
+        "large": { fontSize: "32px", fontWeight: "bold" },
     }
 
     const cardColor = `var(--${props.card.color})`;
