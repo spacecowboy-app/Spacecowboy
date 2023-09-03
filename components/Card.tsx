@@ -38,8 +38,8 @@ interface Props {
 export default function Card(props: Props): JSX.Element
 {
     const cardSx = {
-        width: "6rem",
-        height: "9.7rem",
+        width: "96px",
+        height: "128px",
         margin: "8px",
         border: "0px",
         borderRadius: "7px",
@@ -49,6 +49,8 @@ export default function Card(props: Props): JSX.Element
         opacity: props.card.isDisabled ? 0.2 : 1,
     };
 
+    const imageSize = 64;
+
     // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
         "value-image": CardValueAndImage,
@@ -57,8 +59,8 @@ export default function Card(props: Props): JSX.Element
     };
 
     const fontStyles = {
-        "small": { fontSize: "1rem" },
-        "large": { fontSize: "2rem", fontWeight: "bold" },
+        "small": { fontSize: "16px" },
+        "large": { fontSize: "32px", fontWeight: "bold" },
     }
 
     const cardColor = `var(--${props.card.color})`;
@@ -75,9 +77,9 @@ export default function Card(props: Props): JSX.Element
     function CardValueAndImage(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="center">
-                <Typography sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
-                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
+            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+                <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
+                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
     }
@@ -86,9 +88,9 @@ export default function Card(props: Props): JSX.Element
     function CardImageAndValue(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="center">
-                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
-                <Typography sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
+            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
+                <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
             </Stack>
         );
     }
@@ -99,7 +101,7 @@ export default function Card(props: Props): JSX.Element
     {
         return (
             <Stack alignItems="center" justifyContent="center">
-                <Image src={`${Constants.CardsPath}${card.image}`} width={96} height={96} alt={props.card.value ?? ""} />
+                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
     }
