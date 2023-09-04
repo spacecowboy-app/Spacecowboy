@@ -49,7 +49,7 @@ export default function Card(props: Props): JSX.Element
         opacity: props.card.isDisabled ? 0.2 : 1,
     };
 
-    const imageSize = 64;
+    const imageSize = 76;
 
     // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
