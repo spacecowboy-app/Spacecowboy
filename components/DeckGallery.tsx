@@ -40,7 +40,7 @@ interface Props {
 export default function DeckGallery(props: Props): JSX.Element
 {
     return (
-        <Grid container spacing={2} >
+        <Grid container spacing={2} justifyContent="center" >
             { props.cards.map(c => <Card key={c.id} card={c} handleClick={() => { if (props.selectCard) props.selectCard(c.id); }} /> ) }
         </Grid>
     );
