@@ -14,9 +14,13 @@
     limitations under the License.
 */
 
+"use client";
+
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 import Image from "next/image";
 
@@ -37,19 +41,22 @@ interface Props {
 /** Render a card. */
 export default function Card(props: Props): JSX.Element
 {
+    const theme = useTheme();
+    const sizeMultiplier = useMediaQuery(theme.breakpoints.up("md")) ? 1 : 0.7;
+
     const cardSx = {
-        width: "96px",
-        height: "128px",
+        width: 96 * sizeMultiplier,
+        height: 128 * sizeMultiplier,
         margin: "8px",
-        border: "0px",
-        borderRadius: "7px",
+        border: 0,
+        borderRadius: 7 * sizeMultiplier,
         padding: "4px",
         color: "black",
         background: `var(--${props.card.color})`,
         opacity: props.card.isDisabled ? 0.2 : 1,
     };
 
-    const imageSize = 76;
+    const imageSize = 76 * sizeMultiplier;
 
     // TODO Handle bug if trying to lookup a card style that is not defined here in a good way
     const deckStyles: Record<CardStyle, (c: CardModel) => JSX.Element> = {
@@ -59,8 +66,8 @@ export default function Card(props: Props): JSX.Element
     };
 
     const fontStyles = {
-        "small": { fontSize: "16px" },
-        "large": { fontSize: "32px", fontWeight: "bold" },
+        "small": { fontSize: 16 * sizeMultiplier },
+        "large": { fontSize: 32 * sizeMultiplier, fontWeight: "bold" },
     }
 
     const cardColor = `var(--${props.card.color})`;
