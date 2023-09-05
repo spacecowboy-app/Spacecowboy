@@ -14,11 +14,9 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Grid from '@mui/material/Unstable_Grid2';
-
-import log from "loglevel";
 
 import Card from "./Card";
 import CardModel from "@/model/Card";
