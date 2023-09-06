@@ -45,15 +45,23 @@ export default function Card(props: Props): JSX.Element
     const sizeMultiplier = useMediaQuery(theme.breakpoints.up("md")) ? 1 : 0.7;
 
     const cardSx = {
-        width: 96 * sizeMultiplier,
-        height: 128 * sizeMultiplier,
-        margin: "8px",
-        border: 0,
-        borderRadius: 7 * sizeMultiplier,
-        padding: "4px",
-        color: "black",
-        background: `var(--${props.card.color})`,
-        opacity: props.card.isDisabled ? 0.2 : 1,
+        "&": {
+            width: 96 * sizeMultiplier,
+            height: 128 * sizeMultiplier,
+            margin: "8px",
+            border: 0,
+            borderRadius: "7px",
+            padding: "4px",
+            color: "black",
+            background: `var(--${props.card.color})`,
+            opacity: props.card.isDisabled ? 0.2 : 1,
+            transitionProperty: "transform",
+            transitionDuration: "0.25s",
+        },
+        "&:hover": {
+            transform: "scale(1.1, 1.1)",
+            cursor: "pointer",
+        }
     };
 
     const imageSize = 76 * sizeMultiplier;
