@@ -48,8 +48,20 @@ export default function Charm(props: Props): JSX.Element
     const largeSize = matches ? 200 : 128;
     const size = props.variant == "large" ? largeSize : smallSize;
 
+    const charmSx = {
+        "&": {
+            transitionProperty: "transform",
+            transitionDuration: "0.25s",
+        },
+        "&:hover": {
+            transform: "scale(1.1, 1.1)",
+            cursor: "pointer",
+        }
+    };
+
+
     return (
-        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" >
+        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" sx={charmSx} >
             <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={size * 1.5} height={size * 1.5} />
         </Stack>
     );
