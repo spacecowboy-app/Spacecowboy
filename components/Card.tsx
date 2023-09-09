@@ -44,7 +44,25 @@ export default function Card(props: Props): JSX.Element
     const theme = useTheme();
     const sizeMultiplier = useMediaQuery(theme.breakpoints.up("md")) ? 1 : 0.7;
 
+    const cardHoverSx = props.handleClick ?
+        {
+            "&": {
+                transitionProperty: "transform",
+                transitionDuration: "0.25s",
+            },
+            "&:hover": {
+                transform: "scale(1.1, 1.1)",
+                cursor: "pointer",
+            }
+        }
+        :
+        {
+            "&": {},
+            "&:hover": {}
+        };
+
     const cardSx = {
+        ...cardHoverSx,
         "&": {
             width: 96 * sizeMultiplier,
             height: 128 * sizeMultiplier,
@@ -55,12 +73,6 @@ export default function Card(props: Props): JSX.Element
             color: "black",
             background: `var(--${props.card.color})`,
             opacity: props.card.isDisabled ? 0.2 : 1,
-            transitionProperty: "transform",
-            transitionDuration: "0.25s",
-        },
-        "&:hover": {
-            transform: "scale(1.1, 1.1)",
-            cursor: "pointer",
         }
     };
 
