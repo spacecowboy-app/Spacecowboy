@@ -35,8 +35,8 @@ export default function CharmGallery(props: Props): JSX.Element
     return (
         <Grid container spacing={2} justifyContent="center" >
             { props.charms.charms.map(c =>
-                <Grid key={c} onClick={() => selectCharm(c)} >
-                    <Charm charm={c} variant="small" />
+                <Grid key={c}>
+                    <Charm charm={c} variant="small" selectCharm={() => selectCharm(c)} />
                 </Grid>)
             }
         </Grid>
