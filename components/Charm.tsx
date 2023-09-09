@@ -33,6 +33,8 @@ interface Props {
     /** Charm size. */
     variant: "small"|"large",
 
+    /** Callback for selecting a charm.  The parameter is the relative path to the charm image. */
+    selectCharm?: (charm: string) => void,
 };
 
 
@@ -48,7 +50,7 @@ export default function Charm(props: Props): JSX.Element
     const largeSize = matches ? 200 : 128;
     const size = props.variant == "large" ? largeSize : smallSize;
 
-    const charmSx = {
+    const charmHoverSx = {
         "&": {
             transitionProperty: "transform",
             transitionDuration: "0.25s",
@@ -61,8 +63,8 @@ export default function Charm(props: Props): JSX.Element
 
 
     return (
-        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" sx={charmSx} >
-            <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={size * 1.5} height={size * 1.5} />
+        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" sx={props.selectCharm ? charmHoverSx : {}} >
+            <Image src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={size * 1.5} height={size * 1.5} onClick={() => props.selectCharm && props.selectCharm(props.charm)} />
         </Stack>
     );
 }
