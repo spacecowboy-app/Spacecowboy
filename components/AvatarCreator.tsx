@@ -49,6 +49,13 @@ export default function AvatarCreator(props: Props): JSX.Element
     const [avatarCharm, setAvatarCharm] = useState<string|undefined>();     // Path to avatar charm, relative to `Constants.CharmsPath`.
     const [avatarNameError, setAvatarNameError] = useState<string|undefined>();     // Validation message for avatar name, or `undefined` when no error
 
+    // Styling of the INPUT html element inside a TextField.
+    const sx = {
+        "input": {
+            textAlign: "center",
+        }
+    };
+
     /* Get all charm sets. */
     useEffect(() => {
         if (!charmSets) {
@@ -72,7 +79,7 @@ export default function AvatarCreator(props: Props): JSX.Element
             <Stack spacing={2} alignItems="center">
                 <Typography variant="h1">select your charm</Typography>
                 <Charm charm={avatarCharm} variant="large" />
-                <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} />
+                <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} sx={sx} />
                 <CategorySelector categories={charmSets.map(c => c.name)} value={currentCharmSet} suppressIfSingle={true} categorySelected={(name) => setCurrentCharmSet(name)} />
                 <CharmGallery charms={charmSets.find(s => s.name == currentCharmSet) ?? charmSets[0]} selectCharm={(name) => setAvatarCharm(name) } />
                 <Button variant="contained" type="submit" disabled={avatarNameError !== undefined || avatarName === undefined}>arrive with charm</Button>
