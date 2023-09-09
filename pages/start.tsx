@@ -43,6 +43,13 @@ export default function StartGame(): JSX.Element
     const router = useRouter();
     const dispatch = useContext(SessionDispatchContext);
 
+    // Styling of the INPUT html element inside a TextField.
+    const sx = {
+        "input": {
+            textAlign: "center",
+        }
+    };
+
     // Get default session name and set as value for input field
     useEffect(() => {
         if (sessionId === undefined) {
@@ -61,7 +68,7 @@ export default function StartGame(): JSX.Element
                 <Stack spacing={2} alignItems="center">
                     <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
                     <Typography variant="h3">Name your space or take one here</Typography>
-                    <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                    <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
                     <Button variant="contained" type="submit" disabled={sessionError != undefined} >take this place</Button>
                 </Stack>
             </Box>

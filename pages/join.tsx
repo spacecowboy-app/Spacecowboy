@@ -17,7 +17,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import log from "loglevel";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -35,12 +35,19 @@ export default function JoinGame(): JSX.Element
     const [ sessionError, setSessionError ] = useState<string|undefined>(sessionIdIsValid(sessionId));
     const router = useRouter();
 
+    // Styling of the INPUT html element inside a TextField.
+    const sx = {
+        "input": {
+            textAlign: "center",
+        }
+    };
+
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => joinSession(e)}>
             <Stack spacing={2} alignItems="center">
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h3">The name of the place is</Typography>
-                <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} />
+                <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
                 <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
             </Stack>
         </Box>
