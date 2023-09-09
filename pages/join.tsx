@@ -17,7 +17,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import log from "loglevel";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
