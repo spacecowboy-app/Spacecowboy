@@ -37,7 +37,7 @@ export default function VotingResultList(): JSX.Element
     const voteCard = (p: Participant) => session.deck!.find(c => c.id == p.vote);
 
     const renderParticipantVote = (p: Participant, v?: CardModel): JSX.Element => (
-        <Stack id={p.id} alignItems="center">
+        <Stack key={p.id} alignItems="center">
             { v ? <Card card={v} /> : <></> }
             <Charm charm={p.avatar.charm} variant="small" />
             <Typography>{p.avatar.name}</Typography>
