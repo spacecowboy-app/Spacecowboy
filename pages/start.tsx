@@ -67,7 +67,7 @@ export default function StartGame(): JSX.Element
             <Box component="form" onSubmit={(e:React.SyntheticEvent) => startSession(e)}>
                 <Stack spacing={2} alignItems="center">
                     <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
-                    <Typography variant="h3">Name your space or take one here</Typography>
+                    <Typography variant="h1">Name your space</Typography>
                     <TextField id="session-id" value={sessionId ?? ""} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
                     <Button variant="contained" type="submit" disabled={sessionError != undefined} >take this place</Button>
                 </Stack>
