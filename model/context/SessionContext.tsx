@@ -123,7 +123,7 @@ interface Props
 
 
 /**
- * Context provider for the theme variant.
+ * Context provider for the session state.
  */
 export function SessionProvider(props: Props): JSX.Element
 {
