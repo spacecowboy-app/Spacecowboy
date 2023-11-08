@@ -14,6 +14,7 @@
     limitations under the License.
 */
 
+import { createContext } from "react";
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import log from "loglevel";
 
@@ -32,6 +33,10 @@ enum EventTypes {
 
 
 
+/**
+ * Manages a persistent connection to the service, primarily to receive events from the service.
+ * This is currently implemented as a SignalR connection.
+ */
 export default class ServiceEvents {
 
     private connection?: HubConnection = undefined;
@@ -49,10 +54,21 @@ export default class ServiceEvents {
 
     /**
      * Connects to the service event hub for a given session.
+     * Disconnects if already connected to a different session.  Does nothing if already connected to
+     * the given session.
      * @param sessionId Session id
      */
     public async Connect(sessionId: string): Promise<void>
     {
+        if (this.IsConnected()) {
+            if (sessionId == this.sessionId) {
+                log.debug(`Attempting to connect to existing session [${sessionId}], doing nothing.`);
+                return;
+            }
+            log.debug(`Attempting to connect to session [${sessionId}]; disconnecting from [${this.sessionId}].`)
+            await this.Disconnect();
+        }
+
         this.sessionId = sessionId;
         this.server = `${Configuration.ApiBase}/sessionhub`;
 
@@ -85,7 +101,7 @@ export default class ServiceEvents {
 
         try {
             await this.connection.start();
-            log.debug(`Connected to signalr service at ${this.server}`);
+            log.debug(`Connected to signalr service at ${this.server} for session [${sessionId}]`);
         }
         catch (err) {
             log.error(`Attempted to connect to ${this.server} but got error: ${err}`);
@@ -132,7 +148,19 @@ export default class ServiceEvents {
         log.debug(`Disconnected from signalr service at ${this.server}`);
 
         this.connection = undefined;
+        this.sessionId = undefined;
         this.server = undefined;
     }
 
+
+    /** Returns true if currently connected. */
+    public IsConnected = () => (this.connection?.state === HubConnectionState.Connected);
+
+
+    /** Returns the session id for a connection, or undefined if not connected. */
+    public ConnectedId = () => (this.IsConnected() ? this.sessionId : undefined);
+
 }
+
+
+export const ServiceEventsContext = createContext<ServiceEvents|undefined>(undefined);
