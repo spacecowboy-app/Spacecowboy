@@ -31,15 +31,9 @@ import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
 import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
-import ServiceEvents from "@/service/ServiceEvents";
+import { ServiceEventsContext } from "@/service/ServiceEvents";
 import { addDeckAsync, addParticipantAsync, sessionIdExistsAsync } from "@/service/Service";
 import { getSessionState } from "@/state/PersistentSessionState";
-
-
-enum ServiceConnectionState {
-    NotConnected,
-    Connected
-}
 
 
 /**
@@ -58,9 +52,10 @@ export default function Session(): JSX.Element
     const sessionId = router.query.session as string;
     const session = useContext(SessionContext);
     const dispatch = useContext(SessionDispatchContext);
-    const [connectionState, setConnectionState] = useState<ServiceConnectionState>(ServiceConnectionState.NotConnected);
+    const serviceEvents = useContext(ServiceEventsContext);
 
     // Check that the session actually exists and update state with session id.  If not, redirect to "not found" page.
+    // When this effect is completed we know that session.id === sessionId.
     useEffect(() => {
         checkSession();
 
@@ -83,31 +78,26 @@ export default function Session(): JSX.Element
         }
     }, [dispatch, sessionId, router]);
 
-    // Initialize service for listening for service events
+    // Connect to service to receive service events for the current session.
     useEffect(() => {
         if (session?.id === sessionId) {
-            const events = new ServiceEvents(dispatch);
-            log.debug(`Attempting to connect to event hub for session ${sessionId}.`);
-            events.Connect(sessionId)
-                .then(() => {
-                    log.debug(`Connected to event hub for session ${sessionId}.`);
-                    setConnectionState(ServiceConnectionState.Connected);
-                });
-            return (() => {
-                events.Disconnect();
-                setConnectionState(ServiceConnectionState.NotConnected);
-                log.debug(`Disconnected from event hub for session ${sessionId}.`);
-            });
+            if (!serviceEvents) {
+                // TODO This should never happen but it might still be a good idea to handle it a bit better.
+                log.error("A service event service is not available.");
+                router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                return;
+            }
+            serviceEvents.Connect(sessionId);
         }
-    }, [sessionId, session.id, dispatch]);
+    }, [serviceEvents, router, sessionId, session.id]);
+
+    if (!serviceEvents?.IsConnected()) {
+        return (<p>Waiting for connection to service...</p>);
+    }
 
     /* No session information available yet. Wait until the session update listener has fired at least once. */
     if (session?.id === null) {
         return (<p>Waiting for data from the server...</p>);
-    }
-
-    if (connectionState !== ServiceConnectionState.Connected) {
-        return (<p>Waiting for connection to service...</p>);
     }
 
     /* Let the owner of the session select the deck to use. */
