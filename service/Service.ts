@@ -32,6 +32,7 @@ import { asParticipant } from "./dto/ParticipantResponse";
 
 const headers = {
     "User-Agent": `Spacecowboy/${Configuration.AppVersion}`,
+    "Spacecowboy-app": `Spacecowboy/${Configuration.AppVersion}`,
     "Content-Type": "application/json"
 };
 
