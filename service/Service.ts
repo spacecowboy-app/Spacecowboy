@@ -49,8 +49,9 @@ export async function getRandomSessionIdAsync(): Promise<string>
 
 
 /**
- * Check whether a session identifier is in use
+ * Check whether a session identifier is registered with the service.
  * @param sessionId Session identifier
+ * @returns true if the session is registered.
  * @throws {ServiceException} Error in communicating with the service
 */
 export async function sessionIdExistsAsync(sessionId: string): Promise<boolean>
