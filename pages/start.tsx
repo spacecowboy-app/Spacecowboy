@@ -55,7 +55,6 @@ export default function StartGame(): JSX.Element
         if (sessionId === undefined) {
             getRandomSessionIdAsync()
             .then(result => {
-                log.debug(`Got random session name ${result}`);
                 setSessionId(result);
             })
             .catch(() => setErrorOpen(true) );
