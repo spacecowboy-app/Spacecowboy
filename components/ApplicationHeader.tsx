@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React from "react";
+import React, { useContext } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -28,12 +28,14 @@ import { useRouter } from "next/router";
 
 import Logo from "@/images/logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
+import { ServiceEventsContext } from "@/service/ServiceEvents";
 
 
 export default function ApplicationHeader(): JSX.Element
 {
     const router = useRouter();
     const sessionId = router.query.session as string;
+    const serviceEvents = useContext(ServiceEventsContext);
 
     return (
         <>
@@ -45,7 +47,7 @@ export default function ApplicationHeader(): JSX.Element
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
                         { sessionId && <Button key="share" color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Share</Button> }
-                        { sessionId && <Button key="leave" color="inherit" href={"/"} LinkComponent={Link}>Leave</Button> }
+                        { sessionId && <Button key="leave" color="inherit" onClick={() => leaveSession()} >Leave</Button> }
                         { !sessionId && <Button key="about" color="inherit" href="/about" LinkComponent={Link}>About</Button> }
                         <ThemeSelector />
                     </Toolbar>
@@ -53,4 +55,11 @@ export default function ApplicationHeader(): JSX.Element
             </Box>
         </>
     )
+
+
+    function leaveSession(): void
+    {
+        serviceEvents?.Disconnect();
+        router.push({ pathname:"/", query: { session: sessionId } });
+    }
 }

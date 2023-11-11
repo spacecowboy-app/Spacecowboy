@@ -30,7 +30,8 @@ import Configuration from "@/Configuration";
 import createAppTheme from "@/theme";
 import Layout from "@/components/Layout";
 import { ThemeVariantProvider, ThemeVariantContext } from "@/model/context/ThemeVariantContext";
-import { SessionProvider } from "@/model/context/SessionContext";
+import { SessionProvider, SessionDispatchContext } from "@/model/context/SessionContext";
+import ServiceEvents, { ServiceEventsContext } from "@/service/ServiceEvents";
 
 import "../styles/globals.css";
 
@@ -76,12 +77,17 @@ function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
     const themeVariant = useContext(ThemeVariantContext) ?? "light";
     const theme = useMemo(() => createAppTheme(themeVariant), [ themeVariant ]);
 
+    const dispatch = useContext(SessionDispatchContext);
+    const serviceEvents = new ServiceEvents(dispatch);
+
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-        </ThemeProvider>
+        <ServiceEventsContext.Provider value={serviceEvents} >
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+            </ThemeProvider>
+        </ServiceEventsContext.Provider>
     );
 }

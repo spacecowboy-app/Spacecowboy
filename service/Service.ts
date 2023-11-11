@@ -32,6 +32,7 @@ import { asParticipant } from "./dto/ParticipantResponse";
 
 const headers = {
     "User-Agent": `Spacecowboy/${Configuration.AppVersion}`,
+    "Spacecowboy-app": `Spacecowboy/${Configuration.AppVersion}`,
     "Content-Type": "application/json"
 };
 
@@ -40,23 +41,27 @@ const headers = {
 export async function getRandomSessionIdAsync(): Promise<string>
 {
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/random`, {method: "GET", headers: headers});
-    log.debug(`GetRandomSessionId returned ${response.status}`)
     if (response.ok) {
-        return response.json();
+        const sessionId = await response.json();
+        log.debug(`Service [${sessionId}]: Got random session id.`);
+        return sessionId;
     }
     throw new ServiceException(response.status, response.statusText);
 }
 
 
 /**
- * Check whether a session identifier is in use
+ * Check whether a session identifier is registered with the service.
  * @param sessionId Session identifier
+ * @returns true if the session is registered.
  * @throws {ServiceException} Error in communicating with the service
 */
 export async function sessionIdExistsAsync(sessionId: string): Promise<boolean>
 {
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "HEAD", headers: headers});
-    return (response.status !== 404);
+    const sessionExists = (response.status !== 404);
+    log.debug(`Service [${sessionId}]: Checked session, which ${sessionExists ? "exists" : "does not exist"}.`);
+    return sessionExists;
 }
 
 
@@ -97,6 +102,7 @@ export async function getSessionAsync(id: string, participantId?: string): Promi
         }
         throw new ServiceException(response.status, response.statusText);
     }
+    log.debug(`Service [${id}]: Got session information.`);
     return asSession(await response.json());
 }
 
@@ -111,6 +117,7 @@ export async function createSessionAsync(sessionId: string): Promise<Session>
 {
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}`, {method: "PUT", headers: headers});
     if (response.ok) {
+        log.debug(`Service [${sessionId}]: Created session.`);
         return asSession(await response.json());
     }
     throw new ServiceException(response.status, response.statusText);
@@ -132,6 +139,7 @@ export async function addDeckAsync(sessionId: string, deck: Deck): Promise<void>
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
+    log.debug(`Service [${sessionId}]: Added deck ${deck.name}.`);
 }
 
 
@@ -150,7 +158,9 @@ export async function addParticipantAsync(sessionId: string, participant: Avatar
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
-    return asParticipant(await response.json());
+    const participantInfo = asParticipant(await response.json());
+    log.debug(`Service [${sessionId}]: Added participant ${participantInfo.avatar.name} with id ${participantInfo.id}.`);
+    return participantInfo;
 }
 
 
@@ -172,6 +182,7 @@ export async function castVoteAsync(sessionId: string, participantId: string, vo
         }
         throw new ServiceException(response.status, response.statusText);
     }
+    log.debug(`Service [${sessionId}]: Cast vote ${voteId} for participant ${participantId}.`);
     return true;
 }
 
@@ -187,6 +198,7 @@ export async function resetVotesAsync(sessionId: string): Promise<void>
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
+    log.debug(`Service [${sessionId}]: Reset all votes.`);
 }
 
 
@@ -204,4 +216,5 @@ export async function removeParticipantAsync(sessionId: string, participantId: s
     if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
+    log.debug(`Service [${sessionId}]: Removed participant ${participantId}.`);
 }
