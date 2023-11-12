@@ -147,12 +147,12 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
     switch (action.type) {
 
         case SessionActionTypes.CLEAR_SESSION: {
-            log.debug("Session State: Clear session.");
+            log.debug(`Session State [${session.id}]: Clear session.`);
             return initialSessionState;
         }
 
         case SessionActionTypes.CLEAR_VOTES: {
-            log.debug("Session State: Clear votes.");
+            log.debug(`Session State [${session.id}]: Clear votes.`);
             return {
                 ...session,
                 votingCompleted: false,
@@ -160,7 +160,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_DECK: {
-            log.debug(`Session State: Set the session deck to ${action.deck.name}.`);
+            log.debug(`Session State [${session.id}]: Set the session deck to ${action.deck.name}.`);
             return {
                 ...session,
                 deck: action.deck.cards,
@@ -168,7 +168,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_PARTICIPANT: {
-            log.debug(`Session State: Set current participant id to ${action.participantId}.`);
+            log.debug(`Session State [${session.id}]: Set current participant id to ${action.participantId}.`);
             return {
                 ...session,
                 participantId: action.participantId,
@@ -176,10 +176,10 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_SESSION: {
-            log.debug("Session State: Update session.");
+            log.debug(`Session State [${session.id}]: Update session.`);
             const s = asSession(action.session);
             if (session.id && session.id != s.id) {
-                throw new SessionContextException(`Trying to change the session id from ${session.id} to ${s.id}`);
+                throw new SessionContextException(`Session State: Trying to change the session id from ${session.id} to ${s.id}`);
             }
             return {
                 ...session,
@@ -195,7 +195,10 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_SESSION_ID: {
-            log.debug(`Session State: Setting session id to ${action.id}.`);
+            log.debug(`Session State [${session.id}]: Setting session id to ${action.id}.`);
+            if (session.id && session.id != action.id) {
+                throw new SessionContextException(`Session State: Trying to change the session id from ${session.id} to ${action.id}`);
+            }
             return {
                 ...session,
                 id: action.id,
@@ -203,7 +206,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_OWNER: {
-            log.debug("Session State: Setting session owner status for session.");
+            log.debug(`Session State [${session.id}]: Setting session owner status for session.`);
             return {
                 ...session,
                 owner: true,
@@ -211,7 +214,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         default:
-            log.error(`Session State: Unknown action: ${JSON.stringify(action)}`);
+            log.error(`Session State [${session.id}]: Unknown action: ${JSON.stringify(action)}`);
             return session;
     }
 }
