@@ -61,6 +61,10 @@ export default function Session(): JSX.Element
 
         async function checkSession()
         {
+            // TODO Something is weird with this code.
+            // The dispatch of setSessionIdAction should go away.  Handle both creating and joining a session.
+            // Handle rejoining a session where some state is kept in browser local storage.
+            // Never create the session from this page.
             try {
                 const sessionState = getSessionState();
                 if (!sessionState) {
@@ -99,6 +103,8 @@ export default function Session(): JSX.Element
     if (session?.id === null) {
         return (<p>Waiting for data from the server...</p>);
     }
+
+    // TODO What happens is a participants joins during session setup?  Perhaps show a message "waiting for session owner..."?
 
     /* Let the owner of the session select the deck to use. */
     if ((!session.deck || session.deck.length === 0) && session.owner) {
