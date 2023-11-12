@@ -23,6 +23,9 @@ import Configuration from "@/Configuration";
 import { SessionActions, clearSessionAction, clearVotesAction, setSessionAction } from "@/model/context/SessionContext";
 
 
+/**
+ * Events that this service expects to receive from the remote service.
+ */
 enum EventTypes {
     SessionSubscribe = "SubscribeSession",
     SessionUnsubscribe = "UnsubscribeSession",
@@ -32,9 +35,10 @@ enum EventTypes {
 }
 
 
-
 /**
- * Manages a persistent connection to the service, primarily to receive events from the service.
+ * Manages a persistent connection to the service, primarily to receive events from the remote service.
+ * It updates local session state based on these events using the dispatch method provided in the
+ * constructor.
  * This is currently implemented as a SignalR connection.
  */
 export default class ServiceEvents {
@@ -46,6 +50,10 @@ export default class ServiceEvents {
     private readonly dispatch: (action: SessionActions) => void;
 
 
+    /**
+     * Constructor.
+     * @param dispatch Dispatcher for updating local session state.
+     */
     public constructor(dispatch: (action: SessionActions) => void)
     {
         this.dispatch = dispatch;
@@ -77,10 +85,12 @@ export default class ServiceEvents {
             .withAutomaticReconnect()
             .build();
 
+        /* Handle Message event.  Just log the message to the console. */
         this.connection.on(EventTypes.Message, (message: string) => {
             log.info(`Service message: ${message}`);
         });
 
+        /* Handle SessionUpdated event.  Set or clear the session state depending on the message received. */
         this.connection.on(EventTypes.SessionUpdated, (sessionresponse: SessionResponse) => {
             if (sessionresponse.id) {
                 this.dispatch(setSessionAction(sessionresponse));
@@ -93,6 +103,7 @@ export default class ServiceEvents {
 
         });
 
+        /* Handle SessionVotesCleared event.  Clear voting status in local state. */
         this.connection.on(EventTypes.SessionVotesCleared, () =>
         {
             this.dispatch(clearVotesAction());
@@ -163,4 +174,5 @@ export default class ServiceEvents {
 }
 
 
+/** Context to access a singleton ServiceEvents instance. */
 export const ServiceEventsContext = createContext<ServiceEvents|undefined>(undefined);
