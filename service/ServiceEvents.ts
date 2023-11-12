@@ -93,8 +93,13 @@ export default class ServiceEvents {
         /* Handle SessionUpdated event.  Set or clear the session state depending on the message received. */
         this.connection.on(EventTypes.SessionUpdated, (sessionresponse: SessionResponse) => {
             if (sessionresponse.id) {
-                this.dispatch(setSessionAction(sessionresponse));
-                log.debug(`ServiceEvents [${this.sessionId}]: Session update received.`);
+                if (sessionresponse.id === this.sessionId) {
+                    this.dispatch(setSessionAction(sessionresponse));
+                    log.debug(`ServiceEvents [${this.sessionId}]: Session update received.`);
+                }
+                else {
+                    log.error(`ServiceEvents [${this.sessionId}]: Session update for ${sessionresponse.id}; ignoring it.`);
+                }
             }
             else {
                 this.dispatch(clearSessionAction());
