@@ -195,12 +195,12 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
         }
 
         case SessionActionTypes.SET_SESSION_ID: {
-            log.debug(`Session State [${session.id}]: Setting session id to ${action.id}.`);
+            log.debug(`Session State [${session.id}]: Initializing session ${action.id}.`);
             if (session.id && session.id != action.id) {
                 throw new SessionContextException(`Session State: Trying to change the session id from ${session.id} to ${action.id}`);
             }
             return {
-                ...session,
+                ...initialSessionState,
                 id: action.id,
             };
         }
