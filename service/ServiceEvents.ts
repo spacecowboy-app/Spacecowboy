@@ -70,10 +70,10 @@ export default class ServiceEvents {
     {
         if (this.IsConnected()) {
             if (sessionId == this.sessionId) {
-                log.debug(`Attempting to connect to existing session [${sessionId}], doing nothing.`);
+                log.debug(`ServiceEvents: Attempting to connect to currently connected session [${sessionId}], doing nothing.`);
                 return;
             }
-            log.debug(`Attempting to connect to session [${sessionId}]; disconnecting from [${this.sessionId}].`)
+            log.debug(`ServiceEvents: Attempting to connect to session [${sessionId}]; disconnecting from [${this.sessionId}].`)
             await this.Disconnect();
         }
 
@@ -87,18 +87,18 @@ export default class ServiceEvents {
 
         /* Handle Message event.  Just log the message to the console. */
         this.connection.on(EventTypes.Message, (message: string) => {
-            log.info(`Service message: ${message}`);
+            log.info(`ServiceEvents [${this.sessionId}]: Message: ${message}`);
         });
 
         /* Handle SessionUpdated event.  Set or clear the session state depending on the message received. */
         this.connection.on(EventTypes.SessionUpdated, (sessionresponse: SessionResponse) => {
             if (sessionresponse.id) {
                 this.dispatch(setSessionAction(sessionresponse));
-                log.debug(`Got an update for session ${sessionresponse.id}`);
+                log.debug(`ServiceEvents [${this.sessionId}]: Session update received.`);
             }
             else {
                 this.dispatch(clearSessionAction());
-                log.debug(`Got an update to clear the session`);
+                log.debug(`ServiceEvents [${this.sessionId}]: Clear session received.`);
             }
 
         });
@@ -107,24 +107,24 @@ export default class ServiceEvents {
         this.connection.on(EventTypes.SessionVotesCleared, () =>
         {
             this.dispatch(clearVotesAction());
-            log.debug("God at update to clear votes");
+            log.debug(`ServiceEvents [${this.sessionId}]: Clear votes received.`);
         });
 
         try {
             await this.connection.start();
-            log.debug(`Connected to signalr service at ${this.server} for session [${sessionId}]`);
+            log.debug(`ServiceEvents [${this.sessionId}]: Connected to signalr service at ${this.server}.`);
         }
         catch (err) {
-            log.error(`Attempted to connect to ${this.server} but got error: ${err}`);
+            log.error(`ServiceEvents [${this.sessionId}]: Error while connecting to ${this.server}: ${err}`);
             throw err;
         }
 
         this.connection.invoke(EventTypes.SessionSubscribe, sessionId)
             .then(() => {
-                log.debug(`Subscribed to updates for session ${sessionId}`);
+                log.debug(`ServiceEvents [${this.sessionId}]: Subscribed to updates.`);
             })
             .catch((err: Error) => {
-                log.error(`Unable to subscribe to updates for session ${sessionId}`);
+                log.error(`ServiceEvents [${this.sessionId}]: Unable to subscribe to updates for session.`);
                 log.error(err.toString());
             });
     }
@@ -143,10 +143,10 @@ export default class ServiceEvents {
         if (this.connection.state === HubConnectionState.Connected) {
             try {
                 await this.connection.invoke(EventTypes.SessionUnsubscribe, this.sessionId);
-                log.debug(`Unsubscribed from updates for session ${this.sessionId}`);
+                log.debug(`SessionEvents [${this.sessionId}]: Unsubscribed from updates for session.`);
             }
             catch (err) {
-                log.error(`Unable to unsubscribe from updates for session ${this.sessionId}`);
+                log.error(`SessionEvents [${this.sessionId}]: Unable to unsubscribe from updates for session.`);
                 // Logger.Error(err.toString());   // TODO: Fix tis
             }
         }
@@ -156,7 +156,7 @@ export default class ServiceEvents {
         this.connection.off(EventTypes.Message);
         this.connection.stop();
 
-        log.debug(`Disconnected from signalr service at ${this.server}`);
+        log.debug(`SessionEvents [${this.sessionId}]: Disconnected from signalr service at ${this.server}`);
 
         this.connection = undefined;
         this.sessionId = undefined;
