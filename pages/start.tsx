@@ -30,6 +30,7 @@ import Constants from "../constants";
 import {sessionIdIsValid} from "../model/Session";
 import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
 import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
+import { storeSessionState } from "@/state/PersistentSessionState";
 
 import heroImage from "../images/hero/place.png";
 
@@ -121,6 +122,10 @@ export default function StartGame(): JSX.Element
                     dispatch(clearSessionAction());
                     dispatch(setSessionIdAction(sessionId));
                     dispatch(setSessionOwnerAction());
+                    storeSessionState({
+                        sessionId: sessionId,
+                        isOwner: true
+                    });
                     router.push({ pathname:"/[session]", query: { session: sessionId } });
                 })
                 .catch((error) =>  {
