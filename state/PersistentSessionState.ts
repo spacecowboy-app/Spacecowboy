@@ -30,33 +30,33 @@ export interface PersistentSessionState {
     sessionId: string,
 
     /** Participant identifier. */
-    participantId: string,
+    participantId?: string,
 
     /** This participant is the owner of the session. */
-    isOwner: boolean,
+    isOwner?: boolean,
 
 }
 
 
 
 /**
- * Store the session state in persistent storage.
+ * Store the session state in browser persistent storage.
  * @param session Session state.
  */
-export function storeSessionState(session: PersistentSessionState)
+export function storeSessionState(session: PersistentSessionState): void
 {
     try {
         sessionStorage.setItem(storageKey, JSON.stringify(session));
     }
     catch {
-        log.warn("Unable to save session state to browser storage.");
+        log.warn("Persistent session state: Unable to save session state to browser storage.");
     }
 }
 
 
 
 /**
- * Retrieve the session state from persistent storage.
+ * Retrieve the session state from browser persistent storage.
  * @returns Persisted session state.
  */
 export function getSessionState(): PersistentSessionState|null
@@ -66,7 +66,7 @@ export function getSessionState(): PersistentSessionState|null
         return state === null ? null : JSON.parse(state);
     }
     catch {
-        log.warn("Unable to retrieve session state from browser storage.");
+        log.warn("Persistent session state: Unable to retrieve session state from browser storage.");
         return null;
     }
 }
