@@ -29,7 +29,8 @@ import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
 import {sessionIdIsValid} from "../model/Session";
 import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
-import { SessionDispatchContext, clearSessionAction, setSessionOwnerAction } from "@/model/context/SessionContext";
+import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
+import { storeSessionState } from "@/state/PersistentSessionState";
 
 import heroImage from "../images/hero/place.png";
 
@@ -119,7 +120,12 @@ export default function StartGame(): JSX.Element
             createSessionAsync(sessionId)
                 .then(() => {
                     dispatch(clearSessionAction());
+                    dispatch(setSessionIdAction(sessionId));
                     dispatch(setSessionOwnerAction());
+                    storeSessionState({
+                        sessionId: sessionId,
+                        isOwner: true
+                    });
                     router.push({ pathname:"/[session]", query: { session: sessionId } });
                 })
                 .catch((error) =>  {

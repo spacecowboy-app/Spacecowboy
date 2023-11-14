@@ -60,6 +60,6 @@ export default function ApplicationHeader(): JSX.Element
     function leaveSession(): void
     {
         serviceEvents?.Disconnect();
-        router.push({ pathname:"/", query: { session: sessionId } });
+        router.push({ pathname:"/" });
     }
 }
