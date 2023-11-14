@@ -117,8 +117,6 @@ export default function Session(): JSX.Element
         return (<p>Waiting for data from the server...</p>);
     }
 
-    // TODO What happens is a participants joins during session setup?  Perhaps show a message "waiting for session owner..."?
-
     /* Let the owner of the session select the deck to use. */
     if ((!session.deck || session.deck.length === 0) && session.owner) {
         return (
@@ -145,6 +143,11 @@ export default function Session(): JSX.Element
                 </Snackbar>
             </>
         );
+    }
+
+    /* The session owner has not yet selected a deck... */
+    if (!session.deck || session.deck.length === 0) {
+        return (<p>Waiting for session creator to select a deck...</p>);
     }
 
     /* Accept votes until voting is completed. */
