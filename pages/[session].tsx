@@ -14,6 +14,8 @@
     limitations under the License.
 */
 
+"use client";
+
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 
 import Alert from "@mui/material/Alert";
@@ -30,10 +32,10 @@ import VotingResult from "@/components/VotingResult";
 import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
-import { SessionContext, SessionDispatchContext, setDeckAction, setParticipantAction, setSessionIdAction } from "@/model/context/SessionContext";
+import { SessionContext, SessionDispatchContext, clearSessionAction, setDeckAction, setParticipantAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 import { ServiceEventsContext } from "@/service/ServiceEvents";
 import { addDeckAsync, addParticipantAsync, sessionIdExistsAsync } from "@/service/Service";
-import { getSessionState } from "@/state/PersistentSessionState";
+import { getSessionState, storeSessionState } from "@/state/PersistentSessionState";
 
 
 /**
@@ -54,37 +56,48 @@ export default function Session(): JSX.Element
     const dispatch = useContext(SessionDispatchContext);
     const serviceEvents = useContext(ServiceEventsContext);
 
-    // Check that the session actually exists and update state with session id.  If not, redirect to "not found" page.
-    // When this effect is completed we know that session.id === sessionId.
+    /* Initialize local session state and persisted state for participants joining the session.  This
+       should already be taken care of for the owner of the session.
+       When this effect is completed we know that session.id == sessionId. */
     useEffect(() => {
-        checkSession();
+        setupSession();
 
-        async function checkSession()
+        async function setupSession()
         {
-            // TODO Something is weird with this code.
-            // The dispatch of setSessionIdAction should go away.  Handle both creating and joining a session.
-            // Handle rejoining a session where some state is kept in browser local storage.
-            // Never create the session from this page.
+            log.debug(`Session setup [${sessionId}]`);
             try {
-                const sessionState = getSessionState();
-                if (!sessionState) {
-                    if (await sessionIdExistsAsync(sessionId)) {
-                        dispatch(setSessionIdAction(sessionId));
+                if (!(await sessionIdExistsAsync(sessionId))) {
+                    log.debug(`Setup session [${sessionId}]: Session does not exist on the server.`);
+                    router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                }
+                if (session?.id !== sessionId) {
+                    dispatch(clearSessionAction());
+                    dispatch(setSessionIdAction(sessionId));
+                    const persistentState = getSessionState();
+                    if (persistentState?.sessionId !== sessionId) {
+                        log.debug(`Setup session [${sessionId}]: No persisted state for this session; creating it.`);
+                        storeSessionState({
+                            sessionId: sessionId
+                        });
                     }
                     else {
-                        router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                        log.debug(`Setup session [${sessionId}]: Restoring persisted state for this session.`);
+                        if (persistentState.isOwner) {
+                            dispatch(setSessionOwnerAction());
+                        }
                     }
                 }
             }
             catch {
+                // TODO Improve exception handling here.
                 log.error("Exception");
             }
         }
-    }, [dispatch, sessionId, router]);
+    }, [sessionId, session?.id, dispatch, router]);
 
     // Connect to service to receive service events for the current session.
     useEffect(() => {
-        if (session?.id === sessionId) {
+        if (session?.id == sessionId) {
             if (!serviceEvents) {
                 // TODO This should never happen but it might still be a good idea to handle it a bit better.
                 log.error("A service event service is not available.");
