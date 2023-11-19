@@ -29,12 +29,13 @@ import { useRouter } from "next/router";
 import Logo from "@/images/logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
 import { ServiceEventsContext } from "@/service/ServiceEvents";
+import { SessionContext } from "@/model/context/SessionContext";
 
 
 export default function ApplicationHeader(): JSX.Element
 {
+    const session = useContext(SessionContext);
     const router = useRouter();
-    const sessionId = router.query.session as string;
     const serviceEvents = useContext(ServiceEventsContext);
 
     return (
@@ -46,9 +47,9 @@ export default function ApplicationHeader(): JSX.Element
                             <Image src={Logo} width={32} alt="Logo" />
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
-                        { sessionId && <Button key="share" color="inherit" href={`/${sessionId}/share`} LinkComponent={Link}>Share</Button> }
-                        { sessionId && <Button key="leave" color="inherit" onClick={() => leaveSession()} >Leave</Button> }
-                        { !sessionId && <Button key="about" color="inherit" href="/about" LinkComponent={Link}>About</Button> }
+                        { session?.id && <Button key="share" color="inherit" href={`/${session.id}/share`} LinkComponent={Link}>Share</Button> }
+                        { session?.id && <Button key="leave" color="inherit" onClick={() => leaveSession()} >Leave</Button> }
+                        { !session?.id && <Button key="about" color="inherit" href="/about" LinkComponent={Link}>About</Button> }
                         <ThemeSelector />
                     </Toolbar>
                 </AppBar>
