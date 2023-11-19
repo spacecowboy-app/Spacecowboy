@@ -44,16 +44,21 @@ export default function Home(): JSX.Element
 
     // Leave any active session and clear local session state
     useEffect(() => {
-        if (session.id) {
+        if (session?.id) {
             if (session.participantId) {
                 removeParticipantAsync(session.id, session.participantId)
-                    .then(() => log.info(`Removed participant ${session.participantId} from session ${session.id}`))
+                    .then(() => {
+                        log.info(`Removed participant ${session.participantId} from session ${session.id}`);
+                        dispatch(clearSessionAction());
+                    })
                     .catch(() => {
                         log.error(`Failed to remove participant ${session.participantId} from session ${session.id}`);
                         setErrorOpen(`Communication error with service. Unable to leave ${session.id}`);
                     });
             }
-            dispatch(clearSessionAction());
+            else {
+                dispatch(clearSessionAction());
+            }
         }
     }), [dispatch, session];
 
