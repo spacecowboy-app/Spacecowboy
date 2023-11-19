@@ -198,6 +198,11 @@ export default function Session(): JSX.Element
         addParticipantAsync(sessionId, avatar)
             .then((p) => {
                 dispatch(setParticipantAction(p.id));
+                storeSessionState({
+                    sessionId: sessionId,
+                    participantId: p.id,
+                    isOwner: session.owner,
+                });
             })
             .catch(() => {
                 setAvatarCreatorErrorOpen(true);
