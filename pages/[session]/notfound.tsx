@@ -14,13 +14,21 @@
     limitations under the License.
 */
 
-import Box from "@mui/material/Box";
+import { useContext } from "react";
+
 import Button from "@mui/material/Button";
-import log from "loglevel";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
+import Link from "next/link";
 import { useRouter } from "next/router";
+
+import log from "loglevel";
+
 import HeroImage from "@/components/HeroImage";
+import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "@/service/Service";
+import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
+import { storeSessionState } from "@/state/PersistentSessionState";
 
 import heroImage from "@/images/hero/noplace.png";
 
@@ -32,24 +40,48 @@ export default function SessionNotFound(): JSX.Element
 {
     const router = useRouter();
     const sessionId = router.query.session as string;
+    const dispatch = useContext(SessionDispatchContext);
 
     return (
-        <Box component="form" onSubmit={(e:React.SyntheticEvent) => goHome(e)}>
-            <Stack spacing={2} alignItems="center">
-                <HeroImage src={heroImage} alt="" />
-                <Typography variant="h3">The space {sessionId} does not exist</Typography>
-                <Typography>You can create it or join another</Typography>
-                <Button variant="contained" type="submit">go back</Button>
+        <Stack spacing={2} alignItems="center">
+            <HeroImage src={heroImage} alt="" />
+            <Typography variant="h3">The space {sessionId} does not exist</Typography>
+            <Typography variant="h3">You can create it or join another</Typography>
+            <Stack spacing={2} direction="row">
+                <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
+                <Button variant="contained" onClick={() => startSession() }>create it</Button>
             </Stack>
-        </Box>
+        </Stack>
     );
 
+
     /**
-     * Callback for going to the home screen.
+     * Callback for starting a new session.
+     * Redirects to the session screen.
      */
-    function goHome(e: React.SyntheticEvent): void
+    // TODO This code is duplicated from the start page. Should consolidate into a single instance.
+    function startSession(): void
     {
-        e.preventDefault();
-        router.push({ pathname:"/" });
+        if (sessionId) {
+            log.info(`Starting a new session ${sessionId}`);
+            createSessionAsync(sessionId)
+                .then(() => {
+                    dispatch(clearSessionAction());
+                    dispatch(setSessionIdAction(sessionId));
+                    dispatch(setSessionOwnerAction());
+                    storeSessionState({
+                        sessionId: sessionId,
+                        isOwner: true
+                    });
+                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                })
+                .catch((error) =>  {
+                    // TODO Proper error message in client window
+                    log.error(error);
+                });
+        }
     }
+
 }
+
+
