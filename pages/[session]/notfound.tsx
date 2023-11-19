@@ -14,12 +14,13 @@
     limitations under the License.
 */
 
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import log from "loglevel";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
+import Link from "next/link";
 import { useRouter } from "next/router";
+
 import HeroImage from "@/components/HeroImage";
 
 import heroImage from "@/images/hero/noplace.png";
@@ -34,22 +35,12 @@ export default function SessionNotFound(): JSX.Element
     const sessionId = router.query.session as string;
 
     return (
-        <Box component="form" onSubmit={(e:React.SyntheticEvent) => goHome(e)}>
-            <Stack spacing={2} alignItems="center">
-                <HeroImage src={heroImage} alt="" />
-                <Typography variant="h3">The space {sessionId} does not exist</Typography>
-                <Typography variant="h3">You can create it or join another</Typography>
-                <Button variant="contained" type="submit">go back</Button>
-            </Stack>
-        </Box>
+        <Stack spacing={2} alignItems="center">
+            <HeroImage src={heroImage} alt="" />
+            <Typography variant="h3">The space {sessionId} does not exist</Typography>
+            <Typography variant="h3">You can create it or join another</Typography>
+            <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
+        </Stack>
     );
 
-    /**
-     * Callback for going to the home screen.
-     */
-    function goHome(e: React.SyntheticEvent): void
-    {
-        e.preventDefault();
-        router.push({ pathname:"/" });
-    }
 }
