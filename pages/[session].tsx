@@ -64,11 +64,17 @@ export default function Session(): JSX.Element
 
         async function setupSession()
         {
+            if (!sessionId) {
+                log.warn("Session setup but got no sessionId.");
+                return;
+            }
+
             log.debug(`Session setup [${sessionId}]`);
             try {
                 if (!(await sessionIdExistsAsync(sessionId))) {
                     log.debug(`Setup session [${sessionId}]: Session does not exist on the server.`);
                     router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                    return;
                 }
                 if (session?.id !== sessionId) {
                     dispatch(clearSessionAction());
@@ -97,7 +103,7 @@ export default function Session(): JSX.Element
 
     // Connect to service to receive service events for the current session.
     useEffect(() => {
-        if (session?.id == sessionId) {
+        if (sessionId && session?.id == sessionId) {
             if (!serviceEvents) {
                 // TODO This should never happen but it might still be a good idea to handle it a bit better.
                 log.error("A service event service is not available.");
@@ -107,6 +113,10 @@ export default function Session(): JSX.Element
             serviceEvents.Connect(sessionId);
         }
     }, [serviceEvents, router, sessionId, session.id]);
+
+    if (!sessionId) {
+        return (<></>);
+    }
 
     if (!serviceEvents?.IsConnected()) {
         return (<p>Waiting for connection to service...</p>);
