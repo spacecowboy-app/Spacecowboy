@@ -29,7 +29,7 @@ import log from "loglevel";
 
 import Constants from "@/constants";
 import HeroImage from "@/components/HeroImage";
-import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "@/service/Service";
+import { createSessionAsync } from "@/service/Service";
 import { sessionIdIsValid } from "@/model/Session";
 import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 import { storeSessionState } from "@/state/PersistentSessionState";
