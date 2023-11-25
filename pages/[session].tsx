@@ -65,9 +65,8 @@ export default function Session(): JSX.Element
 
         async function setupSession()
         {
+            // React can invoke this effect prior to setting sessionId.  We just hang around and wait for sessionId to be set...
             if (!sessionId) {
-                log.warn("Session setup but got no sessionId.");
-                router.push("/");
                 return;
             }
 
