@@ -51,7 +51,8 @@ export default function SessionNotFound(): JSX.Element
         <>
             <Stack spacing={2} alignItems="center">
                 <HeroImage src={heroImage} alt="" />
-                <Typography variant="h3">The space {sessionId} does not exist</Typography>
+                <Typography variant="h1">Lost in space</Typography>
+                <Typography variant="h3">The space <strong>{sessionId}</strong> does not exist</Typography>
                 <Typography variant="h3">You can create it or join another</Typography>
                 <Stack spacing={2} direction="row">
                     <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
