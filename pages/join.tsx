@@ -21,6 +21,8 @@ import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 import HeroImage from "@/components/HeroImage";
@@ -47,7 +49,10 @@ export default function JoinGame(): JSX.Element
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h3">The name of the place is</Typography>
                 <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
-                <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
+                <Stack spacing={2} direction="row">
+                    <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
+                    <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
+                </Stack>
             </Stack>
         </Box>
     );
