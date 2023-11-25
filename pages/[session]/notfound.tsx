@@ -14,9 +14,11 @@
     limitations under the License.
 */
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -25,8 +27,10 @@ import { useRouter } from "next/router";
 
 import log from "loglevel";
 
+import Constants from "@/constants";
 import HeroImage from "@/components/HeroImage";
-import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "@/service/Service";
+import { createSessionAsync } from "@/service/Service";
+import { sessionIdIsValid } from "@/model/Session";
 import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 import { storeSessionState } from "@/state/PersistentSessionState";
 
@@ -41,17 +45,26 @@ export default function SessionNotFound(): JSX.Element
     const router = useRouter();
     const sessionId = router.query.session as string;
     const dispatch = useContext(SessionDispatchContext);
+    const [ invalidNameOpen, setInvalidNameOpen ] = useState<string|undefined>();
 
     return (
-        <Stack spacing={2} alignItems="center">
-            <HeroImage src={heroImage} alt="" />
-            <Typography variant="h3">The space {sessionId} does not exist</Typography>
-            <Typography variant="h3">You can create it or join another</Typography>
-            <Stack spacing={2} direction="row">
-                <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
-                <Button variant="contained" onClick={() => startSession() }>create it</Button>
+        <>
+            <Stack spacing={2} alignItems="center">
+                <HeroImage src={heroImage} alt="" />
+                <Typography variant="h1">Lost in space</Typography>
+                <Typography variant="h3">The space <strong>{sessionId}</strong> does not exist</Typography>
+                <Typography variant="h3">You can create it or join another</Typography>
+                <Stack spacing={2} direction="row">
+                    <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
+                    <Button variant="contained" onClick={() => startSession() }>create it</Button>
+                </Stack>
             </Stack>
-        </Stack>
+            <Snackbar open={invalidNameOpen !== undefined} autoHideDuration={Constants.SnackbarDurationMs} onClose={() => closeInvalidNameOpen()} anchorOrigin={Constants.SnackbarAnchor} >
+                <Alert severity="error">
+                    { invalidNameOpen }
+                </Alert>
+            </Snackbar>
+        </>
     );
 
 
@@ -62,7 +75,7 @@ export default function SessionNotFound(): JSX.Element
     // TODO This code is duplicated from the start page. Should consolidate into a single instance.
     function startSession(): void
     {
-        if (sessionId) {
+        if (sessionIdIsValid(sessionId) == undefined) {
             log.info(`Starting a new session ${sessionId}`);
             createSessionAsync(sessionId)
                 .then(() => {
@@ -80,6 +93,17 @@ export default function SessionNotFound(): JSX.Element
                     log.error(error);
                 });
         }
+        else {
+            log.info(`Attempt to create session with invalid name [${sessionId}].`);
+            setInvalidNameOpen("The provided space name is not permitted and cannot be used.");
+        }
+    }
+
+
+    function closeInvalidNameOpen(): void
+    {
+        setInvalidNameOpen(undefined);
+        router.push("/");
     }
 
 }

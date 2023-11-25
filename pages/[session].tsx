@@ -32,6 +32,7 @@ import VotingResult from "@/components/VotingResult";
 import Constants from "@/constants";
 import Avatar from "@/model/Avatar";
 import Deck from "@/model/Deck";
+import { sessionIdIsValid } from "@/model/Session";
 import { SessionContext, SessionDispatchContext, clearSessionAction, setDeckAction, setParticipantAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 import { ServiceEventsContext } from "@/service/ServiceEvents";
 import { addDeckAsync, addParticipantAsync, sessionIdExistsAsync } from "@/service/Service";
@@ -66,6 +67,13 @@ export default function Session(): JSX.Element
         {
             if (!sessionId) {
                 log.warn("Session setup but got no sessionId.");
+                router.push("/");
+                return;
+            }
+
+            if (sessionIdIsValid(sessionId)) {
+                log.warn(`Session name is not valid [${sessionId}].`);
+                router.push("/");
                 return;
             }
 
@@ -114,7 +122,7 @@ export default function Session(): JSX.Element
         }
     }, [serviceEvents, router, sessionId, session.id]);
 
-    if (!sessionId) {
+    if (!sessionId || sessionIdIsValid(sessionId)) {
         return (<></>);
     }
 
