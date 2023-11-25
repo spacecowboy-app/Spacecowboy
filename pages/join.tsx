@@ -47,7 +47,7 @@ export default function JoinGame(): JSX.Element
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => joinSession(e)}>
             <Stack spacing={2} alignItems="center">
                 <HeroImage src={heroImage} alt="" />
-                <Typography variant="h3">The name of the place is</Typography>
+                <Typography variant="h1">Join a space</Typography>
                 <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
                 <Stack spacing={2} direction="row">
                     <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
@@ -82,7 +82,7 @@ export default function JoinGame(): JSX.Element
     /** Validate session name. Accepts any non-empty session name. */
     function sessionIdIsValid(id: string): string|undefined
     {
-        return id.trim().length > 0 ? undefined : "Please provide session id or url";
+        return id.trim().length > 0 ? undefined : "Please provide name or url";
     }
 
 }
