@@ -16,6 +16,7 @@
 
 import React, { useContext } from "react";
 
+import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -40,7 +41,7 @@ export default function VotingParticipants(): JSX.Element
     );
 
     return (
-        <Stack spacing={4} direction="row">
+        <Stack spacing={4} direction="row" divider={<Divider orientation="vertical" role="presentation" variant="middle" flexItem />}>
             <Stack spacing={1} alignItems="left">
                 <Typography>Voted:</Typography>
                 <Stack direction="row">
