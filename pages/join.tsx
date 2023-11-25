@@ -24,7 +24,6 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 
 import HeroImage from "@/components/HeroImage";
-import {sessionIdIsValid} from "@/model/Session";
 
 import heroImage from "@/images/hero/join.png";
 
@@ -72,6 +71,13 @@ export default function JoinGame(): JSX.Element
         const id = pos == -1 ? sessionId : sessionId.substring(pos+1);
         log.info(`Joining session ${id}`);
         router.push({ pathname:"/[session]", query: { session: id } });
+    }
+
+
+    /** Validate session name. Accepts any non-empty session name. */
+    function sessionIdIsValid(id: string): string|undefined
+    {
+        return id.trim().length > 0 ? undefined : "Please provide session id or url";
     }
 
 }
