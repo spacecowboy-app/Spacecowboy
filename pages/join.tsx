@@ -68,8 +68,10 @@ export default function JoinGame(): JSX.Element
     function joinSession(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        log.info(`Joining session ${sessionId}`);
-        router.push({ pathname:"/[session]", query: { session: sessionId } });
+        const pos = sessionId.lastIndexOf("/");
+        const id = pos == -1 ? sessionId : sessionId.substring(pos+1);
+        log.info(`Joining session ${id}`);
+        router.push({ pathname:"/[session]", query: { session: id } });
     }
 
 }
