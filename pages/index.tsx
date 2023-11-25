@@ -44,6 +44,7 @@ export default function Home(): JSX.Element
 
     // Leave any active session and clear local session state
     useEffect(() => {
+        log.debug("Clear session effect : ", session);
         if (session?.id) {
             if (session.participantId) {
                 removeParticipantAsync(session.id, session.participantId)
