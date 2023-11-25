@@ -14,17 +14,20 @@
     limitations under the License.
 */
 
+import React, { useState } from "react";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import log from "loglevel";
-import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
+import Link from "next/link";
 import { useRouter } from "next/router";
 
+import log from "loglevel";
+
 import HeroImage from "@/components/HeroImage";
-import {sessionIdIsValid} from "@/model/Session";
 
 import heroImage from "@/images/hero/join.png";
 
@@ -46,9 +49,12 @@ export default function JoinGame(): JSX.Element
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => joinSession(e)}>
             <Stack spacing={2} alignItems="center">
                 <HeroImage src={heroImage} alt="" />
-                <Typography variant="h3">The name of the place is</Typography>
+                <Typography variant="h1">Join a space</Typography>
                 <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />
-                <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
+                <Stack spacing={2} direction="row">
+                    <Button variant="contained" type="submit" disabled={sessionError != undefined} >join this place</Button>
+                    <Button variant="contained" href="/" LinkComponent={Link}>go back</Button>
+                </Stack>
             </Stack>
         </Box>
     );
@@ -68,8 +74,17 @@ export default function JoinGame(): JSX.Element
     function joinSession(e: React.SyntheticEvent): void
     {
         e.preventDefault();
-        log.info(`Joining session ${sessionId}`);
-        router.push({ pathname:"/[session]", query: { session: sessionId } });
+        const pos = sessionId.lastIndexOf("/");
+        const id = pos == -1 ? sessionId : sessionId.substring(pos+1);
+        log.info(`Joining session ${id}`);
+        router.push({ pathname:"/[session]", query: { session: id } });
+    }
+
+
+    /** Validate session name. Accepts any non-empty session name. */
+    function sessionIdIsValid(id: string): string|undefined
+    {
+        return id.trim().length > 0 ? undefined : "Please provide name or url";
     }
 
 }
