@@ -213,8 +213,13 @@ export async function resetVotesAsync(sessionId: string): Promise<void>
 export async function removeParticipantAsync(sessionId: string, participantId: string): Promise<void>
 {
     const response = await fetch(`${Configuration.ApiBase}/api/v0/session/${sessionId}/participant/${participantId}`, {method: "DELETE", headers: headers});
-    if (!response.ok) {
+    if (response.status == 404) {
+        log.debug(`Service [${sessionId}]: Session or participant ${participantId} does not exist.`);
+    }
+    else if (!response.ok) {
         throw new ServiceException(response.status, response.statusText);
     }
-    log.debug(`Service [${sessionId}]: Removed participant ${participantId}.`);
+    else {
+        log.debug(`Service [${sessionId}]: Removed participant ${participantId}.`);
+    }
 }
