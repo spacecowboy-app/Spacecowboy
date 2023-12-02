@@ -43,7 +43,7 @@ export default function ApplicationFooter(): JSX.Element
 
     if (isLargeFooter) {
         return (
-            <Grid container spacing={2} borderTop={1} mt={6} pt={1} pb={1} pl={2} pr={2}>
+            <Grid container spacing={2} borderTop={1} mt={6} mr={2} ml={2} pt={1} pb={1}>
                 <Grid flexGrow={1}>
                     <Box>
                         <Typography variant="h4">Space Cowboy</Typography>
