@@ -44,13 +44,13 @@ export default function VotingParticipants(): JSX.Element
         <Stack spacing={4} direction="row" divider={<Divider orientation="vertical" role="presentation" variant="middle" flexItem />}>
             <Stack spacing={1} alignItems="left">
                 <Typography>Voted:</Typography>
-                <Stack direction="row">
+                <Stack direction="row" spacing={1}>
                     { session.participants.filter(p => p.vote != session.noVote?.id).map(p => getAvatar(p)) }
                 </Stack>
             </Stack>
             <Stack spacing={1} alignItems="left">
                 <Typography>Not yet voted:</Typography>
-                <Stack direction="row">
+                <Stack direction="row" spacing={1}>
                     { session.participants.filter(p => p.vote == session.noVote?.id).map(p => getAvatar(p)) }
                 </Stack>
             </Stack>
