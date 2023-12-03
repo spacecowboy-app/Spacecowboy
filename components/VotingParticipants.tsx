@@ -33,10 +33,10 @@ export default function VotingParticipants(): JSX.Element
     const session = useContext(SessionContext);
 
     // Function to return an avatar for a participant.
-    const getAvatar = (p: Participant) => (
+    const getAvatar = (p: Participant, highlight: boolean) => (
         <Stack key={p.id} alignItems="center">
             <Charm charm={p.avatar.charm} variant="small" />
-            <Typography>{p.avatar.name}</Typography>
+            <Typography noWrap={false}>{highlight ? <strong>{p.avatar.name}</strong> : p.avatar.name}</Typography>
         </Stack>
     );
 
@@ -45,13 +45,13 @@ export default function VotingParticipants(): JSX.Element
             <Stack spacing={1} alignItems="left">
                 <Typography>Voted:</Typography>
                 <Stack direction="row" spacing={1}>
-                    { session.participants.filter(p => p.vote != session.noVote?.id).map(p => getAvatar(p)) }
+                    { session.participants.filter(p => p.vote != session.noVote?.id).map(p => getAvatar(p, p.id == session.participantId)) }
                 </Stack>
             </Stack>
             <Stack spacing={1} alignItems="left">
                 <Typography>Not yet voted:</Typography>
                 <Stack direction="row" spacing={1}>
-                    { session.participants.filter(p => p.vote == session.noVote?.id).map(p => getAvatar(p)) }
+                    { session.participants.filter(p => p.vote == session.noVote?.id).map(p => getAvatar(p, p.id == session.participantId)) }
                 </Stack>
             </Stack>
         </Stack>
