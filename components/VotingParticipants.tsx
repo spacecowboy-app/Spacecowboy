@@ -40,7 +40,7 @@ export default function VotingParticipants(): JSX.Element
         </Stack>
     );
 
-    const participants = Array.from(session.participants).sort((p1, p2) => p1.avatar.name.localeCompare(p2.avatar.name));
+    const participants = Array.from(session.participants).sort((p1, p2) => p1.id == session.participantId ? -1 : p1.avatar.name.localeCompare(p2.avatar.name));
 
     return (
         <Stack spacing={4} direction="row" divider={<Divider orientation="vertical" role="presentation" variant="middle" flexItem />}>
