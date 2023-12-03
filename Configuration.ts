@@ -14,6 +14,9 @@
     limitations under the License.
 */
 
+import log, { LogLevelDesc } from "loglevel";
+
+
 export default class Configuration
 {
     public static readonly ApiBase?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE;
@@ -22,4 +25,25 @@ export default class Configuration
 
     /** Prefix for all keys used when storing state in the browser using localStorage or sessionStorage. */
     public static readonly BrowserStorageKeyPrefix = "spacecowboy1";
+
+    /** The application logging level */
+    public static LogLevel(): LogLevelDesc
+    {
+        if (process.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL) {
+            switch (process.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL.toUpperCase()) {
+                case "ERROR":
+                    return log.levels.ERROR;
+                case "WARNING":
+                    return log.levels.WARN;
+                case "INFO":
+                    return log.levels.INFO;
+                case "DEBUG":
+                    return log.levels.DEBUG;
+                default:
+                    return log.levels.SILENT;
+            }
+        }
+        return log.levels.SILENT;
+    }
+
 }

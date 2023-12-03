@@ -36,9 +36,7 @@ import ServiceEvents, { ServiceEventsContext } from "@/service/ServiceEvents";
 import "../styles/globals.css";
 
 
-// TODO: Fix hardcoded loglevel
-log.setLevel(log.levels.TRACE);
-
+log.setLevel(Configuration.LogLevel());
 log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
 
