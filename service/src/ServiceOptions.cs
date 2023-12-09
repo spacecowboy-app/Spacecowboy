@@ -14,6 +14,9 @@
     limitations under the License.
 */
 
+using System;
+
+
 namespace Spacecowboy.Service
 {
     /// <summary>
@@ -33,7 +36,8 @@ namespace Spacecowboy.Service
 
         /// <summary>
         /// Name of this instance of the service.  Each running instance has a unique name.
+        /// Defaults to the hostname.
         /// </summary>
-        public string? InstanceName { get; init; }
+        public string? InstanceName { get; init; } = Environment.GetEnvironmentVariable("HOSTNAME");
     }
 }
