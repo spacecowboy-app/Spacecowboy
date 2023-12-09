@@ -22,10 +22,10 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import Image from "next/image";
-
 import CardModel, { CardStyle } from "@/model/Card";
 import Constants from "@/constants";
+
+/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {
@@ -106,7 +106,7 @@ export default function Card(props: Props): JSX.Element
         return (
             <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
-                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
+                <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
     }
@@ -116,7 +116,7 @@ export default function Card(props: Props): JSX.Element
     {
         return (
             <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
-                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
+                <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
             </Stack>
         );
@@ -128,7 +128,7 @@ export default function Card(props: Props): JSX.Element
     {
         return (
             <Stack alignItems="center" justifyContent="center">
-                <Image src={`${Constants.CardsPath}${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
+                <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
     }

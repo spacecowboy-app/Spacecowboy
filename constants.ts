@@ -29,8 +29,8 @@ export default class Constants
     public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "top", horizontal: "center" };
 
     /** Path to decks assets. */
-    public static readonly CardsPath = "/assets/decks/";
+    public static readonly CardsPath = "/resources/decks";
 
     /** Path to charm assets. */
-    public static readonly CharmsPath = "/assets/charms";
+    public static readonly CharmsPath = "/resources/charms";
 }
