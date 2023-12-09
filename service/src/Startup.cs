@@ -42,11 +42,15 @@ namespace Spacecowboy.Service
 
         public IConfiguration Configuration { get; }
 
+        private ServiceOptions serviceOptions = new ServiceOptions();
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var serviceOptions = Configuration.GetSection(ServiceOptions.Service);
-            services.Configure<ServiceOptions>(serviceOptions);
+            var configuration = Configuration.GetSection(ServiceOptions.Service);
+            services.Configure<ServiceOptions>(configuration);
+            configuration.Bind(serviceOptions);
 
             services.AddControllers();
 
@@ -58,9 +62,9 @@ namespace Spacecowboy.Service
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v0", new OpenApiInfo 
-                { 
-                    Title = "Spacecowboy API", 
+                c.SwaggerDoc("v0", new OpenApiInfo
+                {
+                    Title = "Spacecowboy API",
                     Version = "v0",
                     Description = "API for agile decision making in distributed teams",
                     Contact = new OpenApiContact
@@ -80,7 +84,7 @@ namespace Spacecowboy.Service
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            var repositoryType = serviceOptions["RepositoryType"]?.ToLower();
+            var repositoryType = serviceOptions.RepositoryType?.ToLower();
             switch (repositoryType)
             {
                 case "redis":
@@ -113,7 +117,7 @@ namespace Spacecowboy.Service
             });
 
             /* Set the service instance name as a label on all metrics published. */
-            var instanceName = serviceOptions["InstanceName"];
+            var instanceName = serviceOptions.InstanceName;
             if (instanceName != null)
             {
                 Metrics.DefaultRegistry.SetStaticLabels(new Dictionary<string, string>
@@ -139,6 +143,7 @@ namespace Spacecowboy.Service
 
             app.UseSerilogRequestLogging();
             app.UseRouting();
+            app.UseStaticFiles();
             app.UseHttpMetrics();                   // Export HTTP metrics to Prometheus
 
             if (env.IsDevelopment())
