@@ -58,9 +58,9 @@ namespace Spacecowboy.Service
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v0", new OpenApiInfo 
-                { 
-                    Title = "Spacecowboy API", 
+                c.SwaggerDoc("v0", new OpenApiInfo
+                {
+                    Title = "Spacecowboy API",
                     Version = "v0",
                     Description = "API for agile decision making in distributed teams",
                     Contact = new OpenApiContact
@@ -139,6 +139,7 @@ namespace Spacecowboy.Service
 
             app.UseSerilogRequestLogging();
             app.UseRouting();
+            app.UseStaticFiles();
             app.UseHttpMetrics();                   // Export HTTP metrics to Prometheus
 
             if (env.IsDevelopment())
