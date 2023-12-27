@@ -13,12 +13,14 @@ RUN npm ci
 FROM base AS builder
 ARG VERSION=development
 ARG APIBASE=""
+ARG LOGLEVEL="warning"
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_PUBLIC_SPACECOWBOY_VERSION=$VERSION
 ENV NEXT_PUBLIC_SPACECOWBOY_API_BASE=$APIBASE
+ENV NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL=$LOGLEVEL
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
