@@ -15,6 +15,7 @@
 */
 
 import { SnackbarOrigin } from "@mui/material/Snackbar";
+import Configuration from "./Configuration";
 
 
 export default class Constants
@@ -29,8 +30,8 @@ export default class Constants
     public static readonly SnackbarAnchor: SnackbarOrigin = { vertical: "top", horizontal: "center" };
 
     /** Path to decks assets. */
-    public static readonly CardsPath = "/resources/decks";
+    public static readonly CardsPath = `${Configuration.ApiBase}/resources/decks`;
 
     /** Path to charm assets. */
-    public static readonly CharmsPath = "/resources/charms";
+    public static readonly CharmsPath = `${Configuration.ApiBase}/resources/charms`;
 }
