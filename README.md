@@ -50,7 +50,7 @@ Building and running the service locally requires [docker](https://www.docker.co
 Checkout everything you need with:
 
 ```bash
-git clone --recurse-submodules https://github.com/spacecowboy-app/spacecowboy-app.git
+git clone --recurse-submodules https://github.com/spacecowboy-app/Spacecowboy.git
 ```
 
 The app and service run together as a set of docker-compose services.  To build and start the services, execute the following command from the repository root:
