@@ -12,5 +12,10 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   spacecowboys-app:
+    build:
+      context: ./app
+      args:
+        APIBASE: "http://localhost:5000"
+        LOGLEVEL: "debug"
     ports:
-      - 8000:80
+      - 8000:3000

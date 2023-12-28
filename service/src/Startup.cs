@@ -108,7 +108,7 @@ namespace Spacecowboy.Service
             {
                 options.AddPolicy("DevCorsPolicy",
                     builder => {
-                        builder.WithOrigins("http://localhost:3000")
+                        builder.WithOrigins("http://localhost:3000", "http://localhost:8000")
                         .AllowAnyHeader()
                         .AllowCredentials()
                         .AllowAnyMethod();

@@ -1,7 +1,7 @@
 Spacecowboy
 ===========
 
-*Lightweight decision making for distributed agile teams.*
+*Lightweight decision-making for distributed agile teams.*
 
 
 What is it?
@@ -47,6 +47,12 @@ Running locally
 
 Building and running the service locally requires [docker](https://www.docker.com/) to be installed on your system.
 
+Checkout everything you need with:
+
+```bash
+git clone --recurse-submodules https://github.com/spacecowboy-app/spacecowboy-app.git
+```
+
 The app and service run together as a set of docker-compose services.  To build and start the services, execute the following command from the repository root:
 
 ```bash
@@ -61,24 +67,7 @@ To stop the system again:
 docker compose down
 ```
 
-For quick development iterations, it is most convenient to run the system without containerizing to avoid the significant overhead of rebuilding container images for every minor change.
-
-From the project root, start the service with:
-
-```bash
-dotnet run service\Service.csproj
-```
-
-Start the application with:
-
-```bash
-cd app
-npm install
-npm start
-```
-
-In this case, both the service and the application will be configured for development mode.  For the service this means that CORS headers will be generated allowing cross origin requests for localhost clients.  For the application, it will be configured to access the service at http://localhost:5000, as defined in *.env.development*.
-
+Let us know if you have any questions or comments.
 
 ---
 
