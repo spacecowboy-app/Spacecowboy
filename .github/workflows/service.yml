@@ -1,0 +1,30 @@
+name: Spacecowboy service tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore service dependencies
+      run: dotnet restore ./src/Service.csproj
+    - name: Build service
+      run: dotnet build ./src/Service.csproj --no-restore
+    - name: Restore test dependencies
+      run: dotnet restore ./test/Service.Test.csproj
+    - name: Build tests
+      run: dotnet build ./test/Service.Test.csproj --no-restore
+    - name: Run tests
+      run: dotnet test ./test/Service.Test.csproj --no-build --verbosity normal
