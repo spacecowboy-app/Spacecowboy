@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
     /// Exception thrown when trying to access a card that does not exist in the session

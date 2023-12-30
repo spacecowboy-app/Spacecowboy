@@ -17,7 +17,7 @@
 using System.Collections.Generic;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Entities
 {
     /// <summary>
     /// Represents deck of cards

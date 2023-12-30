@@ -17,7 +17,7 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
     /// Exception thrown when trying to retrieve a session that does not exist

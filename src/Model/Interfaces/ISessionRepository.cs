@@ -17,9 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Spacecowboy.Service.Model.Entities;
+using Spacecowboy.Service.Model.Exceptions;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Interfaces
 {
     /// <summary>
     /// Repository for voting sessions

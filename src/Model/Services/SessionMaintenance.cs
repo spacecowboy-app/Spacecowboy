@@ -14,13 +14,14 @@
     limitations under the License.
 */
 
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Spacecowboy.Service.Model.Interfaces;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Services
 {
     /// <summary>
     /// Service for maintenance tasks across all sessions

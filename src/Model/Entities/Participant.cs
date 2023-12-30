@@ -17,7 +17,7 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Entities
 {
     /// <summary>
     /// A participant in a session

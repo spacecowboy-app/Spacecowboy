@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Entities
 {
     /// <summary>
     /// A collection of session metrics

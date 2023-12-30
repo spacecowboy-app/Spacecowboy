@@ -18,9 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Spacecowboy.Service.Model.Exceptions;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Entities
 {
     /// <summary>
     /// A session

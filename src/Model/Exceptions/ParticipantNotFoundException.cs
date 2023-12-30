@@ -17,7 +17,7 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
     /// Exception thrown when trying to access a participant that does not exist in the session
@@ -29,7 +29,7 @@ namespace Spacecowboy.Service.Model
         /// </summary>
         /// <param name="sessionId">Session identifier</param>
         /// <param name="participantId">Participant identifier</param>
-        public ParticipantNotFoundException(string sessionId, Guid participantId) 
+        public ParticipantNotFoundException(string sessionId, Guid participantId)
             : base($"Participant {participantId} does not exist in session {sessionId}") { }
 
     }

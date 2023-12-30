@@ -17,7 +17,7 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
     /// Exception thrown when attempting to create a session with an invalid identifier
