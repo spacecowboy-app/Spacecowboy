@@ -18,73 +18,39 @@
 using System.ComponentModel.DataAnnotations;
 using Spacecowboy.Service.Model.Entities;
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// Information about the session to be created
+/// </summary>
+public record CreateSessionRequest
 {
     /// <summary>
-    /// Information about the session to be created
+    /// Globally unique session identifier
     /// </summary>
-    public record CreateSessionRequest
-    {
-        /// <summary>
-        /// Globally unique session identifier
-        /// </summary>
-        [Required]
-        public required string Id { get; init; }
+    [Required]
+    public required string Id { get; init; }
 
-        /// <summary>
-        /// List of session participants
-        /// </summary>
-        public CreateParticipantRequest[]? Participants { get; init; }
+    /// <summary>
+    /// List of session participants
+    /// </summary>
+    public CreateParticipantRequest[]? Participants { get; init; }
 
 
-        /// <summary>
-        /// List of session cards
-        /// </summary>
-        public CreateCardRequest[]? Cards { get; init; }
+    /// <summary>
+    /// List of session cards
+    /// </summary>
+    public CreateCardRequest[]? Cards { get; init; }
 
-        /// <summary>
-        /// A card used to represent a vote that has not yet been cast
-        /// </summary>
-        public Card? NoVote { get; init; }
+    /// <summary>
+    /// A card used to represent a vote that has not yet been cast
+    /// </summary>
+    public Card? NoVote { get; init; }
 
-        /// <summary>
-        /// A card used to represent a vote that has not yet been revealed
-        /// </summary>
-        public Card? NotRevealed { get; init; }
+    /// <summary>
+    /// A card used to represent a vote that has not yet been revealed
+    /// </summary>
+    public Card? NotRevealed { get; init; }
 
-
-        // TODO: This method should be replaced with a proper Automapper configuration
-        public Session GetSession()
-        {
-            Session session = new Session(Id);
-            AddParticipants(session, Participants);
-            AddCards(session, Cards);
-            return session;
-        }
-
-
-        private void AddParticipants(Session session, CreateParticipantRequest[]? participants)
-        {
-            if (participants != null)
-            {
-                foreach (var p in participants)
-                {
-                    session.AddParticipant(new Participant(p.Name, p.Avatar, p.Color));
-                }
-            }
-        }
-
-
-        private void AddCards(Session session, CreateCardRequest[]? cards)
-        {
-            if (cards != null)
-            {
-                foreach (var c in cards)
-                {
-                    session.AddCard(new Card(c.Value, c.Image, c.Color, c.Font, c.Style));
-                }
-            }
-        }
-
-    }
 }
+
