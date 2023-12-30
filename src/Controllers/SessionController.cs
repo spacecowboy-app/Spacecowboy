@@ -14,6 +14,9 @@
     limitations under the License.
 */
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +26,11 @@ using Prometheus;
 using Spacecowboy.Service.Controllers.DTO;
 using Spacecowboy.Service.Controllers.DTO.Errors;
 using Spacecowboy.Service.Controllers.Hubs;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
+using Spacecowboy.Service.Model.Exceptions;
+using Spacecowboy.Service.Model.Interfaces;
+using Spacecowboy.Service.Model.Services;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace Spacecowboy.Service.Controllers

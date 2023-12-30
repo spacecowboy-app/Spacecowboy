@@ -15,8 +15,8 @@
 */
 
 
-using Spacecowboy.Service.Model;
 using System.ComponentModel.DataAnnotations;
+using Spacecowboy.Service.Model.Entities;
 
 namespace Spacecowboy.Service.Controllers.DTO
 {

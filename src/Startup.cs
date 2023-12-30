@@ -24,7 +24,7 @@ using Prometheus;
 using Serilog;
 using Spacecowboy.Service.Controllers.Hubs;
 using Spacecowboy.Service.Infrastructure;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
