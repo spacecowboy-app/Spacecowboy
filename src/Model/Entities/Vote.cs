@@ -17,17 +17,23 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Entities;
+
+/// <summary>
+/// A vote in a session
+/// </summary>
+/// <remarks>
+/// A vote is a specific Card cast by a specific Participant.
+/// </remarks>
+public class Vote
 {
-    /// <summary>
-    /// Exception thrown when trying to create a new session using an ID that is already in use
-    /// </summary>
-    public class SessionExistsException : Exception
+    public Participant Participant { get; private set; }
+
+    public Card Card { get; private set; }
+
+    public Vote(Participant participant, Card card)
     {
-        /// <summary>
-        /// Create exception to signal that a session identifier already is in use
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        public SessionExistsException(string sessionId) : base($"Session {sessionId} already exists") { }
+        Participant = participant ?? throw new ArgumentNullException(nameof(participant));
+        Card = card ?? throw new ArgumentNullException(nameof(card));
     }
 }

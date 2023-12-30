@@ -14,12 +14,13 @@
     limitations under the License.
 */
 
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Spacecowboy.Service.Controllers.DTO;
-using Spacecowboy.Service.Model;
-using System;
-using System.Threading.Tasks;
+using Spacecowboy.Service.Model.Exceptions;
+using Spacecowboy.Service.Model.Interfaces;
 
 
 namespace Spacecowboy.Service.Controllers.Hubs

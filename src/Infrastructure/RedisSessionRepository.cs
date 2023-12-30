@@ -14,16 +14,18 @@
     limitations under the License.
 */
 
-using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Spacecowboy.Service.Infrastructure.DTO;
-using Spacecowboy.Service.Model;
-using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.Extensions.Logging;
+using Spacecowboy.Service.Infrastructure.DTO;
+using Spacecowboy.Service.Model.Entities;
+using Spacecowboy.Service.Model.Exceptions;
+using Spacecowboy.Service.Model.Interfaces;
+using StackExchange.Redis;
 
 
 

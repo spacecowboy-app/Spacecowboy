@@ -15,7 +15,7 @@
 */
 
 using FluentAssertions;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 
@@ -26,7 +26,7 @@ namespace Spacecowboy.Service.Test.Model
         [Fact]
         public void Create_ReturnsValidEntity()
         {
-            var participant = new Spacecowboy.Service.Model.Participant("Dirty Harry", "dirty.png", "black");
+            var participant = new Participant("Dirty Harry", "dirty.png", "black");
             participant.Id.Should().NotBeEmpty();
             participant.Name.Should().Be("Dirty Harry");
             participant.Avatar.Should().Be("dirty.png");

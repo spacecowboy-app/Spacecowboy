@@ -16,7 +16,7 @@
 
 using AutoMapper;
 using Spacecowboy.Service.Controllers.DTO;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
 using System;
 
 

@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-using Spacecowboy.Service.Model;
 using System;
+using Spacecowboy.Service.Model.Entities;
 
 
 namespace Spacecowboy.Service.Controllers.DTO

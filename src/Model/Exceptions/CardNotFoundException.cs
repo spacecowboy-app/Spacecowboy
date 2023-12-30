@@ -16,25 +16,20 @@
 
 using System;
 
-
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
-    /// A vote in a session
+    /// Exception thrown when trying to access a card that does not exist in the session
     /// </summary>
-    /// <remarks>
-    /// A vote is a specific Card cast by a specific Participant.
-    /// </remarks>
-    public class Vote
+    public class CardNotFoundException : Exception
     {
-        public Participant Participant { get; private set; }
+        /// <summary>
+        /// Create exception to signal that a card does not exist in session
+        /// </summary>
+        /// <param name="sessionId">Session identifier</param>
+        /// <param name="cardId">Card identifier</param>
+        public CardNotFoundException(string sessionId, Guid cardId)
+            : base($"Card {cardId} does not exist in session {sessionId}") { }
 
-        public Card Card { get; private set; }
-
-        public Vote(Participant participant, Card card)
-        {
-            Participant = participant ?? throw new ArgumentNullException(nameof(participant));
-            Card = card ?? throw new ArgumentNullException(nameof(card));
-        }
     }
 }

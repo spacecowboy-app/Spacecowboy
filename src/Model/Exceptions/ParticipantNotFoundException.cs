@@ -17,13 +17,20 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
-    /// Exception thrown when attempting to create a session with an invalid identifier
+    /// Exception thrown when trying to access a participant that does not exist in the session
     /// </summary>
-    public class InvalidSessionIdException : Exception
+    public class ParticipantNotFoundException : Exception
     {
-        public InvalidSessionIdException(string sessionId) : base($"Session {sessionId} is invalid") { }
+        /// <summary>
+        /// Create exception to signal that a participant does not exist in session
+        /// </summary>
+        /// <param name="sessionId">Session identifier</param>
+        /// <param name="participantId">Participant identifier</param>
+        public ParticipantNotFoundException(string sessionId, Guid participantId)
+            : base($"Participant {participantId} does not exist in session {sessionId}") { }
+
     }
 }

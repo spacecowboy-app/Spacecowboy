@@ -14,21 +14,18 @@
     limitations under the License.
 */
 
-using System;
+namespace Spacecowboy.Service.Model.Entities;
 
-
-namespace Spacecowboy.Service.Model
+/// <summary>
+/// A collection of session metrics
+/// </summary>
+public class SessionMetrics
 {
     /// <summary>
-    /// Exception thrown when trying to retrieve a session that does not exist
+    /// The total number of sessions ever created
     /// </summary>
-    public class SessionNotFoundException : Exception
-    {
-        /// <summary>
-        /// Create exception to signal that a session does not exist
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        public SessionNotFoundException(string sessionId) : base($"Session {sessionId} does not exist") { }
+    public int TotalSessions { get; init; } = 0;
 
-    }
+
+    public SessionMetrics() { }
 }

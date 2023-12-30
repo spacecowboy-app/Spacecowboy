@@ -24,7 +24,7 @@ using Spacecowboy.Service.Controllers.DTO;
 using Spacecowboy.Service.Controllers.DTO.Errors;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Infrastructure.DTO;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Xunit;

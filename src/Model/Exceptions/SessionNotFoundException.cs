@@ -16,20 +16,19 @@
 
 using System;
 
-namespace Spacecowboy.Service.Model
+
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
-    /// Exception thrown when trying to access a card that does not exist in the session
+    /// Exception thrown when trying to retrieve a session that does not exist
     /// </summary>
-    public class CardNotFoundException : Exception
+    public class SessionNotFoundException : Exception
     {
         /// <summary>
-        /// Create exception to signal that a card does not exist in session
+        /// Create exception to signal that a session does not exist
         /// </summary>
         /// <param name="sessionId">Session identifier</param>
-        /// <param name="cardId">Card identifier</param>
-        public CardNotFoundException(string sessionId, Guid cardId)
-            : base($"Card {cardId} does not exist in session {sessionId}") { }
+        public SessionNotFoundException(string sessionId) : base($"Session {sessionId} does not exist") { }
 
     }
 }

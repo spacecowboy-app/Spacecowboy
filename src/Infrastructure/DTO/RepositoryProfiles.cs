@@ -15,7 +15,7 @@
 */
 
 using AutoMapper;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
 
 
 namespace Spacecowboy.Service.Infrastructure.DTO

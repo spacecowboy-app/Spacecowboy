@@ -14,19 +14,20 @@
     limitations under the License.
 */
 
-namespace Spacecowboy.Service.Model
+using System;
+
+
+namespace Spacecowboy.Service.Model.Exceptions
 {
     /// <summary>
-    /// A collection of session metrics
+    /// Exception thrown when trying to create a new session using an ID that is already in use
     /// </summary>
-    public class SessionMetrics
+    public class SessionExistsException : Exception
     {
         /// <summary>
-        /// The total number of sessions ever created
+        /// Create exception to signal that a session identifier already is in use
         /// </summary>
-        public int TotalSessions { get; init; } = 0;
-
-
-        public SessionMetrics() { }
+        /// <param name="sessionId">Session identifier</param>
+        public SessionExistsException(string sessionId) : base($"Session {sessionId} already exists") { }
     }
 }

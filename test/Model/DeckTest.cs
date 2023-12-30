@@ -15,7 +15,7 @@
 */
 
 using FluentAssertions;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 

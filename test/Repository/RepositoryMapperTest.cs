@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
+using System;
+using System.Collections.Generic;
 using AutoMapper;
 using FluentAssertions;
 using Spacecowboy.Service.Infrastructure.DTO;
-using Spacecowboy.Service.Model;
-using System;
-using System.Collections.Generic;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 
