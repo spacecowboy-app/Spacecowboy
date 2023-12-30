@@ -17,24 +17,23 @@
 using System;
 
 
-namespace Spacecowboy.Service.Model.Entities
+namespace Spacecowboy.Service.Model.Entities;
+
+/// <summary>
+/// A vote in a session
+/// </summary>
+/// <remarks>
+/// A vote is a specific Card cast by a specific Participant.
+/// </remarks>
+public class Vote
 {
-    /// <summary>
-    /// A vote in a session
-    /// </summary>
-    /// <remarks>
-    /// A vote is a specific Card cast by a specific Participant.
-    /// </remarks>
-    public class Vote
+    public Participant Participant { get; private set; }
+
+    public Card Card { get; private set; }
+
+    public Vote(Participant participant, Card card)
     {
-        public Participant Participant { get; private set; }
-
-        public Card Card { get; private set; }
-
-        public Vote(Participant participant, Card card)
-        {
-            Participant = participant ?? throw new ArgumentNullException(nameof(participant));
-            Card = card ?? throw new ArgumentNullException(nameof(card));
-        }
+        Participant = participant ?? throw new ArgumentNullException(nameof(participant));
+        Card = card ?? throw new ArgumentNullException(nameof(card));
     }
 }

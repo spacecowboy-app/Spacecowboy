@@ -17,57 +17,56 @@
 using System.Collections.Generic;
 
 
-namespace Spacecowboy.Service.Model.Entities
+namespace Spacecowboy.Service.Model.Entities;
+
+/// <summary>
+/// Represents deck of cards
+/// </summary>
+public class Deck
 {
+    private List<Card> cards;
+
     /// <summary>
-    /// Represents deck of cards
+    /// The name of the deck of cards (or null)
     /// </summary>
-    public class Deck
+    public string Name { get; private set; }
+
+    /// <summary>
+    /// The type of deck of cards (or null)
+    /// </summary>
+    public string Type { get; private set; }
+
+    /// <summary>
+    /// The cards in this deck
+    /// </summary>
+    public IReadOnlyCollection<Card> Cards { get => cards.AsReadOnly(); }
+
+    /// <summary>
+    /// A card used to represent a vote that has not yet been cast
+    /// </summary>
+    public Card NoVote { get; private set; }
+
+
+    /// <summary>
+    /// A card used to represent a vote that has not been revealed
+    /// </summary>
+    public Card NotRevealed { get; private set; }
+
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="name">Deck name</param>
+    /// <param name="type">Deck type</param>
+    /// <param name="cards">Deck cards</param>
+    /// <param name="noVote">Card representing no vote cast</param>
+    /// <param name="notRevealed">Card representing a vote not revealed</param>
+    public Deck(string name, string type, IEnumerable<Card> cards, Card noVote, Card notRevealed)
     {
-        private List<Card> cards;
-
-        /// <summary>
-        /// The name of the deck of cards (or null)
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// The type of deck of cards (or null)
-        /// </summary>
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// The cards in this deck
-        /// </summary>
-        public IReadOnlyCollection<Card> Cards { get => cards.AsReadOnly(); }
-
-        /// <summary>
-        /// A card used to represent a vote that has not yet been cast
-        /// </summary>
-        public Card NoVote { get; private set; }
-
-
-        /// <summary>
-        /// A card used to represent a vote that has not been revealed
-        /// </summary>
-        public Card NotRevealed { get; private set; }
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name">Deck name</param>
-        /// <param name="type">Deck type</param>
-        /// <param name="cards">Deck cards</param>
-        /// <param name="noVote">Card representing no vote cast</param>
-        /// <param name="notRevealed">Card representing a vote not revealed</param>
-        public Deck(string name, string type, IEnumerable<Card> cards, Card noVote, Card notRevealed)
-        {
-            Name = name;
-            Type = type;
-            NoVote = noVote;
-            NotRevealed = notRevealed;
-            this.cards = new List<Card>(cards);
-        }
+        Name = name;
+        Type = type;
+        NoVote = noVote;
+        NotRevealed = notRevealed;
+        this.cards = new List<Card>(cards);
     }
 }

@@ -14,19 +14,18 @@
     limitations under the License.
 */
 
-namespace Spacecowboy.Service.Model.Entities
+namespace Spacecowboy.Service.Model.Entities;
+
+/// <summary>
+/// A collection of session metrics
+/// </summary>
+public class SessionMetrics
 {
     /// <summary>
-    /// A collection of session metrics
+    /// The total number of sessions ever created
     /// </summary>
-    public class SessionMetrics
-    {
-        /// <summary>
-        /// The total number of sessions ever created
-        /// </summary>
-        public int TotalSessions { get; init; } = 0;
+    public int TotalSessions { get; init; } = 0;
 
 
-        public SessionMetrics() { }
-    }
+    public SessionMetrics() { }
 }
