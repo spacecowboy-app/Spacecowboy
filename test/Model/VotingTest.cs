@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
-using FluentAssertions;
-using Spacecowboy.Service.Model;
 using System;
 using System.Linq;
+using FluentAssertions;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 
@@ -64,7 +64,7 @@ namespace Spacecowboy.Service.Test.Model
             session.GetVotes().Should().BeEmpty();
         }
 
-        
+
         [Fact]
         public void GetVotesReturnsVotes()
         {

@@ -14,13 +14,14 @@
     limitations under the License.
 */
 
+using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Infrastructure.DTO;
-using Spacecowboy.Service.Model;
-using System;
-using System.Threading.Tasks;
+using Spacecowboy.Service.Model.Entities;
+using Spacecowboy.Service.Model.Exceptions;
 using Xunit;
 
 

@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-using FluentAssertions;
-using Spacecowboy.Service.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 
@@ -29,7 +29,7 @@ namespace Spacecowboy.Service.Test.Model
         [Fact]
         public void Create_ReturnsEmptySession()
         {
-            var session = new Spacecowboy.Service.Model.Session("foo-bar");
+            var session = new Session("foo-bar");
             session.Id.Should().Be("foo-bar");
             session.CreateTime.Should().BeOnOrBefore(DateTime.UtcNow);
             session.GetParticipants().Should().BeEmpty();

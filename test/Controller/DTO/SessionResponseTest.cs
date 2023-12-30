@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
+using System.Linq;
 using FluentAssertions;
 using Spacecowboy.Service.Controllers.DTO;
-using Spacecowboy.Service.Model;
-using System.Linq;
+using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
 

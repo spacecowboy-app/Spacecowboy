@@ -17,7 +17,7 @@
 using AutoMapper;
 using FluentAssertions;
 using Spacecowboy.Service.Controllers.DTO;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Entities;
 using System.Linq;
 using Xunit;
 

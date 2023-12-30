@@ -15,23 +15,16 @@
 */
 
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Spacecowboy.Service.Controllers;
 using Spacecowboy.Service.Controllers.DTO;
-using Spacecowboy.Service.Controllers.DTO.Errors;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Infrastructure.DTO;
-using Spacecowboy.Service.Model;
+using Spacecowboy.Service.Model.Interfaces;
 
 
 namespace Spacecowboy.Service.Test.Controller
