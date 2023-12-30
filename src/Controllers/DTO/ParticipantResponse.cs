@@ -18,61 +18,62 @@ using System;
 using Spacecowboy.Service.Model.Entities;
 
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// Information about a participant.
+/// </summary>
+public record ParticipantResponse
 {
-    public record ParticipantResponse
+    /// <summary>
+    /// Globally unique participant identifier
+    /// </summary>
+    public Guid Id { get; init; }
+
+    /// <summary>
+    /// Participant name
+    /// </summary>
+    public string Name { get; init; }
+
+
+    /// <summary>
+    /// Participant avatar
+    /// </summary>
+    public string? Avatar { get; init; }
+
+
+    /// <summary>
+    /// Participant color
+    /// </summary>
+    public string? Color { get; init; }
+
+
+    /// <summary>
+    /// Participant idle time (in seconds)
+    /// </summary>
+    public double Idle { get; init; }
+
+
+    /// <summary>
+    /// ID of card representing this participant's vote
+    /// </summary>
+    /// <remarks>
+    /// This ID will always reference a card that exists in the session.  It can be the novote or notrevealed cards.
+    /// It can be <c>null</c> if cards have not been defined for the session, yet.
+    /// </remarks>
+    public Guid? Vote { get; init; }
+
+
+    /// <summary>
+    /// Create a ParticipantReponse from Participant, adding an explicit vote
+    /// </summary>
+    public ParticipantResponse(Participant participant, Guid? vote)
     {
-        /// <summary>
-        /// Globally unique participant identifier
-        /// </summary>
-        public Guid Id { get; init; }
-
-        /// <summary>
-        /// Participant name
-        /// </summary>
-        public string Name { get; init; }
-
-
-        /// <summary>
-        /// Participant avatar
-        /// </summary>
-        public string? Avatar { get; init; }
-
-
-        /// <summary>
-        /// Participant color
-        /// </summary>
-        public string? Color { get; init; }
-
-
-        /// <summary>
-        /// Participant idle time (in seconds)
-        /// </summary>
-        public double Idle { get; init; }
-
-
-        /// <summary>
-        /// ID of card representing this participant's vote
-        /// </summary>
-        /// <remarks>
-        /// This ID will always reference a card that exists in the session.  It can be the novote or notrevealed cards.
-        /// It can be <c>null</c> if cards have not been defined for the session, yet.
-        /// </remarks>
-        public Guid? Vote { get; init; }
-
-
-        /// <summary>
-        /// Create a ParticipantReponse from Participant, adding an explicit vote
-        /// </summary>
-        // TODO Consider removing the constructor and use initializers instead.
-        public ParticipantResponse(Participant participant, Guid? vote)
-        {
-            Id = participant.Id;
-            Name = participant.Name;
-            Avatar = participant.Avatar;
-            Color = participant.Color;
-            Idle = participant.Idle;
-            Vote = vote;
-        }
+        Id = participant.Id;
+        Name = participant.Name;
+        Avatar = participant.Avatar;
+        Color = participant.Color;
+        Idle = participant.Idle;
+        Vote = vote;
     }
 }

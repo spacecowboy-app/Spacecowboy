@@ -18,62 +18,60 @@ using System;
 using Spacecowboy.Service.Model.Entities;
 
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// A card that can be used for casing a vote
+/// </summary>
+public record CardResponse
 {
     /// <summary>
-    /// A card that can be used for casing a vote
+    /// Card identifier
     /// </summary>
-    // TODO Convert this class to a record.
-    public class CardResponse
+    public Guid Id { get; init; }
+
+    /// <summary>
+    /// Card value
+    /// </summary>
+    public string? Value { get; init; }
+
+    /// <summary>
+    /// Reference to an image representing the card
+    /// </summary>
+    public string? Image { get; init; }
+
+    /// <summary>
+    /// Reference to a color for the card
+    /// </summary>
+    public string? Color { get; init; }
+
+    /// <summary>
+    /// Reference to card font
+    /// </summary>
+    public string? Font { get; init; }
+
+
+    /// <summary>
+    /// Card style identifier
+    /// </summary>
+    public string? Style { get; init; }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public CardResponse() { }
+
+
+    /// <summary>
+    /// Create a CardResponse from a Card
+    /// </summary>
+    public CardResponse(Card card)
     {
-        /// <summary>
-        /// Card identifier
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Card value
-        /// </summary>
-        public string? Value { get; set; }
-
-        /// <summary>
-        /// Reference to an image representing the card
-        /// </summary>
-        public string? Image { get; set; }
-
-        /// <summary>
-        /// Reference to a color for the card
-        /// </summary>
-        public string? Color { get; set; }
-
-        /// <summary>
-        /// Reference to card font
-        /// </summary>
-        public string? Font { get; set; }
-
-
-        /// <summary>
-        /// Card style identifier
-        /// </summary>
-        public string? Style { get; set; }
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public CardResponse() { }
-
-
-        /// <summary>
-        /// Create a CardResponse from a Card
-        /// </summary>
-        public CardResponse(Card card)
-        {
-            Id = card.Id;
-            Value = card.Value;
-            Image = card.Image;
-            Color = card.Color;
-            Font = card.Font;
-            Style = card.Style;
-        }
+        Id = card.Id;
+        Value = card.Value;
+        Image = card.Image;
+        Color = card.Color;
+        Font = card.Font;
+        Style = card.Style;
     }
 }
