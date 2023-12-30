@@ -25,44 +25,52 @@ namespace Spacecowboy.Service.Model.Entities;
 /// <remarks>
 /// A session contains a set of voting cards.  Each vote must be one of the permitted voting cards.
 /// </remarks>
-// TODO Convert this class to a record.
-public class Card
+public record Card
 {
     /// <summary>
     /// Vote card ID
     /// </summary>
-    public Guid Id { get; private set; }
+    public Guid Id { get; private init; }
 
 
     /// <summary>
     /// Vote card value
     /// </summary>
-    public string? Value { get; private set; }
+    public string? Value { get; private init; }
 
 
     /// <summary>
     /// Reference to image associated with this card
     /// </summary>
-    public string? Image { get; private set; }
+    public string? Image { get; private init; }
 
 
     /// <summary>
     /// Reference to card color
     /// </summary>
-    public string? Color { get; private set; }
+    public string? Color { get; private init; }
 
 
     /// <summary>
     /// Reference to card font
     /// </summary>
-    public string? Font { get; private set; }
+    public string? Font { get; private init; }
 
 
     /// <summary>
     /// Card style identifier
     /// </summary>
-    public string? Style { get; private set; }
+    public string? Style { get; private init; }
 
+
+    /// <summary>
+    /// Create a card entity.
+    /// </summary>
+    /// <param name="value">Card value</param>
+    /// <param name="image">Card image</param>
+    /// <param name="color">Card color</param>
+    /// <param name="font">Card font</param>
+    /// <param name="style">Card style</param>
     public Card(string? value, string? image, string? color, string? font, string? style)
     {
         Id = Guid.NewGuid();
