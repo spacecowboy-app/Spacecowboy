@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2023 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2024 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ namespace Spacecowboy.Service
     /// </remarks>
     public class GenerateSessionName
     {
-        private static readonly string[] descriptions = { 
-            "lovely", "gloomy", "happy", "boring", "exciting", "adventurous", "moody", "scary", 
+        private static readonly string[] descriptions = {
+            "lovely", "gloomy", "happy", "boring", "exciting", "adventurous", "moody", "scary",
             "caring", "noisy", "quiet", "crowded", "lonely", "romantic", "cold", "hot", "misty", "faraway"
          };
 
