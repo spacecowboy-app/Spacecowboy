@@ -49,7 +49,7 @@ export default function ApplicationFooter(): JSX.Element
                         <Typography variant="h4">Space Cowboy</Typography>
                         <Typography variant="body1" pt={1}>The place in space for fast decisions <br/> and great collaboration on the world wild web and the galaxy</Typography>
                         <Typography variant="body1" pt={1}>No warranty. No personal data collected.</Typography>
-                        <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023 Rolf Michelsen and Tami Weiss</Typography>
+                        <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2024 Rolf Michelsen and Tami Weiss</Typography>
                         <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
                     </Box>
                 </Grid>
@@ -73,7 +73,7 @@ export default function ApplicationFooter(): JSX.Element
         return (
             <Stack borderTop={1} mt={6} pt={1} pl={2} pr={2}>
                 <Typography variant="h4">Space Cowboy</Typography>
-                <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2023</Typography>
+                <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2024</Typography>
                 <Typography variant="subtitle1" pt={0} pb={0}>Rolf Michelsen and Tami Weiss</Typography>
                 <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
                 <Link href="mailto:howdy@spacecowboy.app" variant="subtitle1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
