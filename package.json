@@ -40,7 +40,6 @@
     "@microsoft/signalr": "^7.0.7",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
-    "@next/font": "^14.2.3",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
