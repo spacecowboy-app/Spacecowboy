@@ -3,7 +3,7 @@
 {
 	"name": "spacecowboy-app",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:0-18",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:20",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -22,9 +22,7 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"mhutchie.git-graph",
-				"orta.vscode-jest",
-				"gruntfuggly.todo-tree"
+				"orta.vscode-jest"
 			]
 		}
 	}
