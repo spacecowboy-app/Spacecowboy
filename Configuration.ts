@@ -19,7 +19,7 @@ import log, { LogLevelDesc } from "loglevel";
 
 export default class Configuration
 {
-    public static readonly ApiBase?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE;
+    public static readonly ApiBase: string = process.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE ?? "";
 
     public static readonly AppVersion?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_VERSION;
 
