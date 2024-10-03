@@ -44,7 +44,7 @@
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "classnames": "^2.3.2",
-    "eslint": "^8.44.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.3",
     "loglevel": "^1.8.1",
     "next": "^14.2.3",
