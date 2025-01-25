@@ -28,9 +28,13 @@ import VotingParticipants from "./VotingParticipants";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { castVoteAsync } from "@/service/Service";
+import InvitePrompt from "./InvitePrompt";
 
 
-// TODO Document voting component
+/**
+ * Component to allow a participant to place a vote.  It shows the deck of cards and the voting status for all players.
+ * If only a single player is present in the session, it will prompt the user to invite additional participants.
+ */
 export default function Voting(): JSX.Element
 {
     const session = useContext(SessionContext);
@@ -58,6 +62,7 @@ export default function Voting(): JSX.Element
                 <Typography variant="h1">Place your vote</Typography>
                 <DeckGallery cards={session.deck.map(c => vote == c.id ? {...c, isDisabled: true} : c )} selectCard={placeVote} />
                 <VotingParticipants />
+                <InvitePrompt />
             </Stack>
             <Snackbar open={serviceErrorOpen !== undefined} autoHideDuration={Constants.SnackbarDurationMs} onClose={() => setServiceErrorOpen(undefined)} anchorOrigin={Constants.SnackbarAnchor} >
                 <Alert severity="error">
