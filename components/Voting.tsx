@@ -31,7 +31,10 @@ import { castVoteAsync } from "@/service/Service";
 import InvitePrompt from "./InvitePrompt";
 
 
-// TODO Document voting component
+/**
+ * Component to allow a participant to place a vote.  It shows the deck of cards and the voting status for all players.
+ * If only a single player is present in the session, it will prompt the user to invite additional participants.
+ */
 export default function Voting(): JSX.Element
 {
     const session = useContext(SessionContext);
