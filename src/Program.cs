@@ -16,8 +16,9 @@
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 
@@ -34,35 +35,24 @@ namespace Spacecowboy.Service
                 .AddEnvironmentVariables()
                 .Build();
 
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateBootstrapLogger();
+            var host = CreateHostBuilder(args).Build();
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
 
             try
             {
-                Log.Information("Starting service");
-                Log.Debug("Debug level logging enabled");
-                CreateHostBuilder(args).Build().Run();
+                logger.LogInformation("Starting service");
+                logger.LogDebug("Debug level logging enabled");
+                host.Run();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Service terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
+                logger.LogCritical(ex, "Service terminated unexpectedly");
             }
         }
 
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog((context, services, configuration) => configuration
-                    .ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services)
-                    .Enrich.FromLogContext()
-                    .Enrich.WithProperty("InstanceName", Environment.GetEnvironmentVariable("Spacecowboy__InstanceName") ?? "n/a")
-                    .WriteTo.Console())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
