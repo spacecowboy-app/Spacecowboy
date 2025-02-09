@@ -71,4 +71,4 @@ Let us know if you have any questions or comments.
 
 ---
 
-© Copyright 2021-2024 Rolf Michelsen and Tami Weiss
+Copyright 2021-2025 Rolf Michelsen and Tami Weiss
