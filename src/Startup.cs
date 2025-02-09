@@ -19,9 +19,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Prometheus;
-using Serilog;
 using Spacecowboy.Service.Controllers.Hubs;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Model.Interfaces;
@@ -96,10 +96,8 @@ namespace Spacecowboy.Service
                     services.AddSingleton<ISessionRepository, MemorySessionRepository>();
                     break;
                 default:
-                    Log.Fatal("Illegal value for RepositoryType configuration {repositoryType}", repositoryType);
-                    throw new Exception("Illegal value for RepositoryType configuration");
+                    throw new Exception($"Illegal value [{repositoryType}] for RepositoryType configuration");
             }
-            Log.Information("Using {repositoryType} session repository", repositoryType);
 
             services.AddSignalR();
 
@@ -124,11 +122,6 @@ namespace Spacecowboy.Service
                 {
                   { "instance_name", instanceName }
                 });
-                Log.Information("Metrics will be annotated with instance name {instanceName}", instanceName);
-            }
-            else
-            {
-                Log.Information("No instance name configured");
             }
         }
 
@@ -141,7 +134,6 @@ namespace Spacecowboy.Service
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseStaticFiles();
             app.UseHttpMetrics();                   // Export HTTP metrics to Prometheus
