@@ -44,12 +44,14 @@ configuration.Bind(serviceOptions);
 // Path prefix for all API methods
 var pathBase = new PathString(builder.Configuration["PATH_BASE"]);
 
+builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 builder.Services.AddMvc()
     .AddJsonOptions(options => {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
+builder.Services.AddHttpLogging(o => { });
 
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v0", new OpenApiInfo {
@@ -102,11 +104,15 @@ var app = builder.Build();
 
 var logger = app.Services.GetService<ILogger<Program>>();
 
+app.UsePathBase(pathBase);
+app.UseHttpLogging();
+
 if (app.Environment.IsDevelopment()) {
     app.UseDeveloperExceptionPage();
     app.UseCors("DevCorsPolicy");
 }
 
+app.MapHealthChecks("/healthz");
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
