@@ -105,9 +105,11 @@ var app = builder.Build();
 var logger = app.Services.GetService<ILogger<Program>>();
 
 app.UsePathBase(pathBase);
+logger?.LogInformation("Using path base [{pathBase}]", pathBase);
 app.UseHttpLogging();
 
 if (app.Environment.IsDevelopment()) {
+    logger?.LogInformation("Using development settings");
     app.UseDeveloperExceptionPage();
     app.UseCors("DevCorsPolicy");
 }
@@ -125,6 +127,8 @@ app.UseSwagger();
 app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/v0/swagger.json", "Spacecowboy API v0");
 });
+
+logger?.LogInformation("Starting Spacecowboy service with repository type [{repositoryType}]", serviceOptions.RepositoryType);
 
 app.Run();
 
