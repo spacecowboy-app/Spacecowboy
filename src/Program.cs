@@ -14,48 +14,116 @@
     limitations under the License.
 */
 
+using System;
+using System.IO;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
+using Microsoft.OpenApi.Models;
+
+using Spacecowboy.Service;
+using Spacecowboy.Service.Controllers.Hubs;
+using Spacecowboy.Service.Infrastructure;
+using Spacecowboy.Service.Model.Interfaces;
 
 
-namespace Spacecowboy.Service
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(path: "appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build();
+var builder = WebApplication.CreateBuilder(args);
 
-            var host = CreateHostBuilder(args).Build();
-            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+// Make configuration options from ServiceOptions available to all services.
+IConfigurationSection configuration = builder.Configuration.GetSection(ServiceOptions.Service);
+builder.Services.Configure<ServiceOptions>(configuration);
+var serviceOptions = new ServiceOptions();
+configuration.Bind(serviceOptions);
 
-            try
-            {
-                logger.LogInformation("Starting service");
-                logger.LogDebug("Debug level logging enabled");
-                host.Run();
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Service terminated unexpectedly");
-            }
-        }
+// Path prefix for all API methods
+var pathBase = new PathString(builder.Configuration["PATH_BASE"]);
 
+builder.Services.AddControllers();
+builder.Services.AddMvc()
+    .AddJsonOptions(options => {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v0", new OpenApiInfo {
+        Title = "Spacecowboy API",
+        Version = "v0",
+        Description = "API for agile decision making in distributed teams",
+        Contact = new OpenApiContact {
+            Name = "The Spacecowboy team",
+            Email = "howdy@spacecowboy.app",
+        },
+        License = new OpenApiLicense {
+            Name = "Apache 2.0",
+            Url = new Uri("http://www.apache.org/licenses/LICENSE-2.0.html"),
+        },
+    });
+    c.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "spacecowboy-api.xml"));
+});
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+var repositoryType = serviceOptions.RepositoryType?.ToLower();
+switch (repositoryType) {
+    case "redis":
+        builder.Services.AddSingleton<ISessionRepository, RedisSessionRepository>();
+        break;
+    case "memory":
+    case null:
+        repositoryType = "memory";
+        builder.Services.AddSingleton<ISessionRepository, MemorySessionRepository>();
+        break;
+    default:
+        throw new Exception($"Illegal value [{repositoryType}] for RepositoryType configuration");
 }
+
+builder.Services.AddSignalR();
+
+/* Cors policy to facilitate easy local development and testing. */
+builder.Services.AddCors(options => {
+    options.AddPolicy("DevCorsPolicy",
+        builder => {
+            builder.WithOrigins("http://localhost:3000", "http://localhost:8000")
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .AllowAnyMethod();
+        }
+    );
+});
+
+var app = builder.Build();
+
+var logger = app.Services.GetService<ILogger<Program>>();
+
+if (app.Environment.IsDevelopment()) {
+    app.UseDeveloperExceptionPage();
+    app.UseCors("DevCorsPolicy");
+}
+
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
+app.MapHub<SessionHub>("/sessionhub", opt => {
+    opt.Transports = HttpTransportType.WebSockets | HttpTransportType.LongPolling;
+});
+
+app.UseSwagger();
+app.UseSwaggerUI(c => {
+    c.SwaggerEndpoint("/swagger/v0/swagger.json", "Spacecowboy API v0");
+});
+
+app.Run();
+
+
+/// <summary>
+/// Dummy class to make this visible to the integration tests
+/// </summary>
+public partial class Program { }
