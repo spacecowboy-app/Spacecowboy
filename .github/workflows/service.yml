@@ -1,30 +1,70 @@
-name: Spacecowboy service tests
+name: Spacecowboy service tests and build
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - "src/**"
+      - "test/**"
+      - ".github/workflows/service.yml"
   pull_request:
     branches: [ main ]
+    paths:
+      - "src/**"
+      - "test/**"
+      - ".github/workflows/service.yml"
 
 jobs:
 
-  build:
+  # Run all project tests.
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+
     - name: Restore service dependencies
       run: dotnet restore ./src/Service.csproj
+
     - name: Build service
       run: dotnet build ./src/Service.csproj --no-restore
+
     - name: Restore test dependencies
       run: dotnet restore ./test/Service.Test.csproj
+
     - name: Build tests
       run: dotnet build ./test/Service.Test.csproj --no-restore
+
     - name: Run tests
       run: dotnet test ./test/Service.Test.csproj --no-build --verbosity normal
+
+
+  # Build and push container image.
+  build_container:
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [ test]
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Setup Docker
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to GitHub Container Registry
+      run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Build and push Docker image
+      run: docker build src -t ghcr.io/spacecowboy-app/spacecowboy-service:latest
+
+    - name: Push Docker image
+      run: docker push ghcr.io/spacecowboy-app/spacecowboy-service:latest
