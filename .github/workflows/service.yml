@@ -4,14 +4,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "src/**"
-      - "test/**"
+      - "service/src/**"
+      - "service/test/**"
       - ".github/workflows/service.yml"
   pull_request:
     branches: [ main ]
     paths:
-      - "src/**"
-      - "test/**"
+      - "service/src/**"
+      - "service/test/**"
       - ".github/workflows/service.yml"
 
 jobs:
@@ -20,6 +20,10 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: service
 
     steps:
 
