@@ -1,6 +1,3 @@
-[submodule "app"]
-	path = app
-	url = https://github.com/spacecowboy-app/spacecowboy-app.git
 [submodule "service"]
 	path = service
 	url = https://github.com/spacecowboy-app/spacecowboy-service.git
