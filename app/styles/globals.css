@@ -1,0 +1,71 @@
+/*
+    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+:root {
+    /* Palette used for card backgrounds. */
+    --apricot: #ffc287;
+    --bubblegum: #c66391;
+    --cherrybomb: #dd2553;
+    --coral: #CF6062;
+    --corn: #FFC700;
+    --darkgray: #424242;
+    --flamingo: #de8ba4;
+    --gingerbread: #d0a68a;
+    --jade: #1A9E78;
+    --lightgray: #e7e9eb;
+    --lilac: #a58faa;
+    --lime: #d5e155;
+    --marigold: #FAA71B;
+    --mulberry: #be5596;
+    --mint: #90e59c;
+    --ocean: #26ADAC;
+    --peach: #ffa182;
+    --purplesky: #936b9a;
+    --ruby: #e0436b;
+    --seafoam: #b4e8e0;
+    --seaglass: #80cbc1;
+    --silverfox: #e3e9ec;
+    --sky: #71c7d0;
+    --slate: #7f8596;
+    --tangerine: #EC6F42;
+    --teal: #56C3B9;
+
+    /* Palette for deck tops. */
+    --decktop: #FAA81B;
+    --decktopselected: #7E7E7E;
+
+    box-sizing: border-box;
+}
+
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
