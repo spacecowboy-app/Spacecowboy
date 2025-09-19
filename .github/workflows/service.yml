@@ -57,6 +57,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ test]
 
+    defaults:
+      run:
+        working-directory: service
+
     steps:
 
     - uses: actions/checkout@v4
