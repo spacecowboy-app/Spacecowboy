@@ -1,0 +1,7 @@
+.devcontainer
+.env.development
+.github
+.gitignore
+.next
+.vscode
+node_modules

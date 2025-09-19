@@ -28,7 +28,7 @@ Playing *Spacecowboy* typically goes like this:
 The repository
 --------------
 
-We are making the code available subject to the Apache 2.0 license.  See [LICENSE](LICENSE) for details.  The repository contains everything you need to start playing with *Spacecowboy* on your own.  The application consists of two main parts:
+The repository contains everything you need to start playing with *Spacecowboy* on your own.  The application consists of two main parts:
 
 * A web-based application written in Typescript and using the React framework.
 
@@ -50,7 +50,7 @@ Building and running the service locally requires [docker](https://www.docker.co
 Checkout everything you need with:
 
 ```bash
-git clone --recurse-submodules https://github.com/spacecowboy-app/Spacecowboy.git
+git clone https://github.com/spacecowboy-app/Spacecowboy.git
 ```
 
 The app and service run together as a set of docker-compose services.  To build and start the services, execute the following command from the repository root:

@@ -1,0 +1,62 @@
+{
+  "name": "spacecowboy-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lightweight decisions for distributed teams",
+  "keywords": [
+    "collaboration",
+    "planning poker",
+    "agile estimation"
+  ],
+  "homepage": "https://spacecowboy.app",
+  "bugs": "https://github.com/spacecowboy-app/Spacecowboy/issues",
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Rolf Michelsen",
+      "url": "https://github.com/rolfmichelsen"
+    },
+    {
+      "name": "Tami Weiss",
+      "url": "https://github.com/alivetwice"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spacecowboy-app/spacecowboy-app"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/poppins": "^4.5.10",
+    "@fontsource/roboto": "^4.5.8",
+    "@microsoft/signalr": "^7.0.7",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "classnames": "^2.3.2",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.3",
+    "loglevel": "^1.8.1",
+    "next": "^14.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.32.0",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "jest": "^29.6.0",
+    "jest-environment-jsdom": "^29.6.0"
+  }
+}
