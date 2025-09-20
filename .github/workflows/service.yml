@@ -18,6 +18,7 @@ jobs:
 
   # Run all project tests.
   test:
+    name: "Test service"
 
     runs-on: ubuntu-latest
 
@@ -52,6 +53,7 @@ jobs:
 
   # Build and push container image.
   build_container:
+    name: "Build service container"
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -74,6 +76,6 @@ jobs:
     - name: Build and push container image
       uses: docker/build-push-action@v6
       with:
-        context: src
+        context: service/src
         push: true
         tags: ghcr.io/spacecowboy-app/spacecowboy-service:latest
