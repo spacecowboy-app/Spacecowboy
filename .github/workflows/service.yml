@@ -79,3 +79,7 @@ jobs:
         context: service/src
         push: true
         tags: ghcr.io/spacecowboy-app/spacecowboy-service:latest
+        labels: |
+          org.opencontainers.image.source=${{ github.repository }}
+          org.opencontainers.image.description=Spacecowboy service backend
+          org.opencontainers.image.licenses=Apache-2.0
