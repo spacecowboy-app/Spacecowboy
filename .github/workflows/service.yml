@@ -79,6 +79,8 @@ jobs:
         context: service/src
         push: true
         tags: ghcr.io/spacecowboy-app/spacecowboy-service:latest
+        secrets: |
+          GIT_AUTH_TOKEN=${{ secrets.CONTAINER_PUSH_SECRET }}
         labels: |
           org.opencontainers.image.source=${{ github.repository }}
           org.opencontainers.image.description=Spacecowboy service backend
