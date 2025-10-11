@@ -46,7 +46,6 @@ const decks: Deck[] = [
         hiddenVote: { id: "f7867b00-7622-4ba5-895f-3b419729092f" }
     },
 */
-/*
     {
         id: "0e76b80e-587c-4406-9a38-a74ae7010640",
         name: "Halloween",
@@ -71,7 +70,6 @@ const decks: Deck[] = [
         noVote: { id: "a981f68f-7ef5-47cd-a55a-ef1048a5e778" },
         hiddenVote: { id: "d7e56a12-3d59-4a10-9991-87aac17bf43a" },
     },
-*/
     {
         id: "5f007d6a-5ae6-4158-8975-87b6f3364d97",
         name: "High Noon",
