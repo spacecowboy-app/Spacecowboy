@@ -351,4 +351,5 @@ MigrationBackup/
 .ionide/
 
 .vscode
+.pnmp-store
 **/.DS_Store
