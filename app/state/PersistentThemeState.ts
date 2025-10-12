@@ -46,7 +46,7 @@ export function getThemeState(): ThemeVariant
 {
     try {
         const state = localStorage.getItem(storageKeyTheme);
-        return state === null ? null : JSON.parse(state);
+        return state === null ? undefined : JSON.parse(state);
     }
     catch {
         log.warn("Unable to retrieve theme state from browser storage.");
