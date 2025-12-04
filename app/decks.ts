@@ -20,7 +20,6 @@ import DecksCollection from "./model/DecksCollection";
 
 
 const decks: Deck[] = [
-/*
     {
         id: "143098ea-92d5-42e0-b2d3-1093895a6e37",
         name: "Xmas",
@@ -45,7 +44,6 @@ const decks: Deck[] = [
         noVote: { id: "9acbb51b-cd74-4462-b94b-04e533b0c99e" },
         hiddenVote: { id: "f7867b00-7622-4ba5-895f-3b419729092f" }
     },
-*/
 /*
     {
         id: "0e76b80e-587c-4406-9a38-a74ae7010640",
