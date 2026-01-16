@@ -19,71 +19,88 @@ import Charmset from "@/model/Charmset";
 
 const charms: Charmset[] = [
     {
-        name: "cowboys",
-        charms: [
-            "cowboys/cowboy1.png",
-            "cowboys/cowboy2.png",
-            "cowboys/cowboy3.png",
-            "cowboys/cowboy4.png",
-            "cowboys/cowboy5.png",
-            "cowboys/cowboy6.png",
-            "cowboys/cowboy7.png",
-            "cowboys/cowboy8.png",
-            "cowboys/cowboy9.png",
-            "cowboys/cowboy10.png",
-            "cowboys/cowboy11.png",
-            "cowboys/cowboy12.png"
+        "name": "High noon",
+        "charms": [
+            "cowboy/boot.png",
+            "cowboy/booze.png",
+            "cowboy/bull.png",
+            "cowboy/cow.png",
+            "cowboy/coyote.png",
+            "cowboy/gun.png",
+            "cowboy/hat.png",
+            "cowboy/horse.png",
+            "cowboy/hyena.png",
+            "cowboy/pants.png",
+            "cowboy/sherrifstar.png",
+            "cowboy/tumbleweed.png"
         ]
     },
     {
-        name: "hair",
-        charms: [
-            "hair/hair1.png",
-            "hair/hair2.png",
-            "hair/hair3.png",
-            "hair/hair4.png",
-            "hair/hair5.png",
-            "hair/hair6.png",
-            "hair/hair7.png",
-            "hair/hair8.png",
-            "hair/hair9.png",
-            "hair/hair10.png",
-            "hair/hair11.png",
-            "hair/hair12.png"
+        "name": "Galaxy",
+        "charms": [
+            "space/alien.png",
+            "space/darth.png",
+            "space/helmet.png",
+            "space/leah.png",
+            "space/planet.png",
+            "space/r2d2.png",
+            "space/rocket.png",
+            "space/saturn.png",
+            "space/spacegirl.png",
+            "space/spaceinvader.png",
+            "space/swirl.png",
+            "space/yoda.png"
         ]
     },
     {
-        name: "hats",
-        charms: [
-            "hats/hat1.png",
-            "hats/hat2.png",
-            "hats/hat3.png",
-            "hats/hat4.png",
-            "hats/hat5.png",
-            "hats/hat6.png",
-            "hats/hat7.png",
-            "hats/hat8.png",
-            "hats/hat9.png",
-            "hats/hat10.png",
-            "hats/hat11.png",
-            "hats/hat12.png"
+        "name": "Legends",
+        "charms": [
+            "rocklegends/amy.png",
+            "rocklegends/bono.png",
+            "rocklegends/bowie.png",
+            "rocklegends/elton.png",
+            "rocklegends/elvis.png",
+            "rocklegends/florian.png",
+            "rocklegends/freddie.png",
+            "rocklegends/jim.png",
+            "rocklegends/john.png",
+            "rocklegends/lana.png",
+            "rocklegends/lenny.png",
+            "rocklegends/michael.png"
         ]
     },
     {
-        name: "shapes",
-        charms: [
-            "shapes/shape1.png",
-            "shapes/shape2.png",
-            "shapes/shape3.png",
-            "shapes/shape4.png",
-            "shapes/shape5.png",
-            "shapes/shape6.png",
-            "shapes/shape7.png",
-            "shapes/shape8.png",
-            "shapes/shape9.png",
-            "shapes/shape10.png",
-            "shapes/shape11.png",
-            "shapes/shape12.png"
+        "name": "Sea",
+        "charms": [
+            "sea/angryfish.png",
+            "sea/blowfish.png",
+            "sea/crab.png",
+            "sea/dolphin.png",
+            "sea/eel.png",
+            "sea/nessie.png",
+            "sea/octopus.png",
+            "sea/seahorse.png",
+            "sea/shark.png",
+            "sea/starfish.png",
+            "sea/stingray.png",
+            "sea/whale.png"
+        ]
+    },
+    {
+        "name": "Mighty",
+        "charms": [
+            "mighty/anteater.png",
+            "mighty/bear.png",
+            "mighty/camel.png",
+            "mighty/cat.png",
+            "mighty/dragon.png",
+            "mighty/eagle.png",
+            "mighty/lion.png",
+            "mighty/platypus.png",
+            "mighty/porcupine.png",
+            "mighty/snake.png",
+            "mighty/swan.png",
+            "mighty/unicorn.png"
         ]
     }
 ];
