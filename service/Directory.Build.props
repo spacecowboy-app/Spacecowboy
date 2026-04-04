@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Ensure warnings are treated as warnings (not errors) for all projects in this solution -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>
