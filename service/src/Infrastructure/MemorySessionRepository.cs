@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 
 using Spacecowboy.Service.Infrastructure.DTO;
@@ -36,7 +35,6 @@ namespace Spacecowboy.Service.Infrastructure;
 /// </remarks>
 public class MemorySessionRepository : ISessionRepository
 {
-    private readonly IMapper map;
     private readonly ILogger<MemorySessionRepository>? log;
 
     /// <summary>
@@ -61,9 +59,8 @@ public class MemorySessionRepository : ISessionRepository
     private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
 
 
-    public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
+    public MemorySessionRepository(ILogger<MemorySessionRepository>? log)
     {
-        this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.log = log;
         log?.LogInformation("Starting MemorySessionRepository");
     }
