@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
@@ -81,15 +80,13 @@ public class RedisSessionRepository : ISessionRepository
     // field names used for the session metrics hash with key keySessionMetrics
     private readonly static string sessionMetricsTotalSessions = "TotalSessions";
 
-    private readonly IMapper map;
     private readonly ILogger<RedisSessionRepository> log;
 
     private readonly ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
 
 
-    public RedisSessionRepository(ILogger<RedisSessionRepository> log, IMapper map)
+    public RedisSessionRepository(ILogger<RedisSessionRepository> log)
     {
-        this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.log = log;
         log?.LogInformation("Redis session repository starting");
     }
