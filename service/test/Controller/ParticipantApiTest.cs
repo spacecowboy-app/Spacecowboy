@@ -15,7 +15,6 @@
 */
 
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -36,7 +35,6 @@ public class ParticipantApiTest
     private readonly ISessionRepository repository;
     private readonly SessionController controller;
     private readonly ILogger<SessionController> logger;
-    private readonly IMapper mapper;
 
 
     public ParticipantApiTest()
@@ -48,13 +46,7 @@ public class ParticipantApiTest
         });
         logger = loggerFactory.CreateLogger<SessionController>();
 
-        var mapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<RepositoryProfiles>();
-        });
-        mapper = mapperConfig.CreateMapper();
-
-        repository = new MemorySessionRepository(null, mapper);
+        repository = new MemorySessionRepository(null);
         var options = new ServiceOptions();
         controller = new SessionController(logger, repository, null);
     }
