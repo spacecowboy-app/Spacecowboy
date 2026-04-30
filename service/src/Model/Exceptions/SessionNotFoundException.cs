@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,19 +16,17 @@
 
 using System;
 
+namespace Spacecowboy.Service.Model.Exceptions;
 
-namespace Spacecowboy.Service.Model.Exceptions
+/// <summary>
+/// Exception thrown when trying to retrieve a session that does not exist
+/// </summary>
+public class SessionNotFoundException : Exception
 {
     /// <summary>
-    /// Exception thrown when trying to retrieve a session that does not exist
+    /// Create exception to signal that a session does not exist
     /// </summary>
-    public class SessionNotFoundException : Exception
-    {
-        /// <summary>
-        /// Create exception to signal that a session does not exist
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        public SessionNotFoundException(string sessionId) : base($"Session {sessionId} does not exist") { }
+    /// <param name="sessionId">Session identifier</param>
+    public SessionNotFoundException(string sessionId) : base($"Session {sessionId} does not exist") { }
 
-    }
 }

@@ -17,16 +17,15 @@
 using System;
 
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// Service metrics
+/// </summary>
+public class ServiceMetricsResponse
 {
     /// <summary>
-    /// Service metrics
+    /// Time when the service was started
     /// </summary>
-    public class ServiceMetricsResponse
-    {
-        /// <summary>
-        /// Time when the service was started
-        /// </summary>
-        public DateTime ServiceStartTime { get; set; }
-    }
+    public DateTime ServiceStartTime { get; set; }
 }

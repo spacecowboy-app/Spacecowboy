@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,41 +16,40 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// Add a deck of cards to a session
+/// </summary>
+public record AddDeckRequest
 {
     /// <summary>
-    /// Add a deck of cards to a session
+    /// Cards in this deck
     /// </summary>
-    public record AddDeckRequest
-    {
-        /// <summary>
-        /// Cards in this deck
-        /// </summary>
-        [Required]
-        public required CreateCardRequest[] Cards { get; init; }
+    [Required]
+    public required CreateCardRequest[] Cards { get; init; }
 
-        /// <summary>
-        /// A card used when no vote has been cast
-        /// </summary>
-        [Required]
-        public required CreateCardRequest NoVote { get; init; }
+    /// <summary>
+    /// A card used when no vote has been cast
+    /// </summary>
+    [Required]
+    public required CreateCardRequest NoVote { get; init; }
 
-        /// <summary>
-        /// A card representing a vote that has not yet been revealed
-        /// </summary>
-        [Required]
-        public required CreateCardRequest NotRevealed { get; init; }
+    /// <summary>
+    /// A card representing a vote that has not yet been revealed
+    /// </summary>
+    [Required]
+    public required CreateCardRequest NotRevealed { get; init; }
 
-        /// <summary>
-        /// The name of the deck
-        /// </summary>
-        [Required]
-        public required string Name { get; init; }
+    /// <summary>
+    /// The name of the deck
+    /// </summary>
+    [Required]
+    public required string Name { get; init; }
 
-        /// <summary>
-        /// The type of deck
-        /// </summary>
-        [Required]
-        public required string Type { get; init; }
-    }
+    /// <summary>
+    /// The type of deck
+    /// </summary>
+    [Required]
+    public required string Type { get; init; }
 }

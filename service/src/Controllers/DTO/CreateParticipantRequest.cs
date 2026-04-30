@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,36 +16,34 @@
 
 using System.ComponentModel.DataAnnotations;
 
+namespace Spacecowboy.Service.Controllers.DTO;
 
-namespace Spacecowboy.Service.Controllers.DTO
+public record CreateParticipantRequest
 {
-    public record CreateParticipantRequest
-    {
-        /// <summary>
-        /// Participant name
-        /// </summary>
-        /// <remarks>
-        /// The service does not use this property for anything. It is intended for the client to use to store the publically
-        /// displayed nick or name associated with the participant.
-        /// </remarks>
-        [Required]
-        public required string Name { get; init; }
+    /// <summary>
+    /// Participant name
+    /// </summary>
+    /// <remarks>
+    /// The service does not use this property for anything. It is intended for the client to use to store the publically
+    /// displayed nick or name associated with the participant.
+    /// </remarks>
+    [Required]
+    public required string Name { get; init; }
 
 
-        /// <summary>
-        /// Avatar reference
-        /// </summary>
-        /// <remarks>
-        /// The service does not use this property for anything. It is intended for the client to use as a reference to
-        /// the participant's avatar.  It is up to the client to define the format of this reference.
-        /// </remarks>
-        public string? Avatar { get; init;  }
+    /// <summary>
+    /// Avatar reference
+    /// </summary>
+    /// <remarks>
+    /// The service does not use this property for anything. It is intended for the client to use as a reference to
+    /// the participant's avatar.  It is up to the client to define the format of this reference.
+    /// </remarks>
+    public string? Avatar { get; init;  }
 
 
-        /// <summary>
-        ///  Avatar color
-        /// </summary>
-        public string? Color { get; init; }
+    /// <summary>
+    ///  Avatar color
+    /// </summary>
+    public string? Color { get; init; }
 
-    }
 }

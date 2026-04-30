@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,249 +20,248 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+
 using Spacecowboy.Service.Infrastructure.DTO;
 using Spacecowboy.Service.Model.Entities;
 using Spacecowboy.Service.Model.Exceptions;
 using Spacecowboy.Service.Model.Interfaces;
 
+namespace Spacecowboy.Service.Infrastructure;
 
-namespace Spacecowboy.Service.Infrastructure
+/// <summary>
+/// Memory based session repository
+/// </summary>
+/// <remarks>
+/// This is a very basic repository that maintains all data in memory only.  It must be injected as a singleton.
+/// </remarks>
+public class MemorySessionRepository : ISessionRepository
 {
+    private readonly IMapper map;
+    private readonly ILogger<MemorySessionRepository>? log;
+
     /// <summary>
-    /// Memory based session repository
+    /// Used for concurrency control for the repository
     /// </summary>
-    /// <remarks>
-    /// This is a very basic repository that maintains all data in memory only.  It must be injected as a singleton.
-    /// </remarks>
-    public class MemorySessionRepository : ISessionRepository
+    private readonly Object repolock = new object();
+
+    /// <summary>
+    /// Dictionary for maintaining session information
+    /// </summary>
+    private readonly Dictionary<string, SessionDto> sessions = new Dictionary<string, SessionDto>();
+
+    /// <summary>
+    /// Dictionary for maintaining generation counter and last update timestamps for each session
+    /// </summary>
+    private readonly Dictionary<string, SessionGeneration> generations = new Dictionary<string, SessionGeneration>();
+
+
+    /// <summary>
+    /// Last updated timestamps for each participant in each session
+    /// </summary>
+    private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
+
+
+    public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
     {
-        private readonly IMapper map;
-        private readonly ILogger<MemorySessionRepository>? log;
-
-        /// <summary>
-        /// Used for concurrency control for the repository
-        /// </summary>
-        private readonly Object repolock = new object();
-
-        /// <summary>
-        /// Dictionary for maintaining session information
-        /// </summary>
-        private readonly Dictionary<string, SessionDto> sessions = new Dictionary<string, SessionDto>();
-
-        /// <summary>
-        /// Dictionary for maintaining generation counter and last update timestamps for each session
-        /// </summary>
-        private readonly Dictionary<string, SessionGeneration> generations = new Dictionary<string, SessionGeneration>();
+        this.map = map ?? throw new ArgumentNullException(nameof(map));
+        this.log = log;
+        log?.LogInformation("Starting MemorySessionRepository");
+    }
 
 
-        /// <summary>
-        /// Last updated timestamps for each participant in each session
-        /// </summary>
-        private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
+    /// <inheritdoc/>
+    public Task AddSessionAsync(Session session)
+    {
+        if (session == null) throw new ArgumentNullException(nameof(session));
 
-
-        public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
+        lock (repolock)
         {
-            this.map = map ?? throw new ArgumentNullException(nameof(map));
-            this.log = log;
-            log?.LogInformation("Starting MemorySessionRepository");
+            if (sessions.ContainsKey(session.Id)) throw new SessionExistsException(session.Id);
+            sessions[session.Id] = map.Map<SessionDto>(session);
+            UpdateGeneration(session.Id);
+            participantsTimestamps[session.Id] = new Dictionary<Guid, DateTime>();
         }
+        return Task.CompletedTask;
+    }
 
 
-        /// <inheritdoc/>
-        public Task AddSessionAsync(Session session)
+    /// <inheritdoc/>
+    public Task<Session> GetSessionAsync(string id)
+    {
+        return Task<Session>.FromResult(GetSession(id));
+    }
+
+
+    private Session GetSession(string id)
+    {
+        if (id == null) throw new ArgumentNullException(nameof(id));
+
+        lock (repolock)
         {
-            if (session == null) throw new ArgumentNullException(nameof(session));
+            if (!sessions.ContainsKey(id)) throw new SessionNotFoundException(id);
+            var session = sessions[id];
+            PopulateGeneration(session);
+            PopulateParticipantsLastActiveTimestamp(session);
+            return map.Map<Session>(session);
+        }
+    }
 
-            lock (repolock)
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<string>> GetSessionNamesAsync()
+    {
+        lock (repolock)
+        {
+            return Task<IEnumerable<string>>.FromResult((IEnumerable<string>) sessions.Keys.ToList());
+        }
+    }
+
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<Session>> GetSessionsAsync()
+    {
+        IEnumerable<Session> result;
+        lock (repolock)
+        {
+            result = sessions.Keys.Select(id => GetSession(id)).ToList();
+        }
+        return Task<IEnumerable<Session>>.FromResult(result);
+    }
+
+
+    /// <inheritdoc/>
+    public Task<Session> UpdateSessionAsync(Session session)
+    {
+        if (session == null) throw new ArgumentNullException(nameof(session));
+
+        lock (repolock)
+        {
+            if (!sessions.ContainsKey(session.Id)) throw new SessionNotFoundException(session.Id);
+            sessions[session.Id] = map.Map<SessionDto>(session);
+            UpdateGeneration(session.Id);
+            return Task<Session>.FromResult(session);
+        }
+    }
+
+
+    /// <inheritdoc/>
+    public Task DeleteSessionAsync(string id)
+    {
+        if (id == null) throw new ArgumentNullException(nameof(id));
+
+        lock (repolock)
+        {
+            if (!sessions.Remove(id))
             {
-                if (sessions.ContainsKey(session.Id)) throw new SessionExistsException(session.Id);
-                sessions[session.Id] = map.Map<SessionDto>(session);
-                UpdateGeneration(session.Id);
-                participantsTimestamps[session.Id] = new Dictionary<Guid, DateTime>();
+                throw new SessionNotFoundException(id);
             }
-            return Task.CompletedTask;
-        }
-
-
-        /// <inheritdoc/>
-        public Task<Session> GetSessionAsync(string id)
-        {
-            return Task<Session>.FromResult(GetSession(id));
-        }
-
-
-        private Session GetSession(string id)
-        {
-            if (id == null) throw new ArgumentNullException(nameof(id));
-
-            lock (repolock)
+            if (!generations.Remove(id))
             {
-                if (!sessions.ContainsKey(id)) throw new SessionNotFoundException(id);
-                var session = sessions[id];
-                PopulateGeneration(session);
-                PopulateParticipantsLastActiveTimestamp(session);
-                return map.Map<Session>(session);
+                log?.LogError("Inconsistent data structure, {id} not found in generations table", id);
+                throw new SessionNotFoundException(id);
             }
-        }
-
-
-        /// <inheritdoc/>
-        public Task<IEnumerable<string>> GetSessionNamesAsync()
-        {
-            lock (repolock)
+            if (!participantsTimestamps.Remove(id))
             {
-                return Task<IEnumerable<string>>.FromResult((IEnumerable<string>) sessions.Keys.ToList());
-            }
-        }
-
-
-        /// <inheritdoc/>
-        public Task<IEnumerable<Session>> GetSessionsAsync()
-        {
-            IEnumerable<Session> result;
-            lock (repolock)
-            {
-                result = sessions.Keys.Select(id => GetSession(id)).ToList();
-            }
-            return Task<IEnumerable<Session>>.FromResult(result);
-        }
-
-
-        /// <inheritdoc/>
-        public Task<Session> UpdateSessionAsync(Session session)
-        {
-            if (session == null) throw new ArgumentNullException(nameof(session));
-
-            lock (repolock)
-            {
-                if (!sessions.ContainsKey(session.Id)) throw new SessionNotFoundException(session.Id);
-                sessions[session.Id] = map.Map<SessionDto>(session);
-                UpdateGeneration(session.Id);
-                return Task<Session>.FromResult(session);
+                log?.LogError("Inconsistent data structure, {id} not found in participants timestamps table", id);
+                throw new SessionNotFoundException(id);
             }
         }
+        return Task.CompletedTask;
+    }
 
 
-        /// <inheritdoc/>
-        public Task DeleteSessionAsync(string id)
+    /// <inheritdoc/>
+    public Task<bool> SessionExistsAsync(string id)
+    {
+        if (id == null) throw new ArgumentNullException(nameof(id));
+
+        lock (repolock)
         {
-            if (id == null) throw new ArgumentNullException(nameof(id));
+            return Task<bool>.FromResult(sessions.ContainsKey(id));
+        }
+    }
 
-            lock (repolock)
+
+    /// <inheritdoc/>
+    public Task ParticipantHeartbeatAsync(string sessionId, Guid participantId)
+    {
+        if (participantsTimestamps.ContainsKey(sessionId))
+        {
+            participantsTimestamps[sessionId][participantId] = DateTime.UtcNow;
+        }
+        return Task.CompletedTask;
+    }
+
+
+    /// <summary>
+    /// Populates the last active timestamp for each participant in the session object
+    /// </summary>
+    /// <param name="session">Session object</param>
+    private void PopulateParticipantsLastActiveTimestamp(SessionDto session)
+    {
+        if (!participantsTimestamps.ContainsKey(session.Id))
+        {
+            log?.LogError("Inconsistent data structure, {Id} not found in participants timestamp table", session.Id);
+            throw new SessionNotFoundException(session.Id);
+        }
+        var timestamps = participantsTimestamps[session.Id];
+
+        if (session.Participants != null) {
+            foreach (var p in session.Participants)
             {
-                if (!sessions.Remove(id))
+                if (timestamps.ContainsKey(p.Id))
                 {
-                    throw new SessionNotFoundException(id);
-                }
-                if (!generations.Remove(id))
-                {
-                    log?.LogError("Inconsistent data structure, {id} not found in generations table", id);
-                    throw new SessionNotFoundException(id);
-                }
-                if (!participantsTimestamps.Remove(id))
-                {
-                    log?.LogError("Inconsistent data structure, {id} not found in participants timestamps table", id);
-                    throw new SessionNotFoundException(id);
-                }
-            }
-            return Task.CompletedTask;
-        }
-
-
-        /// <inheritdoc/>
-        public Task<bool> SessionExistsAsync(string id)
-        {
-            if (id == null) throw new ArgumentNullException(nameof(id));
-
-            lock (repolock)
-            {
-                return Task<bool>.FromResult(sessions.ContainsKey(id));
-            }
-        }
-
-
-        /// <inheritdoc/>
-        public Task ParticipantHeartbeatAsync(string sessionId, Guid participantId)
-        {
-            if (participantsTimestamps.ContainsKey(sessionId))
-            {
-                participantsTimestamps[sessionId][participantId] = DateTime.UtcNow;
-            }
-            return Task.CompletedTask;
-        }
-
-
-        /// <summary>
-        /// Populates the last active timestamp for each participant in the session object
-        /// </summary>
-        /// <param name="session">Session object</param>
-        private void PopulateParticipantsLastActiveTimestamp(SessionDto session)
-        {
-            if (!participantsTimestamps.ContainsKey(session.Id))
-            {
-                log?.LogError("Inconsistent data structure, {Id} not found in participants timestamp table", session.Id);
-                throw new SessionNotFoundException(session.Id);
-            }
-            var timestamps = participantsTimestamps[session.Id];
-
-            if (session.Participants != null) {
-                foreach (var p in session.Participants)
-                {
-                    if (timestamps.ContainsKey(p.Id))
-                    {
-                        p.LastActive = timestamps[p.Id];
-                    }
+                    p.LastActive = timestamps[p.Id];
                 }
             }
         }
+    }
 
 
 
-        /// <summary>
-        /// Update the generation counter and last modified timestamp for a session
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        private void UpdateGeneration(string sessionId)
+    /// <summary>
+    /// Update the generation counter and last modified timestamp for a session
+    /// </summary>
+    /// <param name="sessionId">Session identifier</param>
+    private void UpdateGeneration(string sessionId)
+    {
+        generations[sessionId] = generations.ContainsKey(sessionId) ? generations[sessionId].Update() : new SessionGeneration();
+    }
+
+
+    /// <summary>
+    /// Populate the session with generation counter and last updated timestamp
+    /// </summary>
+    /// <param name="session">Session to update</param>
+    private void PopulateGeneration(SessionDto session)
+    {
+        if (!generations.ContainsKey(session.Id))
         {
-            generations[sessionId] = generations.ContainsKey(sessionId) ? generations[sessionId].Update() : new SessionGeneration();
+            log?.LogError("Inconsistent data structure, {Id} not found in generations table", session.Id);
+            throw new SessionNotFoundException(session.Id);
         }
+        session.Generation = generations[session.Id].Generation;
+        session.UpdateTime = generations[session.Id].LastModified;
+    }
 
 
-        /// <summary>
-        /// Populate the session with generation counter and last updated timestamp
-        /// </summary>
-        /// <param name="session">Session to update</param>
-        private void PopulateGeneration(SessionDto session)
+    /// <inheritdoc />
+    public Task<SessionMetrics> GetMetrics()
+    {
+        return Task.FromResult(new SessionMetrics());
+    }
+
+
+    private class SessionGeneration
+    {
+        public int Generation = 0;
+        public DateTime LastModified = DateTime.UtcNow;
+
+        public SessionGeneration Update()
         {
-            if (!generations.ContainsKey(session.Id))
-            {
-                log?.LogError("Inconsistent data structure, {Id} not found in generations table", session.Id);
-                throw new SessionNotFoundException(session.Id);
-            }
-            session.Generation = generations[session.Id].Generation;
-            session.UpdateTime = generations[session.Id].LastModified;
-        }
-
-
-        /// <inheritdoc />
-        public Task<SessionMetrics> GetMetrics()
-        {
-            return Task.FromResult(new SessionMetrics());
-        }
-
-
-        private class SessionGeneration
-        {
-            public int Generation = 0;
-            public DateTime LastModified = DateTime.UtcNow;
-
-            public SessionGeneration Update()
-            {
-                Generation++;
-                LastModified = DateTime.UtcNow;
-                return this;
-            }
+            Generation++;
+            LastModified = DateTime.UtcNow;
+            return this;
         }
     }
 }

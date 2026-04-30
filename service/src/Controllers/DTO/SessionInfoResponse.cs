@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,48 +15,47 @@
 */
 
 using System;
+
 using Spacecowboy.Service.Model.Entities;
 
+namespace Spacecowboy.Service.Controllers.DTO;
 
-namespace Spacecowboy.Service.Controllers.DTO
+/// <summary>
+/// Summary information about a voting session
+/// </summary>
+public class SessionInfoResponse
 {
     /// <summary>
-    /// Summary information about a voting session
+    /// Globally unique session identifier
     /// </summary>
-    public class SessionInfoResponse
+    public string Id { get; set; }
+
+    /// <summary>
+    /// Number of participants currently in session
+    /// </summary>
+    public int Participants { get; set; }
+
+    /// <summary>
+    /// Time when this session was created
+    /// </summary>
+    public DateTime CreateTime { get; set; }
+
+    /// <summary>
+    /// Time when the session was last updated
+    /// </summary>
+    public DateTime UpdateTime { get; set; }
+
+    /// <summary>
+    /// The number of seconds that this session has been idle
+    /// </summary>
+    public double IdleTime => (DateTime.UtcNow - UpdateTime).TotalSeconds;
+
+
+    public SessionInfoResponse(Session session)
     {
-        /// <summary>
-        /// Globally unique session identifier
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Number of participants currently in session
-        /// </summary>
-        public int Participants { get; set; }
-
-        /// <summary>
-        /// Time when this session was created
-        /// </summary>
-        public DateTime CreateTime { get; set; }
-
-        /// <summary>
-        /// Time when the session was last updated
-        /// </summary>
-        public DateTime UpdateTime { get; set; }
-
-        /// <summary>
-        /// The number of seconds that this session has been idle
-        /// </summary>
-        public double IdleTime => (DateTime.UtcNow - UpdateTime).TotalSeconds;
-
-
-        public SessionInfoResponse(Session session)
-        {
-            Id = session.Id;
-            CreateTime = session.CreateTime;
-            UpdateTime = session.UpdateTime;
-            Participants = session.GetParticipantsCount();
-        }
+        Id = session.Id;
+        CreateTime = session.CreateTime;
+        UpdateTime = session.UpdateTime;
+        Participants = session.GetParticipantsCount();
     }
 }

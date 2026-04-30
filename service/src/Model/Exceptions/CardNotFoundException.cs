@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,20 +16,19 @@
 
 using System;
 
-namespace Spacecowboy.Service.Model.Exceptions
+namespace Spacecowboy.Service.Model.Exceptions;
+
+/// <summary>
+/// Exception thrown when trying to access a card that does not exist in the session
+/// </summary>
+public class CardNotFoundException : Exception
 {
     /// <summary>
-    /// Exception thrown when trying to access a card that does not exist in the session
+    /// Create exception to signal that a card does not exist in session
     /// </summary>
-    public class CardNotFoundException : Exception
-    {
-        /// <summary>
-        /// Create exception to signal that a card does not exist in session
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        /// <param name="cardId">Card identifier</param>
-        public CardNotFoundException(string sessionId, Guid cardId)
-            : base($"Card {cardId} does not exist in session {sessionId}") { }
+    /// <param name="sessionId">Session identifier</param>
+    /// <param name="cardId">Card identifier</param>
+    public CardNotFoundException(string sessionId, Guid cardId)
+        : base($"Card {cardId} does not exist in session {sessionId}") { }
 
-    }
 }

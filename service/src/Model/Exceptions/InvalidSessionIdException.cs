@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,14 +16,12 @@
 
 using System;
 
+namespace Spacecowboy.Service.Model.Exceptions;
 
-namespace Spacecowboy.Service.Model.Exceptions
+/// <summary>
+/// Exception thrown when attempting to create a session with an invalid identifier
+/// </summary>
+public class InvalidSessionIdException : Exception
 {
-    /// <summary>
-    /// Exception thrown when attempting to create a session with an invalid identifier
-    /// </summary>
-    public class InvalidSessionIdException : Exception
-    {
-        public InvalidSessionIdException(string sessionId) : base($"Session {sessionId} is invalid") { }
-    }
+    public InvalidSessionIdException(string sessionId) : base($"Session {sessionId} is invalid") { }
 }
