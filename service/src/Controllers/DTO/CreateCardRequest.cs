@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,36 +15,35 @@
 */
 
 
-namespace Spacecowboy.Service.Controllers.DTO
+namespace Spacecowboy.Service.Controllers.DTO;
+
+/// <summary>
+/// Create a card in a session
+/// </summary>
+public record CreateCardRequest
 {
     /// <summary>
-    /// Create a card in a session
+    /// Card value
     /// </summary>
-    public record CreateCardRequest
-    {
-        /// <summary>
-        /// Card value
-        /// </summary>
-        public string? Value { get; init; }
+    public string? Value { get; init; }
 
-        /// <summary>
-        /// Reference to an image representing the card
-        /// </summary>
-        public string? Image { get; init; }
+    /// <summary>
+    /// Reference to an image representing the card
+    /// </summary>
+    public string? Image { get; init; }
 
-        /// <summary>
-        /// Reference to a color for the card
-        /// </summary>
-        public string? Color { get; init; }
+    /// <summary>
+    /// Reference to a color for the card
+    /// </summary>
+    public string? Color { get; init; }
 
-        /// <summary>
-        /// Reference to a font for the card
-        /// </summary>
-        public string? Font { get; init; }
+    /// <summary>
+    /// Reference to a font for the card
+    /// </summary>
+    public string? Font { get; init; }
 
-        /// <summary>
-        /// Card style identifier
-        /// </summary>
-        public string? Style { get; init; }
-    }
+    /// <summary>
+    /// Card style identifier
+    /// </summary>
+    public string? Style { get; init; }
 }

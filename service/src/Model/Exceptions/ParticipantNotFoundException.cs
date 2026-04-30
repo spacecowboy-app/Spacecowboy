@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 
 using System;
 
+namespace Spacecowboy.Service.Model.Exceptions;
 
-namespace Spacecowboy.Service.Model.Exceptions
+/// <summary>
+/// Exception thrown when trying to access a participant that does not exist in the session
+/// </summary>
+public class ParticipantNotFoundException : Exception
 {
     /// <summary>
-    /// Exception thrown when trying to access a participant that does not exist in the session
+    /// Create exception to signal that a participant does not exist in session
     /// </summary>
-    public class ParticipantNotFoundException : Exception
-    {
-        /// <summary>
-        /// Create exception to signal that a participant does not exist in session
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        /// <param name="participantId">Participant identifier</param>
-        public ParticipantNotFoundException(string sessionId, Guid participantId)
-            : base($"Participant {participantId} does not exist in session {sessionId}") { }
+    /// <param name="sessionId">Session identifier</param>
+    /// <param name="participantId">Participant identifier</param>
+    public ParticipantNotFoundException(string sessionId, Guid participantId)
+        : base($"Participant {participantId} does not exist in session {sessionId}") { }
 
-    }
 }

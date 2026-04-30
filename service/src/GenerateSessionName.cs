@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,40 +16,38 @@
 
 using System;
 
+namespace Spacecowboy.Service;
 
-namespace Spacecowboy.Service
+/// <summary>
+/// Generate a random session name
+/// </summary>
+/// <remarks>
+/// The generated session name is short and readable.  This class makes no guarantee that the session name is actually available for use.
+/// </remarks>
+public class GenerateSessionName
 {
+    private static readonly string[] descriptions = {
+        "lovely", "gloomy", "happy", "boring", "exciting", "adventurous", "moody", "scary",
+        "caring", "noisy", "quiet", "crowded", "lonely", "romantic", "cold", "hot", "misty", "faraway"
+        };
+
+    private static readonly string[] places =
+    {
+        "town", "chaparral", "saloon", "graveyard", "barn", "prairie", "mountain", "goldmine", "lodge",
+        "galaxy", "planet", "moon", "comet", "star", "infinity", "wormhole", "singularity", "sun", "supernova"
+    };
+
+    private static Random random = new Random();
+
+
     /// <summary>
     /// Generate a random session name
     /// </summary>
-    /// <remarks>
-    /// The generated session name is short and readable.  This class makes no guarantee that the session name is actually available for use.
-    /// </remarks>
-    public class GenerateSessionName
+    /// <returns>Session name</returns>
+    public static string getName()
     {
-        private static readonly string[] descriptions = {
-            "lovely", "gloomy", "happy", "boring", "exciting", "adventurous", "moody", "scary",
-            "caring", "noisy", "quiet", "crowded", "lonely", "romantic", "cold", "hot", "misty", "faraway"
-         };
-
-        private static readonly string[] places =
-        {
-            "town", "chaparral", "saloon", "graveyard", "barn", "prairie", "mountain", "goldmine", "lodge",
-            "galaxy", "planet", "moon", "comet", "star", "infinity", "wormhole", "singularity", "sun", "supernova"
-        };
-
-        private static Random random = new Random();
-
-
-        /// <summary>
-        /// Generate a random session name
-        /// </summary>
-        /// <returns>Session name</returns>
-        public static string getName()
-        {
-            var i = (int) (random.NextDouble() * descriptions.Length);
-            int j = (int) (random.NextDouble() * places.Length);
-            return descriptions[i] + "-" + places[j];
-        }
+        var i = (int) (random.NextDouble() * descriptions.Length);
+        int j = (int) (random.NextDouble() * places.Length);
+        return descriptions[i] + "-" + places[j];
     }
 }

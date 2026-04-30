@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,47 +18,46 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+
 using Spacecowboy.Service.Model.Interfaces;
 
+namespace Spacecowboy.Service.Model.Services;
 
-namespace Spacecowboy.Service.Model.Services
+/// <summary>
+/// Service for maintenance tasks across all sessions
+/// </summary>
+public static class SessionMaintenance
 {
+    // The amount of inactive time that must pass before an empty session can be deleted
+    private static readonly TimeSpan SessionExpiration = new TimeSpan(0, 30, 0);
+
+
     /// <summary>
-    /// Service for maintenance tasks across all sessions
+    /// Delete sessions that have been inactive for a long time
     /// </summary>
-    public static class SessionMaintenance
+    /// <param name="repository">Session repository</param>
+    /// <param name="log">Logger or <c>null</c> to disable logging</param>
+    /// <returns>The number of remaining active sessions</returns>
+    public static async Task<int> SessionCleanupAsync(ISessionRepository repository, ILogger log)
     {
-        // The amount of inactive time that must pass before an empty session can be deleted
-        private static readonly TimeSpan SessionExpiration = new TimeSpan(0, 30, 0);
+        if (repository == null) throw new ArgumentNullException(nameof(repository));
 
-
-        /// <summary>
-        /// Delete sessions that have been inactive for a long time
-        /// </summary>
-        /// <param name="repository">Session repository</param>
-        /// <param name="log">Logger or <c>null</c> to disable logging</param>
-        /// <returns>The number of remaining active sessions</returns>
-        public static async Task<int> SessionCleanupAsync(ISessionRepository repository, ILogger log)
+        var expiryTime = DateTime.UtcNow - SessionExpiration;
+        var sessions = (await repository.GetSessionsAsync()).Where(s => s.UpdateTime < expiryTime);
+        var deleteCount = 0;
+        foreach (var s in sessions)
         {
-            if (repository == null) throw new ArgumentNullException(nameof(repository));
-
-            var expiryTime = DateTime.UtcNow - SessionExpiration;
-            var sessions = (await repository.GetSessionsAsync()).Where(s => s.UpdateTime < expiryTime);
-            var deleteCount = 0;
-            foreach (var s in sessions)
+            var activeParticipants = s.GetParticipants().Where(p => p.LastActive > expiryTime);
+            if (!activeParticipants.Any())
             {
-                var activeParticipants = s.GetParticipants().Where(p => p.LastActive > expiryTime);
-                if (!activeParticipants.Any())
-                {
-                    var count = s.GetParticipantsCount();
-                    log?.LogInformation("Session cleanup: Deleting session {SessionId} with {Count} participants", s.Id, count);
-                    await repository.DeleteSessionAsync(s.Id);
-                    deleteCount++;
-                }
+                var count = s.GetParticipantsCount();
+                log?.LogInformation("Session cleanup: Deleting session {SessionId} with {Count} participants", s.Id, count);
+                await repository.DeleteSessionAsync(s.Id);
+                deleteCount++;
             }
-            var activeSessions = (await repository.GetSessionsAsync()).Count();
-            log?.LogInformation("Session cleanup: {0} active sessions, {1} sessions deleted", activeSessions, deleteCount);
-            return activeSessions;
         }
+        var activeSessions = (await repository.GetSessionsAsync()).Count();
+        log?.LogInformation("Session cleanup: {0} active sessions, {1} sessions deleted", activeSessions, deleteCount);
+        return activeSessions;
     }
 }

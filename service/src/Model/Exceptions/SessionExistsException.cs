@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 using System;
 
+namespace Spacecowboy.Service.Model.Exceptions;
 
-namespace Spacecowboy.Service.Model.Exceptions
+/// <summary>
+/// Exception thrown when trying to create a new session using an ID that is already in use
+/// </summary>
+public class SessionExistsException : Exception
 {
     /// <summary>
-    /// Exception thrown when trying to create a new session using an ID that is already in use
+    /// Create exception to signal that a session identifier already is in use
     /// </summary>
-    public class SessionExistsException : Exception
-    {
-        /// <summary>
-        /// Create exception to signal that a session identifier already is in use
-        /// </summary>
-        /// <param name="sessionId">Session identifier</param>
-        public SessionExistsException(string sessionId) : base($"Session {sessionId} already exists") { }
-    }
+    /// <param name="sessionId">Session identifier</param>
+    public SessionExistsException(string sessionId) : base($"Session {sessionId} already exists") { }
 }

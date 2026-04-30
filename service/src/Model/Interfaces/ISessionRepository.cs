@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Spacecowboy.Service.Model.Entities;
 using Spacecowboy.Service.Model.Exceptions;
-
 
 namespace Spacecowboy.Service.Model.Interfaces;
 

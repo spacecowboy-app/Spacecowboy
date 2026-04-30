@@ -1,5 +1,5 @@
 /*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,73 +18,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
+using Spacecowboy.Service.Model.Entities;
 
-namespace Spacecowboy.Service.Test.Model
+namespace Spacecowboy.Service.Test.Model;
+
+public class SessionTest
 {
-    public class SessionTest
+    [Fact]
+    public void Create_ReturnsEmptySession()
     {
-        [Fact]
-        public void Create_ReturnsEmptySession()
-        {
-            var session = new Session("foo-bar");
-            session.Id.Should().Be("foo-bar");
-            session.CreateTime.Should().BeOnOrBefore(DateTime.UtcNow);
-            session.GetParticipants().Should().BeEmpty();
-        }
+        var session = new Session("foo-bar");
+        session.Id.Should().Be("foo-bar");
+        session.CreateTime.Should().BeOnOrBefore(DateTime.UtcNow);
+        session.GetParticipants().Should().BeEmpty();
+    }
 
 
-        [Fact]
-        public void Create_EmptySessionName_ThrowsException()
-        {
-            Action act = () => new Session(" ");
-            act.Should().Throw<ArgumentException>();
-        }
+    [Fact]
+    public void Create_EmptySessionName_ThrowsException()
+    {
+        Action act = () => new Session(" ");
+        act.Should().Throw<ArgumentException>();
+    }
 
-        [Theory]
-        [InlineData("foo-bar")]
-        [InlineData("foo")]
-        [InlineData("a")]
-        [InlineData("0-0")]
-        public void SessionId_Valid(string id)
-        {
-            Session.IsValidId(id).Should().BeTrue();
-        }
-
-
-        [Theory]
-        [InlineData("/foobar")]
-        [InlineData("foo/bar")]
-        [InlineData("foo&bar")]
-        public void SessionId_Invalid(string id)
-        {
-            Session.IsValidId(id).Should().BeFalse();
-        }
+    [Theory]
+    [InlineData("foo-bar")]
+    [InlineData("foo")]
+    [InlineData("a")]
+    [InlineData("0-0")]
+    public void SessionId_Valid(string id)
+    {
+        Session.IsValidId(id).Should().BeTrue();
+    }
 
 
-        [Fact]
-        public void Participant_IdleTime_ShouldIncrease()
-        {
-            var session = new Session("foo-bar");
-            var participant = new Participant("clyde", "avatar", "color");
-            session.AddParticipant(participant);
+    [Theory]
+    [InlineData("/foobar")]
+    [InlineData("foo/bar")]
+    [InlineData("foo&bar")]
+    public void SessionId_Invalid(string id)
+    {
+        Session.IsValidId(id).Should().BeFalse();
+    }
 
-            var idle1 = FindParticipant(session.GetParticipants(), participant.Id).Idle;
-            var idle2 = FindParticipant(session.GetParticipants(), participant.Id).Idle;
 
-            idle1.Should().BeLessThan((double)idle2);
-        }
+    [Fact]
+    public void Participant_IdleTime_ShouldIncrease()
+    {
+        var session = new Session("foo-bar");
+        var participant = new Participant("clyde", "avatar", "color");
+        session.AddParticipant(participant);
+
+        var idle1 = FindParticipant(session.GetParticipants(), participant.Id).Idle;
+        var idle2 = FindParticipant(session.GetParticipants(), participant.Id).Idle;
+
+        idle1.Should().BeLessThan((double)idle2);
+    }
 
 
 
-        private static Participant FindParticipant(IEnumerable<Participant> participants, Guid id)
-        {
-            var found = participants.Where(p => (p.Id == id));
-            if (found.Count() != 1)
-                throw new Exception($"Expected to find exactly one participant but found {found.Count()}");
-            return found.First();
-        }
+    private static Participant FindParticipant(IEnumerable<Participant> participants, Guid id)
+    {
+        var found = participants.Where(p => (p.Id == id));
+        if (found.Count() != 1)
+            throw new Exception($"Expected to find exactly one participant but found {found.Count()}");
+        return found.First();
     }
 }

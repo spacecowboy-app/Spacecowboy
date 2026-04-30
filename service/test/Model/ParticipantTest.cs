@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,48 +15,47 @@
 */
 
 using FluentAssertions;
-using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
+using Spacecowboy.Service.Model.Entities;
 
-namespace Spacecowboy.Service.Test.Model
+namespace Spacecowboy.Service.Test.Model;
+
+public class ParticipantTest
 {
-    public class ParticipantTest
+    [Fact]
+    public void Create_ReturnsValidEntity()
     {
-        [Fact]
-        public void Create_ReturnsValidEntity()
-        {
-            var participant = new Participant("Dirty Harry", "dirty.png", "black");
-            participant.Id.Should().NotBeEmpty();
-            participant.Name.Should().Be("Dirty Harry");
-            participant.Avatar.Should().Be("dirty.png");
-            participant.Color.Should().Be("black");
-        }
-
-        [Fact]
-        public void TwoParticipantsAreNotEqual()
-        {
-            var participant1 = new Participant("Blinky", "blinky", "red");
-            var participant2 = new Participant("Blinky", "blinky", "red");
-            participant1.Should().NotBe(participant2);
-        }
-
-        [Fact]
-        public void AParticipantIsEqualToItself()
-        {
-            var participant1 = new Participant("Blinky", "blinky", "red");
-            var participant2 = participant1;
-            participant1.Should().Be(participant2);
-        }
-
-        [Fact]
-        public void Participant_IdleTimeIncreases()
-        {
-            var participant = new Participant("clyde", "clyde", "clyde");
-            var idle1 = participant.Idle;
-            var idle2 = participant.Idle;
-            idle2.Should().BeGreaterThan(idle1);
-        }
-
+        var participant = new Participant("Dirty Harry", "dirty.png", "black");
+        participant.Id.Should().NotBeEmpty();
+        participant.Name.Should().Be("Dirty Harry");
+        participant.Avatar.Should().Be("dirty.png");
+        participant.Color.Should().Be("black");
     }
+
+    [Fact]
+    public void TwoParticipantsAreNotEqual()
+    {
+        var participant1 = new Participant("Blinky", "blinky", "red");
+        var participant2 = new Participant("Blinky", "blinky", "red");
+        participant1.Should().NotBe(participant2);
+    }
+
+    [Fact]
+    public void AParticipantIsEqualToItself()
+    {
+        var participant1 = new Participant("Blinky", "blinky", "red");
+        var participant2 = participant1;
+        participant1.Should().Be(participant2);
+    }
+
+    [Fact]
+    public void Participant_IdleTimeIncreases()
+    {
+        var participant = new Participant("clyde", "clyde", "clyde");
+        var idle1 = participant.Idle;
+        var idle2 = participant.Idle;
+        idle2.Should().BeGreaterThan(idle1);
+    }
+
 }

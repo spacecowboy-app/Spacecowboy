@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,28 +16,26 @@
 
 using System;
 
+namespace Spacecowboy.Service;
 
-namespace Spacecowboy.Service
+/// <summary>
+/// Service configuration options.
+/// </summary>
+public record ServiceOptions
 {
+    public const string Service = "Spacecowboy";
+
     /// <summary>
-    /// Service configuration options.
+    /// Session repository type
     /// </summary>
-    public record ServiceOptions
-    {
-        public const string Service = "Spacecowboy";
+    /// <remarks>
+    /// Valid values are "redis" and "memory".
+    /// </remarks>
+    public string? RepositoryType { get; init; }
 
-        /// <summary>
-        /// Session repository type
-        /// </summary>
-        /// <remarks>
-        /// Valid values are "redis" and "memory".
-        /// </remarks>
-        public string? RepositoryType { get; init; }
-
-        /// <summary>
-        /// Name of this instance of the service.  Each running instance has a unique name.
-        /// Defaults to the hostname.
-        /// </summary>
-        public string? InstanceName { get; init; } = Environment.GetEnvironmentVariable("HOSTNAME");
-    }
+    /// <summary>
+    /// Name of this instance of the service.  Each running instance has a unique name.
+    /// Defaults to the hostname.
+    /// </summary>
+    public string? InstanceName { get; init; } = Environment.GetEnvironmentVariable("HOSTNAME");
 }

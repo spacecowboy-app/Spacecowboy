@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,19 +16,17 @@
 
 using Xunit;
 
+namespace Spacecowboy.Service.Test;
 
-namespace Spacecowboy.Service.Test
+public class GenerateSessionNameTest
 {
-    public class GenerateSessionNameTest
+    [Fact]
+    public void CanGenerateNames()
     {
-        [Fact]
-        public void CanGenerateNames()
+        for (int i=0; i<100; i++)
         {
-            for (int i=0; i<100; i++)
-            {
-                GenerateSessionName.getName();
-            }
+            GenerateSessionName.getName();
         }
-
     }
+
 }
