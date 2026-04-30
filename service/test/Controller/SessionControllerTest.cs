@@ -51,7 +51,6 @@ public class SessionControllerTest
 
         var mapperConfig = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile<Profiles>();
             cfg.AddProfile<RepositoryProfiles>();
         });
         mapper = mapperConfig.CreateMapper();
@@ -60,7 +59,7 @@ public class SessionControllerTest
 
         var options = new ServiceOptions();
 
-        controller = new SessionController(logger, repository, mapper, null);
+        controller = new SessionController(logger, repository, null);
     }
 
 

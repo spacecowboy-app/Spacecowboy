@@ -17,7 +17,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -63,14 +62,12 @@ public class SessionController : ControllerBase
         });
 
     private readonly ILogger<SessionController> log;
-    private readonly IMapper map;
     private readonly ISessionRepository repository;
     private readonly IHubContext<SessionHub>? sessionHub;
 
-    public SessionController(ILogger<SessionController> log, ISessionRepository repository, IMapper map, IHubContext<SessionHub>? hub)
-    {
+    public SessionController(ILogger<SessionController> log, ISessionRepository repository, IHubContext<SessionHub>? hub)
+        {
         this.log = log ?? throw new ArgumentNullException(nameof(log));
-        this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         this.sessionHub = hub;
 
@@ -299,7 +296,7 @@ public class SessionController : ControllerBase
             Session session = await repository.GetSessionAsync(sessionId);
             log.LogInformation("Add deck to session {SessionId} using deck {DeckName} of type {DeckType}", sessionId, deck.Name, deck.Type);
             session.RemoveAllCards();
-            session.AddDeck(map.Map<Deck>(deck));
+            session.AddDeck((Deck) deck);
             var response = new SessionResponse(await repository.UpdateSessionAsync(session));
             await SessionHub.SendSessionUpdated(sessionHub, response);
             decksTotal.WithLabels(deck.Name ?? "-", deck.Type ?? "-").Inc();

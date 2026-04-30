@@ -15,6 +15,9 @@
 */
 
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+using Spacecowboy.Service.Model.Entities;
 
 namespace Spacecowboy.Service.Controllers.DTO;
 
@@ -52,4 +55,19 @@ public record AddDeckRequest
     /// </summary>
     [Required]
     public required string Type { get; init; }
+
+    /// <summary>
+    /// Explicit cast to model <see cref="Deck"/>.
+    /// </summary>
+    public static explicit operator Deck(AddDeckRequest request)
+    {
+        return new Deck(
+            request.Name,
+            request.Type,
+            request.Cards.Select(c => (Card) c),
+            (Card) request.NoVote,
+            (Card) request.NotRevealed
+        );
+    }
+
 }

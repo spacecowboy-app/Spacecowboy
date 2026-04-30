@@ -17,6 +17,8 @@
 
 namespace Spacecowboy.Service.Controllers.DTO;
 
+using Spacecowboy.Service.Model.Entities;
+
 /// <summary>
 /// Create a card in a session
 /// </summary>
@@ -46,4 +48,18 @@ public record CreateCardRequest
     /// Card style identifier
     /// </summary>
     public string? Style { get; init; }
+
+    /// <summary>
+    /// Explicit cast to model <see cref="Card"/>.
+    /// </summary>
+    public static explicit operator Card(CreateCardRequest request)
+    {
+        return new Card(
+            request.Value,
+            request.Image,
+            request.Color,
+            request.Font,
+            request.Style
+        );
+    }
 }
