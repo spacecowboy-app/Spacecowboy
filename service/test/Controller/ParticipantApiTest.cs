@@ -50,16 +50,13 @@ public class ParticipantApiTest
 
         var mapperConfig = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile<Profiles>();
             cfg.AddProfile<RepositoryProfiles>();
         });
         mapper = mapperConfig.CreateMapper();
 
         repository = new MemorySessionRepository(null, mapper);
-
         var options = new ServiceOptions();
-
-        controller = new SessionController(logger, repository, mapper, null);
+        controller = new SessionController(logger, repository, null);
     }
 
 
