@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,137 +14,136 @@
     limitations under the License.
 */
 
-using Xunit;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Xunit;
+
 using Spacecowboy.Service.Controllers;
 using Spacecowboy.Service.Controllers.DTO;
 using Spacecowboy.Service.Infrastructure;
 using Spacecowboy.Service.Infrastructure.DTO;
 using Spacecowboy.Service.Model.Interfaces;
 
+namespace Spacecowboy.Service.Test.Controller;
 
-namespace Spacecowboy.Service.Test.Controller
+public class ParticipantApiTest
 {
-    public class ParticipantApiTest
+    private const string SessionName = "foo-bar";
+
+    private readonly ISessionRepository repository;
+    private readonly SessionController controller;
+    private readonly ILogger<SessionController> logger;
+    private readonly IMapper mapper;
+
+
+    public ParticipantApiTest()
     {
-        private const string SessionName = "foo-bar";
-
-        private readonly ISessionRepository repository;
-        private readonly SessionController controller;
-        private readonly ILogger<SessionController> logger;
-        private readonly IMapper mapper;
-
-
-        public ParticipantApiTest()
+        using var loggerFactory = LoggerFactory.Create(builder =>
         {
-            using var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder
-                    .AddConsole();
-            });
-            logger = loggerFactory.CreateLogger<SessionController>();
+            builder
+                .AddConsole();
+        });
+        logger = loggerFactory.CreateLogger<SessionController>();
 
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<Profiles>();
-                cfg.AddProfile<RepositoryProfiles>();
-            });
-            mapper = mapperConfig.CreateMapper();
-
-            repository = new MemorySessionRepository(null, mapper);
-
-            var options = new ServiceOptions();
-
-            controller = new SessionController(logger, repository, mapper, null);
-        }
-
-
-        [Fact]
-        public async Task AddParticipant()
+        var mapperConfig = new MapperConfiguration(cfg =>
         {
-            // Create session
-            var sessionResponse = await controller.CreateSession(SessionName);
-            var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.Should().NotBeNull();
-            sessionResult!.StatusCode.Should().Be(201);
+            cfg.AddProfile<Profiles>();
+            cfg.AddProfile<RepositoryProfiles>();
+        });
+        mapper = mapperConfig.CreateMapper();
 
-            // Add deck
-            await controller.AddDeck(SessionName, new AddDeckRequest
-            {
-                Name = "foo-deck",
-                Type = "foo-type",
-                NoVote = new CreateCardRequest { Value = "novote" },
-                NotRevealed = new CreateCardRequest { Value = "notrevealed" },
-                Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
-            });
+        repository = new MemorySessionRepository(null, mapper);
 
-            // Add participant
-            var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar", Color = "inky-color" });
-            var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.Should().NotBeNull();
-            participantResult!.StatusCode.Should().Be(200);
+        var options = new ServiceOptions();
 
-        }
+        controller = new SessionController(logger, repository, mapper, null);
+    }
 
 
-        [Fact]
-        public async Task AddParticipantWithoutColor()
+    [Fact]
+    public async Task AddParticipant()
+    {
+        // Create session
+        var sessionResponse = await controller.CreateSession(SessionName);
+        var sessionResult = sessionResponse.Result as ObjectResult;
+        sessionResult.Should().NotBeNull();
+        sessionResult!.StatusCode.Should().Be(201);
+
+        // Add deck
+        await controller.AddDeck(SessionName, new AddDeckRequest
         {
-            // Create session
-            var sessionResponse = await controller.CreateSession(SessionName);
-            var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.Should().NotBeNull();
-            sessionResult!.StatusCode.Should().Be(201);
+            Name = "foo-deck",
+            Type = "foo-type",
+            NoVote = new CreateCardRequest { Value = "novote" },
+            NotRevealed = new CreateCardRequest { Value = "notrevealed" },
+            Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
+        });
 
-            // Add deck
-            await controller.AddDeck(SessionName, new AddDeckRequest
-            {
-                Name = "foo-deck",
-                Type = "foo-type",
-                NoVote = new CreateCardRequest { Value = "novote" },
-                NotRevealed = new CreateCardRequest { Value = "notrevealed" },
-                Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
-            });
-
-            // Add participant
-            var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar" });
-            var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.Should().NotBeNull();
-            participantResult!.StatusCode.Should().Be(200);
-
-        }
-
-
-        [Fact]
-        public async Task AddParticipantWithoutAvatar()
-        {
-            // Create session
-            var sessionResponse = await controller.CreateSession(SessionName);
-            var sessionResult = sessionResponse.Result as ObjectResult;
-            sessionResult.Should().NotBeNull();
-            sessionResult!.StatusCode.Should().Be(201);
-
-            // Add deck
-            await controller.AddDeck(SessionName, new AddDeckRequest
-            {
-                Name = "foo-deck",
-                Type = "foo-type",
-                NoVote = new CreateCardRequest { Value = "novote" },
-                NotRevealed = new CreateCardRequest { Value = "notrevealed" },
-                Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
-            });
-
-            // Add participant
-            var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Color = "inky-color" });
-            var participantResult = participantResponse.Result as ObjectResult;
-            participantResult.Should().NotBeNull();
-            participantResult!.StatusCode.Should().Be(200);
-
-        }
+        // Add participant
+        var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar", Color = "inky-color" });
+        var participantResult = participantResponse.Result as ObjectResult;
+        participantResult.Should().NotBeNull();
+        participantResult!.StatusCode.Should().Be(200);
 
     }
+
+
+    [Fact]
+    public async Task AddParticipantWithoutColor()
+    {
+        // Create session
+        var sessionResponse = await controller.CreateSession(SessionName);
+        var sessionResult = sessionResponse.Result as ObjectResult;
+        sessionResult.Should().NotBeNull();
+        sessionResult!.StatusCode.Should().Be(201);
+
+        // Add deck
+        await controller.AddDeck(SessionName, new AddDeckRequest
+        {
+            Name = "foo-deck",
+            Type = "foo-type",
+            NoVote = new CreateCardRequest { Value = "novote" },
+            NotRevealed = new CreateCardRequest { Value = "notrevealed" },
+            Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
+        });
+
+        // Add participant
+        var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Avatar = "inky-avatar" });
+        var participantResult = participantResponse.Result as ObjectResult;
+        participantResult.Should().NotBeNull();
+        participantResult!.StatusCode.Should().Be(200);
+
+    }
+
+
+    [Fact]
+    public async Task AddParticipantWithoutAvatar()
+    {
+        // Create session
+        var sessionResponse = await controller.CreateSession(SessionName);
+        var sessionResult = sessionResponse.Result as ObjectResult;
+        sessionResult.Should().NotBeNull();
+        sessionResult!.StatusCode.Should().Be(201);
+
+        // Add deck
+        await controller.AddDeck(SessionName, new AddDeckRequest
+        {
+            Name = "foo-deck",
+            Type = "foo-type",
+            NoVote = new CreateCardRequest { Value = "novote" },
+            NotRevealed = new CreateCardRequest { Value = "notrevealed" },
+            Cards = new CreateCardRequest[] { new CreateCardRequest { Value = "1" } }
+        });
+
+        // Add participant
+        var participantResponse = await controller.AddParticipant(SessionName, new CreateParticipantRequest { Name = "inky", Color = "inky-color" });
+        var participantResult = participantResponse.Result as ObjectResult;
+        participantResult.Should().NotBeNull();
+        participantResult!.StatusCode.Should().Be(200);
+
+    }
+
 }

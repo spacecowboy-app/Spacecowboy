@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,67 +16,66 @@
 
 using System;
 using FluentAssertions;
-using Spacecowboy.Service.Model.Entities;
 using Xunit;
 
+using Spacecowboy.Service.Model.Entities;
 
-namespace Spacecowboy.Service.Test.Model
+namespace Spacecowboy.Service.Test.Model;
+
+public class SessionCardTest
 {
-    public class SessionCardTest
+    // Name of sessions created by these tests
+    private readonly string sessionId = "foo-bar";
+
+
+    [Fact]
+    public void NewSessionContainsNoCards()
     {
-        // Name of sessions created by these tests
-        private readonly string sessionId = "foo-bar";
+        Session session = new Session(sessionId);
+        session.GetCards().Should().BeEmpty();
+    }
 
 
-        [Fact]
-        public void NewSessionContainsNoCards()
-        {
-            Session session = new Session(sessionId);
-            session.GetCards().Should().BeEmpty();
-        }
+    [Fact]
+    public void SessionShouldContainAddedCards()
+    {
+        Card cardA = new Card("A", "imageA", "white", "large", null);
+        Card cardB = new Card("B", "imageB", "white", "large", null);
+
+        Session session = new Session(sessionId);
+        session.AddCard(cardA);
+        session.AddCard(cardB);
+
+        session.GetCards().Count.Should().Be(2);
+        session.ContainsCard(cardA.Id).Should().BeTrue();
+        session.ContainsCard(cardB.Id).Should().BeTrue();
+    }
 
 
-        [Fact]
-        public void SessionShouldContainAddedCards()
-        {
-            Card cardA = new Card("A", "imageA", "white", "large", null);
-            Card cardB = new Card("B", "imageB", "white", "large", null);
+    [Fact]
+    public void AddDuplicateCardShouldThrowException()
+    {
+        Card card = new Card("A", "imageA", "white", "large", "default");
+        Session session = new Session(sessionId);
+        session.AddCard(card);
 
-            Session session = new Session(sessionId);
-            session.AddCard(cardA);
-            session.AddCard(cardB);
-
-            session.GetCards().Count.Should().Be(2);
-            session.ContainsCard(cardA.Id).Should().BeTrue();
-            session.ContainsCard(cardB.Id).Should().BeTrue();
-        }
+        session.Invoking<Session>(s => s.AddCard(card)).Should().Throw<ArgumentException>();
+    }
 
 
-        [Fact]
-        public void AddDuplicateCardShouldThrowException()
-        {
-            Card card = new Card("A", "imageA", "white", "large", "default");
-            Session session = new Session(sessionId);
-            session.AddCard(card);
+    [Fact]
+    public void RemoveCardSholdBeOk()
+    {
+        Card cardA = new Card("A", "imageA", "white", "large", null);
+        Card cardB = new Card("B", "imageB", "white", "large", null);
 
-            session.Invoking<Session>(s => s.AddCard(card)).Should().Throw<ArgumentException>();
-        }
+        Session session = new Session(sessionId);
+        session.AddCard(cardA);
+        session.AddCard(cardB);
+        session.RemoveCard(cardA.Id);
 
-
-        [Fact]
-        public void RemoveCardSholdBeOk()
-        {
-            Card cardA = new Card("A", "imageA", "white", "large", null);
-            Card cardB = new Card("B", "imageB", "white", "large", null);
-
-            Session session = new Session(sessionId);
-            session.AddCard(cardA);
-            session.AddCard(cardB);
-            session.RemoveCard(cardA.Id);
-
-            session.GetCards().Count.Should().Be(1);
-            session.ContainsCard(cardA.Id).Should().BeFalse();
-            session.ContainsCard(cardB.Id).Should().BeTrue();
-        }
+        session.GetCards().Count.Should().Be(1);
+        session.ContainsCard(cardA.Id).Should().BeFalse();
+        session.ContainsCard(cardB.Id).Should().BeTrue();
     }
 }
