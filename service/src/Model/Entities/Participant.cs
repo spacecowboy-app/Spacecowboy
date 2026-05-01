@@ -29,7 +29,7 @@ public class Participant : IEquatable<Participant>
     /// <remarks>
     /// The service generates the participant identifier.  It is guaranteed to be globally unique.
     /// </remarks>
-    public Guid Id { get; private set; }
+    public Guid Id { get; init; }
 
     /// <summary>
     /// Participant name
@@ -38,7 +38,7 @@ public class Participant : IEquatable<Participant>
     /// The service does not use this property for anything. It is intended for the client to use to store the publically
     /// displayed nick or name associated with the participant.
     /// </remarks>
-    public string Name { get; }
+    public string Name { get; init; }
 
     /// <summary>
     /// Avatar reference
@@ -47,22 +47,25 @@ public class Participant : IEquatable<Participant>
     /// The service does not use this property for anything. It is intended for the client to use as a reference to
     /// the participant's avatar.  It is up to the client to define the format of this reference.
     /// </remarks>
-    public string? Avatar { get; }
+    public string? Avatar { get; init; }
 
     /// <summary>
     /// Avatar color
     /// </summary>
-    public string? Color { get; }
+    public string? Color { get; init; }
 
     /// <summary>
     /// The time this participant was last active
     /// </summary>
-    public DateTime LastActive { get; private set; }
+    public DateTime LastActive { get; init; }
 
     /// <summary>
     /// Return the participant idle time (in seconds)
     /// </summary>
     public double Idle { get => (DateTime.UtcNow - LastActive).TotalSeconds; }
+
+
+    public Participant() { }
 
     /// <summary>
     /// Create a Participant
@@ -77,13 +80,6 @@ public class Participant : IEquatable<Participant>
         Avatar = avatar;
         Color = color;
         LastActive = DateTime.UtcNow;
-    }
-
-
-    public override bool Equals(object? other)
-    {
-        if (!(other is Participant)) return false;
-        return Equals((Participant) other);
     }
 
     public bool Equals(Participant? other)
