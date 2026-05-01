@@ -16,6 +16,8 @@
 
 using System;
 
+using Spacecowboy.Service.Model.Entities;
+
 namespace Spacecowboy.Service.Infrastructure.DTO;
 
 /// <summary>
@@ -29,4 +31,20 @@ public record CardDto
     public string? Color { get; init; }
     public string? Font { get; init; }
     public string? Style { get; init; }
+
+    /// <summary>
+    /// Explicit cast from model <see cref="Card"/> to <see cref="CardDto"/>.
+    /// </summary>
+    public static explicit operator CardDto(Card card)
+    {
+        return new CardDto
+        {
+            Id = card.Id,
+            Value = card.Value,
+            Image = card.Image,
+            Color = card.Color,
+            Font = card.Font,
+            Style = card.Style
+        };
+    }
 }
