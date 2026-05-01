@@ -99,7 +99,7 @@ public class RedisSessionRepository : ISessionRepository
         var db = redis.GetDatabase();
         var trans = db.CreateTransaction();
         trans.AddCondition(Condition.HashNotExists(keySessions, session.Id));
-        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize(map.Map<SessionDto>(session)));
+        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize((SessionDto) session));
         var result = await trans.ExecuteAsync();
         if (!result) throw new SessionExistsException(session.Id);
         _ = db.HashIncrementAsync(keySessionMetrics, sessionMetricsTotalSessions);
@@ -114,7 +114,7 @@ public class RedisSessionRepository : ISessionRepository
         var db = redis.GetDatabase();
         var trans = db.CreateTransaction();
         trans.AddCondition(Condition.HashExists(keySessions, session.Id));
-        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize(map.Map<SessionDto>(session)));
+        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize((SessionDto) session));
         var result = await trans.ExecuteAsync();
         if (!result) throw new SessionNotFoundException(session.Id);
         await UpdateGenerationAsync(session.Id);
