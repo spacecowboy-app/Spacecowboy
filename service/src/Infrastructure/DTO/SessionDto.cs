@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Spacecowboy.Service.Model.Entities;
 
@@ -39,4 +40,28 @@ public class SessionDto
     public CardDto? NotRevealed { get; set; }
     public string? DeckName { get; set; }
     public string? DeckType { get; set; }
+
+
+    /// <summary>
+    /// Explicit cast from model <see cref="Session"/> to <see cref="SessionDto"/>.
+    /// </summary>
+    public static explicit operator SessionDto(Session session)
+    {
+        return new SessionDto
+        {
+            Id = session.Id,
+            CreateTime = session.CreateTime,
+            UpdateTime = session.UpdateTime,
+            Generation = session.Generation,
+            ParticipantCountMax = session.ParticipantCountMax,
+            VoteCount = session.VoteCount,
+            Participants = session.Participants is not null ? session.Participants.Select(p => (ParticipantDto) p) : null,
+            Cards = session.Cards is not null ? session.Cards.Select(c => (CardDto) c) : null,
+            SimpleVotes = session.SimpleVotes is not null ? session.SimpleVotes : null,
+            NoVote = session.NoVote is not null ? (CardDto)session.NoVote : null,
+            NotRevealed = session.NotRevealed is not null ? (CardDto) session.NotRevealed : null,
+            DeckName = session.DeckName,
+            DeckType = session.DeckType
+        };
+    }
 }
