@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,19 +16,17 @@
 
 using System;
 
+namespace Spacecowboy.Service.Infrastructure.DTO;
 
-namespace Spacecowboy.Service.Infrastructure.DTO
+/// <summary>
+/// Represents a card as stored in a repository
+/// </summary>
+public record CardDto
 {
-    /// <summary>
-    /// Represents a card as stored in a repository
-    /// </summary>
-    public record CardDto
-    {
-        public required Guid Id { get; init; }
-        public string? Value { get; init; }
-        public string? Image { get; init; }
-        public string? Color { get; init; }
-        public string? Font { get; init; }
-        public string? Style { get; init; }
-    }
+    public required Guid Id { get; init; }
+    public string? Value { get; init; }
+    public string? Image { get; init; }
+    public string? Color { get; init; }
+    public string? Font { get; init; }
+    public string? Style { get; init; }
 }

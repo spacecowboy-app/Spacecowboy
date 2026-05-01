@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,28 +16,27 @@
 
 using System;
 using System.Collections.Generic;
+
 using Spacecowboy.Service.Model.Entities;
 
+namespace Spacecowboy.Service.Infrastructure.DTO;
 
-namespace Spacecowboy.Service.Infrastructure.DTO
+/// <summary>
+/// Represents a session as stored in a repository
+/// </summary>
+public class SessionDto
 {
-    /// <summary>
-    /// Represents a session as stored in a repository
-    /// </summary>
-    public class SessionDto
-    {
-        public required string Id { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
-        public int Generation { get; set; }
-        public int ParticipantCountMax { get; set; }
-        public int VoteCount { get; set; }
-        public IEnumerable<ParticipantDto>? Participants { get; set; }
-        public IEnumerable<CardDto>? Cards { get; set; }
-        public IEnumerable<SimpleVote>? SimpleVotes { get; set; }
-        public CardDto? NoVote { get; set; }
-        public CardDto? NotRevealed { get; set; }
-        public string? DeckName { get; set; }
-        public string? DeckType { get; set; }
-    }
+    public required string Id { get; set; }
+    public DateTime CreateTime { get; set; }
+    public DateTime UpdateTime { get; set; }
+    public int Generation { get; set; }
+    public int ParticipantCountMax { get; set; }
+    public int VoteCount { get; set; }
+    public IEnumerable<ParticipantDto>? Participants { get; set; }
+    public IEnumerable<CardDto>? Cards { get; set; }
+    public IEnumerable<SimpleVote>? SimpleVotes { get; set; }
+    public CardDto? NoVote { get; set; }
+    public CardDto? NotRevealed { get; set; }
+    public string? DeckName { get; set; }
+    public string? DeckType { get; set; }
 }

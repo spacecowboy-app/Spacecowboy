@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 using System;
 
+namespace Spacecowboy.Service.Infrastructure.DTO;
 
-namespace Spacecowboy.Service.Infrastructure.DTO
+/// <summary>
+/// Represents a participant as stored in a repository
+/// </summary>
+public class ParticipantDto
 {
-    /// <summary>
-    /// Represents a participant as stored in a repository
-    /// </summary>
-    public class ParticipantDto
-    {
-        public Guid Id { get; init; }
-        public required string Name { get; init; }
-        public string? Avatar { get; init; }
-        public string? Color { get; init; }
-        public DateTime LastActive { get; set; }
-    }
+    public Guid Id { get; init; }
+    public required string Name { get; init; }
+    public string? Avatar { get; init; }
+    public string? Color { get; init; }
+    public DateTime LastActive { get; set; }
 }
