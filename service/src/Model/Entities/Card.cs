@@ -30,38 +30,41 @@ public record Card
     /// <summary>
     /// Vote card ID
     /// </summary>
-    public Guid Id { get; private init; }
+    public Guid Id { get; init; }
 
 
     /// <summary>
     /// Vote card value
     /// </summary>
-    public string? Value { get; private init; }
+    public string? Value { get; init; }
 
 
     /// <summary>
     /// Reference to image associated with this card
     /// </summary>
-    public string? Image { get; private init; }
+    public string? Image { get; init; }
 
 
     /// <summary>
     /// Reference to card color
     /// </summary>
-    public string? Color { get; private init; }
+    public string? Color { get; init; }
 
 
     /// <summary>
     /// Reference to card font
     /// </summary>
-    public string? Font { get; private init; }
+    public string? Font { get; init; }
 
 
     /// <summary>
     /// Card style identifier
     /// </summary>
-    public string? Style { get; private init; }
+    public string? Style { get; init; }
 
+
+    // TODO Convert to using only record initializers with proper validation and remove constructors
+    public Card() {}
 
     /// <summary>
     /// Create a card entity.
