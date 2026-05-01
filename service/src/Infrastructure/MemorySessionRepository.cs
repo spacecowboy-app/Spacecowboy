@@ -74,7 +74,7 @@ public class MemorySessionRepository : ISessionRepository
         lock (repolock)
         {
             if (sessions.ContainsKey(session.Id)) throw new SessionExistsException(session.Id);
-            sessions[session.Id] = map.Map<SessionDto>(session);
+            sessions[session.Id] = (SessionDto) session;
             UpdateGeneration(session.Id);
             participantsTimestamps[session.Id] = new Dictionary<Guid, DateTime>();
         }
@@ -134,7 +134,7 @@ public class MemorySessionRepository : ISessionRepository
         lock (repolock)
         {
             if (!sessions.ContainsKey(session.Id)) throw new SessionNotFoundException(session.Id);
-            sessions[session.Id] = map.Map<SessionDto>(session);
+            sessions[session.Id] = (SessionDto) session;
             UpdateGeneration(session.Id);
             return Task<Session>.FromResult(session);
         }
