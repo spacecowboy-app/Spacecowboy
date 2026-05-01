@@ -45,4 +45,19 @@ public record ParticipantDto
             LastActive = participant.LastActive
         };
     }
+
+    /// <summary>
+    /// Explicit cast from <see cref="ParticipantDto"/> to model <see cref="Participant"/>.
+    /// </summary>
+    public static explicit operator Participant(ParticipantDto dto)
+    {
+        return new Participant
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Avatar = dto.Avatar,
+            Color = dto.Color,
+            LastActive = dto.LastActive
+        };
+    }
 }
