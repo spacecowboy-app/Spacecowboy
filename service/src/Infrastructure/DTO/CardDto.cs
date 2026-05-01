@@ -47,4 +47,20 @@ public record CardDto
             Style = card.Style
         };
     }
+
+    /// <summary>
+    /// Explicit cast from <see cref="CardDto"/> to model <see cref="Card"/>.
+    /// </summary>
+    public static explicit operator Card(CardDto dto)
+    {
+        return new Card
+        {
+            Id = dto.Id,
+            Value = dto.Value,
+            Image = dto.Image,
+            Color = dto.Color,
+            Font = dto.Font,
+            Style = dto.Style
+        };
+    }
 }
