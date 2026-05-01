@@ -16,16 +16,33 @@
 
 using System;
 
+using Spacecowboy.Service.Model.Entities;
+
 namespace Spacecowboy.Service.Infrastructure.DTO;
 
 /// <summary>
 /// Represents a participant as stored in a repository
 /// </summary>
-public class ParticipantDto
+public record ParticipantDto
 {
     public Guid Id { get; init; }
     public required string Name { get; init; }
     public string? Avatar { get; init; }
     public string? Color { get; init; }
     public DateTime LastActive { get; set; }
+
+    /// <summary>
+    /// Explicit cast from model <see cref="Participant"/> to <see cref="ParticipantDto"/>.
+    /// </summary>
+    public static explicit operator ParticipantDto(Participant participant)
+    {
+        return new ParticipantDto
+        {
+            Id = participant.Id,
+            Name = participant.Name,
+            Avatar = participant.Avatar,
+            Color = participant.Color,
+            LastActive = participant.LastActive
+        };
+    }
 }
