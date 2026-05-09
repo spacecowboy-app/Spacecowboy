@@ -148,6 +148,39 @@ public class Session
 
 
     /// <summary>
+    /// Constructur with all parameters.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="createTime"></param>
+    /// <param name="updateTime"></param>
+    /// <param name="generation"></param>
+    /// <param name="participantCountMax"></param>
+    /// <param name="voteCount"></param>
+    /// <param name="participants"></param>
+    /// <param name="cards"></param>
+    /// <param name="simpleVotes"></param>
+    /// <param name="noVote"></param>
+    /// <param name="notRevealed"></param>
+    /// <param name="deckName"></param>
+    /// <param name="deckType"></param>
+    public Session(string id, DateTime createTime, DateTime updateTime, int generation, int participantCountMax, int voteCount, IEnumerable<Participant>? participants, IEnumerable<Card>? cards, IEnumerable<SimpleVote>? simpleVotes, Card? noVote, Card? notRevealed, string? deckName, string? deckType) : this(id)
+    {
+        CreateTime = createTime;
+        UpdateTime = updateTime;
+        Generation = generation;
+        ParticipantCountMax = participantCountMax;
+        VoteCount = voteCount;
+        if (participants is not null) AddParticipants(participants);
+        if (cards is not null) AddCards(cards);
+        if (simpleVotes is not null) AddVotes(simpleVotes);
+        NoVote = noVote;
+        NotRevealed = notRevealed;
+        DeckName = deckName;
+        DeckType = deckType;
+    }
+
+
+    /// <summary>
     /// Add a participant to the session
     /// </summary>
     /// <param name="participant">Participant to add to the session</param>
