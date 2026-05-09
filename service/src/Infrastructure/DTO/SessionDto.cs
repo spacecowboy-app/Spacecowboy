@@ -64,4 +64,27 @@ public class SessionDto
             DeckType = session.DeckType
         };
     }
+
+
+    /// <summary>
+    /// Explicit cast from <see cref="SessionDto"/> to model <see cref="Session"/>.
+    /// </summary>
+    public static explicit operator Session(SessionDto dto)
+    {
+        return new Session(
+             id: dto.Id,
+             createTime: dto.CreateTime,
+             updateTime: dto.UpdateTime,
+             generation: dto.Generation,
+             participantCountMax: dto.ParticipantCountMax,
+             voteCount: dto.VoteCount,
+             participants: dto.Participants is not null ? dto.Participants.Select(p => (Participant) p).ToList() : null,
+             cards: dto.Cards is not null ? dto.Cards.Select(c => (Card) c).ToList() : null,
+             simpleVotes: dto.SimpleVotes is not null ? dto.SimpleVotes.ToList() : null,
+             noVote: dto.NoVote is not null ? (Card)dto.NoVote : null,
+             notRevealed: dto.NotRevealed is not null ? (Card) dto.NotRevealed : null,
+             deckName: dto.DeckName,
+             deckType: dto.DeckType
+        );
+    }
 }
