@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using AutoMapper;
 using FluentAssertions;
 using Xunit;
 
@@ -27,25 +26,6 @@ namespace Spacecowboy.Service.Test.Repository;
 
 public class RepositoryMapperTest
 {
-    readonly MapperConfiguration configuration;
-    readonly IMapper mapper;
-
-    public RepositoryMapperTest()
-    {
-        configuration = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<RepositoryProfiles>();
-        });
-        mapper = configuration.CreateMapper();
-    }
-
-
-    [Fact]
-    public void Mapper_IsValidConfiguration()
-    {
-        configuration.AssertConfigurationIsValid();
-    }
-
 
     [Fact]
     public void ConvertSessionToDto()
@@ -62,7 +42,7 @@ public class RepositoryMapperTest
         session.AddDeck(deck);
         session.AddVote(p1.Id, c1.Id);
 
-        var sessionDto = mapper.Map<SessionDto>(session);
+        var sessionDto = (SessionDto) session;
 
         sessionDto.Id.Should().Be("foo-bar");
         sessionDto.DeckName.Should().Be("deckname");
@@ -98,7 +78,7 @@ public class RepositoryMapperTest
         votes.Add(new SimpleVote(p1.Id, c1.Id));
         sessionDto.SimpleVotes = votes;
 
-        var session = mapper.Map<Session>(sessionDto);
+        var session = (Session) sessionDto;
 
         session.Id.Should().Be("foo-bar");
         session.GetParticipants().Should().HaveCount(1);
@@ -113,7 +93,7 @@ public class RepositoryMapperTest
     public void ConvertDtoToParticipant()
     {
         var participantDto = new ParticipantDto() { Name = "inky", Avatar = "inky-avatar", Color = "inky-color", Id = Guid.NewGuid(), LastActive = DateTime.UtcNow };
-        var participant = mapper.Map<Participant>(participantDto);
+        var participant = (Participant) participantDto;
         participant.Name.Should().Be("inky");
         participant.Avatar.Should().Be("inky-avatar");
         participant.Id.Should().Be(participantDto.Id);
