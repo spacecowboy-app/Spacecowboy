@@ -168,7 +168,7 @@ public class RedisSessionRepository : ISessionRepository
             if (sessionDto == null) { throw new JsonException("Got null response from JSON deserializer."); }
             await PopulateGenerationAsync(sessionDto);
             await PopulateParticipantsLastActiveTimestampAsync(sessionDto);
-            return map.Map<Session>(sessionDto);
+            return (Session) sessionDto;
         }
         catch (JsonException ex)
         {
@@ -195,7 +195,7 @@ public class RedisSessionRepository : ISessionRepository
         var sessions = await db.HashValuesAsync(keySessions);
         try
         {
-            return sessions.Select(s => s.ToString()).Where(s => s != null).Select(s => map.Map<Session>(JsonSerializer.Deserialize<SessionDto>(s)));
+            return sessions.Select(s => s.ToString()).Where(s => s is not null).Select(s => JsonSerializer.Deserialize<SessionDto>(s)).Where(s => s is not null).Select(s => (Session) s!).ToList();
         }
         catch (JsonException ex)
         {
