@@ -99,7 +99,7 @@ public class MemorySessionRepository : ISessionRepository
             var session = sessions[id];
             PopulateGeneration(session);
             PopulateParticipantsLastActiveTimestamp(session);
-            return map.Map<Session>(session);
+            return (Session) session;
         }
     }
 
