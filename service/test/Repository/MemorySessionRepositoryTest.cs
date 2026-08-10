@@ -16,12 +16,10 @@
 
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentAssertions;
 using Xunit;
 
 using Spacecowboy.Service.Infrastructure;
-using Spacecowboy.Service.Infrastructure.DTO;
 using Spacecowboy.Service.Model.Entities;
 using Spacecowboy.Service.Model.Exceptions;
 
@@ -29,31 +27,11 @@ namespace Spacecowboy.Service.Test.Repository;
 
 public class MemorySessionRepositoryTest
 {
-    private readonly IMapper mapper;
-
-    public MemorySessionRepositoryTest()
-    {
-        var mapperConfig = new MapperConfiguration(cfg =>
-        {
-            cfg.AddProfile<RepositoryProfiles>();
-        });
-        mapper = mapperConfig.CreateMapper();
-    }
-
-
-    [Fact]
-    public async Task NewRepositoryContainsNoSessions()
-    {
-        var repo = new MemorySessionRepository(null, mapper);
-        var sessions = await repo.GetSessionNamesAsync();
-        sessions.Should().BeEmpty();
-    }
-
 
     [Fact]
     public async Task AddedSessionExistsInRepository()
     {
-        var repo = new MemorySessionRepository(null, mapper);
+        var repo = new MemorySessionRepository(null);
         await repo.AddSessionAsync(new Session("foo-bar"));
         (await repo.SessionExistsAsync("foo-bar")).Should().BeTrue();
         (await repo.GetSessionNamesAsync()).Should().NotBeEmpty();
@@ -63,7 +41,7 @@ public class MemorySessionRepositoryTest
     [Fact]
     public async Task AddedSessionCanBeDeleted()
     {
-        var repo = new MemorySessionRepository(null, mapper);
+        var repo = new MemorySessionRepository(null);
         await repo.AddSessionAsync(new Session("foo-bar"));
         await repo.DeleteSessionAsync("foo-bar");
         (await repo.SessionExistsAsync("foo-bar")).Should().BeFalse();
@@ -73,7 +51,7 @@ public class MemorySessionRepositoryTest
     [Fact]
     public void GetNonexistingSessionThrowsException()
     {
-        var repo = new MemorySessionRepository(null, mapper);
+        var repo = new MemorySessionRepository(null);
         Action act = () => repo.GetSessionAsync("foo-bar");
         act.Should().Throw<SessionNotFoundException>();
     }
@@ -82,7 +60,7 @@ public class MemorySessionRepositoryTest
     [Fact]
     public void DeleteNonexistingSessionThrowsException()
     {
-        var repo = new MemorySessionRepository(null, mapper);
+        var repo = new MemorySessionRepository(null);
         Action act = () => repo.DeleteSessionAsync("foo-bar");
         act.Should().Throw<SessionNotFoundException>();
     }

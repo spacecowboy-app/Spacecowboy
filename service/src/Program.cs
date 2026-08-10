@@ -70,8 +70,6 @@ builder.Services.AddSwaggerGen(c => {
     c.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "spacecowboy-api.xml"));
 });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 var repositoryType = serviceOptions.RepositoryType?.ToLower();
 switch (repositoryType) {
     case "redis":

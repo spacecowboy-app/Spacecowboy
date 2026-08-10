@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 
 using Spacecowboy.Service.Infrastructure.DTO;
@@ -36,7 +35,6 @@ namespace Spacecowboy.Service.Infrastructure;
 /// </remarks>
 public class MemorySessionRepository : ISessionRepository
 {
-    private readonly IMapper map;
     private readonly ILogger<MemorySessionRepository>? log;
 
     /// <summary>
@@ -61,9 +59,8 @@ public class MemorySessionRepository : ISessionRepository
     private readonly Dictionary<string, Dictionary<Guid, DateTime>> participantsTimestamps = new Dictionary<string, Dictionary<Guid, DateTime>>();
 
 
-    public MemorySessionRepository(ILogger<MemorySessionRepository>? log, IMapper map)
+    public MemorySessionRepository(ILogger<MemorySessionRepository>? log)
     {
-        this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.log = log;
         log?.LogInformation("Starting MemorySessionRepository");
     }
@@ -77,7 +74,7 @@ public class MemorySessionRepository : ISessionRepository
         lock (repolock)
         {
             if (sessions.ContainsKey(session.Id)) throw new SessionExistsException(session.Id);
-            sessions[session.Id] = map.Map<SessionDto>(session);
+            sessions[session.Id] = (SessionDto) session;
             UpdateGeneration(session.Id);
             participantsTimestamps[session.Id] = new Dictionary<Guid, DateTime>();
         }
@@ -102,7 +99,7 @@ public class MemorySessionRepository : ISessionRepository
             var session = sessions[id];
             PopulateGeneration(session);
             PopulateParticipantsLastActiveTimestamp(session);
-            return map.Map<Session>(session);
+            return (Session) session;
         }
     }
 
@@ -137,7 +134,7 @@ public class MemorySessionRepository : ISessionRepository
         lock (repolock)
         {
             if (!sessions.ContainsKey(session.Id)) throw new SessionNotFoundException(session.Id);
-            sessions[session.Id] = map.Map<SessionDto>(session);
+            sessions[session.Id] = (SessionDto) session;
             UpdateGeneration(session.Id);
             return Task<Session>.FromResult(session);
         }

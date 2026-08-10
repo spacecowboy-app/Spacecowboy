@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
@@ -81,15 +80,13 @@ public class RedisSessionRepository : ISessionRepository
     // field names used for the session metrics hash with key keySessionMetrics
     private readonly static string sessionMetricsTotalSessions = "TotalSessions";
 
-    private readonly IMapper map;
     private readonly ILogger<RedisSessionRepository> log;
 
     private readonly ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("redis");
 
 
-    public RedisSessionRepository(ILogger<RedisSessionRepository> log, IMapper map)
+    public RedisSessionRepository(ILogger<RedisSessionRepository> log)
     {
-        this.map = map ?? throw new ArgumentNullException(nameof(map));
         this.log = log;
         log?.LogInformation("Redis session repository starting");
     }
@@ -102,7 +99,7 @@ public class RedisSessionRepository : ISessionRepository
         var db = redis.GetDatabase();
         var trans = db.CreateTransaction();
         trans.AddCondition(Condition.HashNotExists(keySessions, session.Id));
-        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize(map.Map<SessionDto>(session)));
+        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize((SessionDto) session));
         var result = await trans.ExecuteAsync();
         if (!result) throw new SessionExistsException(session.Id);
         _ = db.HashIncrementAsync(keySessionMetrics, sessionMetricsTotalSessions);
@@ -117,7 +114,7 @@ public class RedisSessionRepository : ISessionRepository
         var db = redis.GetDatabase();
         var trans = db.CreateTransaction();
         trans.AddCondition(Condition.HashExists(keySessions, session.Id));
-        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize(map.Map<SessionDto>(session)));
+        _ = trans.HashSetAsync(keySessions, session.Id, JsonSerializer.Serialize((SessionDto) session));
         var result = await trans.ExecuteAsync();
         if (!result) throw new SessionNotFoundException(session.Id);
         await UpdateGenerationAsync(session.Id);
@@ -171,7 +168,7 @@ public class RedisSessionRepository : ISessionRepository
             if (sessionDto == null) { throw new JsonException("Got null response from JSON deserializer."); }
             await PopulateGenerationAsync(sessionDto);
             await PopulateParticipantsLastActiveTimestampAsync(sessionDto);
-            return map.Map<Session>(sessionDto);
+            return (Session) sessionDto;
         }
         catch (JsonException ex)
         {
@@ -198,7 +195,7 @@ public class RedisSessionRepository : ISessionRepository
         var sessions = await db.HashValuesAsync(keySessions);
         try
         {
-            return sessions.Select(s => s.ToString()).Where(s => s != null).Select(s => map.Map<Session>(JsonSerializer.Deserialize<SessionDto>(s)));
+            return sessions.Select(s => s.ToString()).Where(s => s is not null).Select(s => JsonSerializer.Deserialize<SessionDto>(s)).Where(s => s is not null).Select(s => (Session) s!).ToList();
         }
         catch (JsonException ex)
         {

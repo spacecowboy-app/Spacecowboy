@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright 2021-2025 Rolf Michelsen and Tami Weiss
+    Copyright 2021-2026 Rolf Michelsen and Tami Weiss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,19 +16,51 @@
 
 using System;
 
+using Spacecowboy.Service.Model.Entities;
 
-namespace Spacecowboy.Service.Infrastructure.DTO
+namespace Spacecowboy.Service.Infrastructure.DTO;
+
+/// <summary>
+/// Represents a card as stored in a repository
+/// </summary>
+public record CardDto
 {
+    public required Guid Id { get; init; }
+    public string? Value { get; init; }
+    public string? Image { get; init; }
+    public string? Color { get; init; }
+    public string? Font { get; init; }
+    public string? Style { get; init; }
+
     /// <summary>
-    /// Represents a card as stored in a repository
+    /// Explicit cast from model <see cref="Card"/> to <see cref="CardDto"/>.
     /// </summary>
-    public record CardDto
+    public static explicit operator CardDto(Card card)
     {
-        public required Guid Id { get; init; }
-        public string? Value { get; init; }
-        public string? Image { get; init; }
-        public string? Color { get; init; }
-        public string? Font { get; init; }
-        public string? Style { get; init; }
+        return new CardDto
+        {
+            Id = card.Id,
+            Value = card.Value,
+            Image = card.Image,
+            Color = card.Color,
+            Font = card.Font,
+            Style = card.Style
+        };
+    }
+
+    /// <summary>
+    /// Explicit cast from <see cref="CardDto"/> to model <see cref="Card"/>.
+    /// </summary>
+    public static explicit operator Card(CardDto dto)
+    {
+        return new Card
+        {
+            Id = dto.Id,
+            Value = dto.Value,
+            Image = dto.Image,
+            Color = dto.Color,
+            Font = dto.Font,
+            Style = dto.Style
+        };
     }
 }
