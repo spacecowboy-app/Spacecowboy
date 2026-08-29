@@ -15,7 +15,6 @@
 */
 
 import Grid from '@mui/material/Unstable_Grid2';
-import log from "loglevel";
 
 import Charmset from "@/model/Charmset";
 import Charm from "./Charm";

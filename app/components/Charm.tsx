@@ -22,7 +22,6 @@ import { useTheme } from '@mui/material/styles';
 
 import Constants from "@/constants";
 
-/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {

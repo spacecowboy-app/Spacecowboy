@@ -8,10 +8,11 @@ applyTo: 'app/**/*'
 ## Overview
 
 - Application project is located in the `./app` folder.
-- The web application is built using React, TypeScript and Next.js.
+- The web application is built using React, TypeScript and Vite.
 - It uses Material UI (MUI) for the user interface components and styling.
 - The application is a single-page application (SPA) that communicates with the backend service via RESTful APIs and a
   SignalR connection for real-time updates.
+- Routing is handled by `react-router-dom`.
 
 
 ## Project Structure
@@ -21,9 +22,9 @@ applyTo: 'app/**/*'
 - `hooks/`: Contains custom React hooks for state management and side effects.
 - `images/`: Contains static image assets.
 - `model`: Contains TypeScript interfaces and types for the application model (ref domain-driven design).
-- `pages/`: Contains Next.js pages and API routes.
+- `pages/`: Contains top-level route components, wired up to routes in `App.tsx`.
 - `public/`: Contains static files that are served directly by the web server.
 - `services/`: Contains code to interact with the service part of the application.
 - `state/`: Persistent state management.
 - `styles/`: Contains global styles and theme configuration for Material UI.
-- `tests/`: Contains unit and integration tests for the application.
+- `tests/`: Contains unit and integration tests for the application, run with Vitest.

@@ -23,7 +23,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import log from "loglevel";
-import { useRouter } from "next/router";
+import { useNavigate } from "react-router-dom";
 
 import HeroImage from "@/components/HeroImage";
 import Constants from "../constants";
@@ -41,7 +41,7 @@ export default function StartGame(): JSX.Element
     const [ sessionId, setSessionId ] = useState<string|undefined>();
     const [ sessionError, setSessionError ] = useState<string|undefined>();
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
-    const router = useRouter();
+    const navigate = useNavigate();
     const dispatch = useContext(SessionDispatchContext);
 
     // Styling of the INPUT html element inside a TextField.
@@ -82,7 +82,7 @@ export default function StartGame(): JSX.Element
 
 
     /** Callback for closing the error snackbar. */
-    function handleErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -126,7 +126,7 @@ export default function StartGame(): JSX.Element
                         sessionId: sessionId,
                         isOwner: true
                     });
-                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                    navigate(`/${sessionId}`);
                 })
                 .catch((error) =>  {
                     // TODO Proper error message in client window
