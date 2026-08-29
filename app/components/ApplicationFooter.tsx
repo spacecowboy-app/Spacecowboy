@@ -14,8 +14,6 @@
     limitations under the License.
 */
 
-"use client";
-
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Link from "@mui/material/Link";
@@ -23,8 +21,6 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
-import Image from "next/image";
 
 import Configuration from "@/Configuration";
 
@@ -61,7 +57,7 @@ export default function ApplicationFooter(): JSX.Element
                         <Link href="mailto:howdy@spacecowboy.app" variant="body1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
                         <Box pt={0.8}>
                             <Link href="https://github.com/spacecowboy-app" >
-                                <Image src={logo} alt="Github repository" width={32} />
+                                <img src={logo} alt="Github repository" width={32} />
                             </Link>
                         </Box>
                     </Box>

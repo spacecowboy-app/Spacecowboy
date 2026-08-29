@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-import { createContext, useReducer } from "react";
+import { createContext, Dispatch, useReducer } from "react";
 import log from "loglevel";
 
 
 export type ThemeVariant = "light"|"dark"|undefined;
 
 export const ThemeVariantContext = createContext<ThemeVariant>(undefined);
-export const ThemeVariantDispatchContext = createContext<any>(null);
+export const ThemeVariantDispatchContext = createContext<Dispatch<ThemeVariantActions>>(() => {});
 
 
 interface Props
@@ -51,6 +51,9 @@ export interface ThemeVariantSetAction extends ThemeVariantAction
 }
 
 
+export type ThemeVariantActions = ThemeVariantToggleAction|ThemeVariantSetAction;
+
+
 
 
 /**
@@ -73,7 +76,7 @@ export function ThemeVariantProvider(props: Props): JSX.Element
 /**
  * Reducer function for the theme variant context.
  */
-export function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVariantAction): ThemeVariant
+export function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVariantActions): ThemeVariant
 {
     switch (action.type) {
         case "toggle": {
@@ -91,6 +94,6 @@ export function themeVariantReducer(themeVariant: ThemeVariant, action: ThemeVar
             throw Error("Invalid action type for set action");
         }
         default:
-            throw Error(`Unknown action ${action.type}`);
+            throw Error(`Unknown action ${(action as ThemeVariantAction).type}`);
     }
 }

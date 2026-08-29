@@ -22,8 +22,8 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from "@/components/Link";
+import { useNavigate } from "react-router-dom";
 
 import log from "loglevel";
 
@@ -36,7 +36,7 @@ export default function JoinGame(): JSX.Element
 {
     const [ sessionId, setSessionId ] = useState<string>("");
     const [ sessionError, setSessionError ] = useState<string|undefined>(sessionIdIsValid(sessionId));
-    const router = useRouter();
+    const navigate = useNavigate();
 
     // Styling of the INPUT html element inside a TextField.
     const sx = {
@@ -77,7 +77,7 @@ export default function JoinGame(): JSX.Element
         const pos = sessionId.lastIndexOf("/");
         const id = pos == -1 ? sessionId : sessionId.substring(pos+1);
         log.info(`Joining session ${id}`);
-        router.push({ pathname:"/[session]", query: { session: id } });
+        navigate(`/${id}`);
     }
 
 

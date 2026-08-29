@@ -14,8 +14,6 @@
     limitations under the License.
 */
 
-"use client";
-
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -25,7 +23,6 @@ import { useTheme } from "@mui/material/styles";
 import CardModel, { CardStyle } from "@/model/Card";
 import Constants from "@/constants";
 
-/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {
@@ -90,7 +87,6 @@ export default function Card(props: Props): JSX.Element
         "large": { fontSize: 32 * sizeMultiplier, fontWeight: "bold" },
     }
 
-    const cardColor = `var(--${props.card.color})`;
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (

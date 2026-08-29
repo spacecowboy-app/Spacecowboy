@@ -22,7 +22,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link";
+import Link from "@/components/Link";
 
 import log from "loglevel";
 
@@ -61,7 +61,7 @@ export default function Home(): JSX.Element
                 dispatch(clearSessionAction());
             }
         }
-    }), [dispatch, session];
+    }, [dispatch, session]);
 
     return (
         <>

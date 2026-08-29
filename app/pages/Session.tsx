@@ -14,14 +14,12 @@
     limitations under the License.
 */
 
-"use client";
-
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 
 import Alert from "@mui/material/Alert";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 
-import { useRouter } from "next/router";
+import { useNavigate, useParams } from "react-router-dom";
 
 import log from "loglevel";
 
@@ -51,8 +49,8 @@ export default function Session(): JSX.Element
 {
     const [ avatarCreatorErrorOpen, setAvatarCreatorErrorOpen ] = useState<boolean>(false);
     const [ deckCreatorErrorOpen, setDeckCreatorErrorOpen ] = useState<boolean>(false);
-    const router = useRouter();
-    const sessionId = router.query.session as string;
+    const navigate = useNavigate();
+    const sessionId = useParams().session as string;
     const session = useContext(SessionContext);
     const dispatch = useContext(SessionDispatchContext);
     const serviceEvents = useContext(ServiceEventsContext);
@@ -72,7 +70,7 @@ export default function Session(): JSX.Element
 
             if (sessionIdIsValid(sessionId)) {
                 log.warn(`Session name is not valid [${sessionId}].`);
-                router.push("/");
+                navigate("/");
                 return;
             }
 
@@ -80,7 +78,7 @@ export default function Session(): JSX.Element
             try {
                 if (!(await sessionIdExistsAsync(sessionId))) {
                     log.debug(`Setup session [${sessionId}]: Session does not exist on the server.`);
-                    router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                    navigate(`/${sessionId}/notfound`);
                     return;
                 }
                 if (session?.id !== sessionId) {
@@ -106,7 +104,7 @@ export default function Session(): JSX.Element
                 log.error("Exception");
             }
         }
-    }, [sessionId, session?.id, dispatch, router]);
+    }, [sessionId, session?.id, dispatch, navigate]);
 
     // Connect to service to receive service events for the current session.
     useEffect(() => {
@@ -114,12 +112,12 @@ export default function Session(): JSX.Element
             if (!serviceEvents) {
                 // TODO This should never happen but it might still be a good idea to handle it a bit better.
                 log.error("A service event service is not available.");
-                router.push({ pathname:"/[session]/notfound", query: { session: sessionId } });
+                navigate(`/${sessionId}/notfound`);
                 return;
             }
             serviceEvents.Connect(sessionId);
         }
-    }, [serviceEvents, router, sessionId, session.id]);
+    }, [serviceEvents, navigate, sessionId, session.id]);
 
     if (!sessionId || sessionIdIsValid(sessionId)) {
         return (<></>);
@@ -175,7 +173,7 @@ export default function Session(): JSX.Element
     return (<VotingResult />);
 
     /** Callback for closing the error snackbar. */
-    function handleAvatarCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleAvatarCreatorErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -185,7 +183,7 @@ export default function Session(): JSX.Element
 
 
     /** Callback for closing the deck creator error snackbar. */
-    function handleDeckCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleDeckCreatorErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -225,7 +223,7 @@ export default function Session(): JSX.Element
     function registerDeck(deck: Deck): void
     {
         addDeckAsync(sessionId, deck)
-            .then((p) => {
+            .then(() => {
                 dispatch(setDeckAction(deck));
             })
             .catch(() => {

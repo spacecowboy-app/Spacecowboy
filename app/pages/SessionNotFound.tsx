@@ -22,8 +22,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from "@/components/Link";
+import { useNavigate, useParams } from "react-router-dom";
 
 import log from "loglevel";
 
@@ -42,8 +42,8 @@ import heroImage from "@/images/hero/noplace.png";
  * */
 export default function SessionNotFound(): JSX.Element
 {
-    const router = useRouter();
-    const sessionId = router.query.session as string;
+    const navigate = useNavigate();
+    const sessionId = useParams().session as string;
     const dispatch = useContext(SessionDispatchContext);
     const [ invalidNameOpen, setInvalidNameOpen ] = useState<string|undefined>();
 
@@ -86,7 +86,7 @@ export default function SessionNotFound(): JSX.Element
                         sessionId: sessionId,
                         isOwner: true
                     });
-                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                    navigate(`/${sessionId}`);
                 })
                 .catch((error) =>  {
                     // TODO Proper error message in client window
@@ -103,7 +103,7 @@ export default function SessionNotFound(): JSX.Element
     function closeInvalidNameOpen(): void
     {
         setInvalidNameOpen(undefined);
-        router.push("/");
+        navigate("/");
     }
 
 }

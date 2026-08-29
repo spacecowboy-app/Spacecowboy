@@ -14,13 +14,11 @@
     limitations under the License.
 */
 
-import Image, { StaticImageData } from "next/image";
-
 import useViewportSize from "@/hooks/useViewportSize";
 
 
 interface Props {
-    src: StaticImageData,
+    src: string,
     alt: string,
 }
 
@@ -33,6 +31,6 @@ export default function HeroImage(props: Props): JSX.Element
     const viewport = useViewportSize();
 
     return (
-        <Image src={props.src} alt={props.alt} width={Math.min(800, viewport.width * 0.8)} priority />
+        <img src={props.src} alt={props.alt} width={Math.min(800, viewport.width * 0.8)} />
     );
 }
