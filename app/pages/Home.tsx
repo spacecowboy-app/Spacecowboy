@@ -64,7 +64,7 @@ export default function Home(): JSX.Element
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <HeroImage src={heroImage} alt="Welcome to Spacecowboy" />
                 <Typography variant="h1">Welcome Space Cowboy</Typography>
                 <Typography variant="h3">Name your space, select a deck and</Typography>
