@@ -14,12 +14,14 @@
     limitations under the License.
 */
 
+import { JSX } from "react";
+
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Unstable_Grid2";
-import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
+
+import Link from "@/components/Link";
 
 import DestionationImage from "@/images/about/destination.png";
 import SelectDeckImage from "@/images/about/selectdeck.png";
@@ -45,31 +47,31 @@ export default function About(): JSX.Element
                 <Grid direction="row" spacing={4} container columns={{xs:1, sm:2, md:5}} >
                     <Grid xs={1}>
                         <Stack alignItems="center">
-                            <Image src={DestionationImage} alt="destination" />
+                            <img src={DestionationImage} alt="destination" />
                             <Typography align="center">name your destination</Typography>
                         </Stack>
                     </Grid>
                     <Grid xs={1}>
                         <Stack alignItems="center">
-                            <Image src={SelectDeckImage} alt="destination" />
+                            <img src={SelectDeckImage} alt="destination" />
                             <Typography align="center">select the deck</Typography>
                         </Stack>
                     </Grid>
                     <Grid xs={1}>
                         <Stack alignItems="center">
-                            <Image src={SelectAvatarImage} alt="destination" />
+                            <img src={SelectAvatarImage} alt="destination" />
                             <Typography align="center">select your avatar</Typography>
                         </Stack>
                     </Grid>
                     <Grid xs={1}>
                         <Stack alignItems="center">
-                            <Image src={ShareLinkImage} alt="destination" />
+                            <img src={ShareLinkImage} alt="destination" />
                             <Typography align="center">share the link</Typography>
                         </Stack>
                     </Grid>
                     <Grid xs={1}>
                         <Stack alignItems="center">
-                            <Image src={ShowdownImage} alt="destination" />
+                            <img src={ShowdownImage} alt="destination" />
                             <Typography align="center">tell your story and start the showdown</Typography>
                         </Stack>
                     </Grid>
