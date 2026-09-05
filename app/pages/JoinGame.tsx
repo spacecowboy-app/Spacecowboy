@@ -47,7 +47,7 @@ export default function JoinGame(): JSX.Element
 
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => joinSession(e)}>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h1">Join a space</Typography>
                 <TextField id="session-id" value={sessionId} error={sessionError !== undefined} label={sessionError} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateSessionId(e)} sx={sx} />

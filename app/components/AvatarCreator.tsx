@@ -76,7 +76,7 @@ export default function AvatarCreator(props: Props): JSX.Element
 
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">select your charm</Typography>
                 <Charm charm={avatarCharm} variant="large" />
                 <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} sx={sx} />

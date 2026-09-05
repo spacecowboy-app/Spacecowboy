@@ -46,7 +46,7 @@ export default function ShareSessionPage(): JSX.Element
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h1">Share your place</Typography>
                 <Typography variant="h3">Invite more Space Cowboys</Typography>

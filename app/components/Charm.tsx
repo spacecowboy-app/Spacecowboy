@@ -61,7 +61,7 @@ export default function Charm(props: Props): JSX.Element
 
 
     return (
-        <Stack borderRadius="50%" bgcolor="primary.light" width={size} height={size} alignItems="center" justifyContent="center" sx={props.selectCharm ? charmHoverSx : {}} >
+        <Stack sx={[{ borderRadius: "50%", bgcolor: "primary.light", width: size, height: size, alignItems: "center", justifyContent: "center" }, props.selectCharm ? charmHoverSx : {}]}>
             <img src={`${Constants.CharmsPath}/${props.charm}`} alt="" width={size} height={size} onClick={() => props.selectCharm && props.selectCharm(props.charm)} />
         </Stack>
     );

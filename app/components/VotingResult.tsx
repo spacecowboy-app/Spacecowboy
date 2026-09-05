@@ -38,7 +38,7 @@ export default function VotingResult(): JSX.Element
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">Voting results</Typography>
                 <VotingResultList />
                 <Button variant="contained" onClick={startNextRound} >next round</Button>

@@ -48,7 +48,7 @@ export default function SessionNotFound(): JSX.Element
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h1">Lost in space</Typography>
                 <Typography variant="h3">The space <strong>{sessionId}</strong> does not exist</Typography>

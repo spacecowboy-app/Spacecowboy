@@ -103,7 +103,7 @@ export default function Card(props: Props): JSX.Element
     function CardValueAndImage(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+            <Stack sx={{ alignItems: "center", justifyContent: "space-between", height: "100%" }}>
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
@@ -114,7 +114,7 @@ export default function Card(props: Props): JSX.Element
     function CardImageAndValue(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+            <Stack sx={{ alignItems: "center", justifyContent: "space-between", height: "100%" }}>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
             </Stack>
@@ -126,7 +126,7 @@ export default function Card(props: Props): JSX.Element
     function CardCenteredImage(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="center">
+            <Stack sx={{ alignItems: "center", justifyContent: "center" }}>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
