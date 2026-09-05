@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useContext, useEffect, useState } from "react";
+import { JSX, useContext, useEffect, useState } from "react";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -22,11 +22,10 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link";
-
 import log from "loglevel";
 
 import Constants from "@/constants";
+import Link from "@/components/Link";
 import HeroImage from "@/components/HeroImage";
 import heroImage from "@/images/hero/welcome.png";
 import { SessionContext, SessionDispatchContext, clearSessionAction } from "@/model/context/SessionContext";
@@ -61,7 +60,7 @@ export default function Home(): JSX.Element
                 dispatch(clearSessionAction());
             }
         }
-    }), [dispatch, session];
+    }, [dispatch, session]);
 
     return (
         <>

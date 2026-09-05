@@ -14,7 +14,8 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState, SyntheticEvent } from "react";
+import { JSX, useState, SyntheticEvent } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -22,8 +23,6 @@ import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-
-import { useRouter } from "next/router";
 
 import log from "loglevel";
 
@@ -39,19 +38,11 @@ import heroImage from "@/images/hero/place.png";
  */
 export default function ShareSessionPage(): JSX.Element
 {
-    const [ sessionUrl, setSessionLink ] = useState<string|undefined>();    // Complete URL to the session, e.g. https://spacecowboy.app/foobar
     const [ infoOpen, setInfoOpen ] = useState<boolean>(false);             // True when the copy link info snackbar is open
-    const router = useRouter();
-    const sessionId = router.query.session as string;
+    const navigate = useNavigate();
+    const sessionId = useParams().session as string;
 
-    // Set sessionUrl from effect hook to ensure client evaluation
-    useEffect(() => {
-        setSessionLink(`${document.location.origin}/${sessionId}`);
-    }, [ setSessionLink, sessionId] );
-
-    if (!sessionUrl) {
-        return (<></>);
-    }
+    const sessionUrl = `${document.location.origin}/${sessionId}`;         // Complete URL to the session, e.g. https://spacecowboy.app/foobar
 
     return (
         <>
@@ -75,20 +66,20 @@ export default function ShareSessionPage(): JSX.Element
     /** Handle button click by copying session URL to clipboard and opening the info snackbar.  */
     function handleButtonClick(): void
     {
-        navigator.clipboard.writeText(sessionUrl!);
+        navigator.clipboard.writeText(sessionUrl);
         setInfoOpen(true);
         log.info(`Copied session link to clipboard: ${sessionUrl}`);
     }
 
 
     /** Callback for closing the error snackbar and redirect back to the main session screen. */
-    function handleInfoClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleInfoClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
         }
         setInfoOpen(false);
-        router.replace({ pathname:"/[session]", query: { session: sessionId } });
+        navigate(`/${sessionId}`, { replace: true });
     }
 
 }

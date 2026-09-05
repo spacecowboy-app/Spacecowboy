@@ -14,7 +14,8 @@
     limitations under the License.
 */
 
-import React, { useContext } from "react";
+import { JSX, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -22,9 +23,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 
-import Image from "next/image";
-import Link from "next/link"
-import { useRouter } from "next/router";
+import Link from "@/components/Link";
 
 import Logo from "@/images/logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -35,7 +34,7 @@ import { SessionContext } from "@/model/context/SessionContext";
 export default function ApplicationHeader(): JSX.Element
 {
     const session = useContext(SessionContext);
-    const router = useRouter();
+    const navigate = useNavigate();
     const serviceEvents = useContext(ServiceEventsContext);
 
     return (
@@ -44,7 +43,7 @@ export default function ApplicationHeader(): JSX.Element
                 <AppBar position="static" >
                     <Toolbar>
                         <IconButton href="/" LinkComponent={Link} size="large" edge="start" color="inherit" >
-                            <Image src={Logo} width={32} alt="Logo" />
+                            <img src={Logo} width={32} alt="Logo" />
                         </IconButton>
                         <Box sx={{ flexGrow: 1 }} ></Box>
                         { session?.id && <Button key="share" color="inherit" href={`/${session.id}/share`} LinkComponent={Link}>Share</Button> }
@@ -61,6 +60,6 @@ export default function ApplicationHeader(): JSX.Element
     function leaveSession(): void
     {
         serviceEvents?.Disconnect();
-        router.push({ pathname:"/" });
+        navigate("/");
     }
 }

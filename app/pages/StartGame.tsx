@@ -14,25 +14,27 @@
     limitations under the License.
 */
 
+import { JSX, SyntheticEvent, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Alert from "@mui/material/Alert";
-import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
 import log from "loglevel";
-import { useRouter } from "next/router";
 
 import HeroImage from "@/components/HeroImage";
-import Constants from "../constants";
-import {sessionIdIsValid} from "../model/Session";
-import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "../service/Service";
+import Constants from "@/constants";
+import {sessionIdIsValid} from "@/model/Session";
+import { createSessionAsync, getRandomSessionIdAsync, sessionIdExistsAsync } from "@/service/Service";
 import { SessionDispatchContext, clearSessionAction, setSessionIdAction, setSessionOwnerAction } from "@/model/context/SessionContext";
 import { storeSessionState } from "@/state/PersistentSessionState";
 
-import heroImage from "../images/hero/place.png";
+import heroImage from "@/images/hero/place.png";
 
 
 
@@ -41,7 +43,7 @@ export default function StartGame(): JSX.Element
     const [ sessionId, setSessionId ] = useState<string|undefined>();
     const [ sessionError, setSessionError ] = useState<string|undefined>();
     const [ errorOpen, setErrorOpen ] = useState<boolean>(false);
-    const router = useRouter();
+    const navigate = useNavigate();
     const dispatch = useContext(SessionDispatchContext);
 
     // Styling of the INPUT html element inside a TextField.
@@ -82,7 +84,7 @@ export default function StartGame(): JSX.Element
 
 
     /** Callback for closing the error snackbar. */
-    function handleErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -126,7 +128,7 @@ export default function StartGame(): JSX.Element
                         sessionId: sessionId,
                         isOwner: true
                     });
-                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                    navigate(`/${sessionId}`);
                 })
                 .catch((error) =>  {
                     // TODO Proper error message in client window

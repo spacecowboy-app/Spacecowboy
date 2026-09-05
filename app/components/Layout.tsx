@@ -14,11 +14,8 @@
     limitations under the License.
 */
 
-"use client";
-
-import React from "react";
-
-import { usePathname } from "next/navigation";
+import { JSX } from "react";
+import { useLocation } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 
@@ -37,7 +34,7 @@ interface Props {
  */
 export default function Layout(props: Props): JSX.Element
 {
-    const pathname = usePathname();
+    const { pathname } = useLocation();
 
     return (
         <div style={{ display: "grid", minHeight: "98vh", gridTemplateRows: "auto 1fr auto", gap: 16 }} >

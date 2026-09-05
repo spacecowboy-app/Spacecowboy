@@ -14,17 +14,11 @@
     limitations under the License.
 */
 
-"use client";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import type { AppProps } from "next/app";
-import Head from "next/head";
 import log from "loglevel";
-import { StrictMode, useContext, useMemo } from "react";
-
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/500.css";
+import { JSX, useContext, useMemo } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import Configuration from "@/Configuration";
 import createAppTheme from "@/theme";
@@ -33,7 +27,13 @@ import { ThemeVariantProvider, ThemeVariantContext } from "@/model/context/Theme
 import { SessionProvider, SessionDispatchContext } from "@/model/context/SessionContext";
 import ServiceEvents, { ServiceEventsContext } from "@/service/ServiceEvents";
 
-import "../styles/globals.css";
+import About from "@/pages/About";
+import Home from "@/pages/Home";
+import JoinGame from "@/pages/JoinGame";
+import Session from "@/pages/Session";
+import SessionNotFound from "@/pages/SessionNotFound";
+import SessionShare from "@/pages/SessionShare";
+import StartGame from "@/pages/StartGame";
 
 
 log.setLevel(Configuration.LogLevel());
@@ -41,36 +41,19 @@ log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
 
 
-export default function App({ Component, router, pageProps }: AppProps): JSX.Element
+export default function App(): JSX.Element
 {
     return (
-        <>
-            <Head>
-                <title>Spacecowboy</title>
-                <meta name="description" content="Spacecowboy : Quick decisions" key="description" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta property="og:title" content="Spacecowboy : Quick decisions" key="title" />
-                <meta property="og:type" content="website" key="type" />
-                <meta property="og:url" content="https://spacecowboy.app" key="url" />
-                <meta property="og:image" content="https://spacecowboy.app/thumbnail.png" key="image" />
-                <link rel="apple-touch-icon" href="/logo192.png" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <main>
-                <StrictMode>
-                    <ThemeVariantProvider>
-                        <SessionProvider>
-                            <StatefulApp Component={Component} router={router} pageProps={pageProps} />
-                        </SessionProvider>
-                    </ThemeVariantProvider>
-                </StrictMode>
-            </main>
-        </>
+        <ThemeVariantProvider>
+            <SessionProvider>
+                <StatefulApp />
+            </SessionProvider>
+        </ThemeVariantProvider>
     )
 }
 
 
-function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
+function StatefulApp(): JSX.Element
 {
     const themeVariant = useContext(ThemeVariantContext) ?? "light";
     const theme = useMemo(() => createAppTheme(themeVariant), [ themeVariant ]);
@@ -82,9 +65,17 @@ function StatefulApp({ Component, pageProps }: AppProps): JSX.Element
         <ServiceEventsContext.Provider value={serviceEvents} >
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/join" element={<JoinGame />} />
+                        <Route path="/start" element={<StartGame />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/:session/share" element={<SessionShare />} />
+                        <Route path="/:session/notfound" element={<SessionNotFound />} />
+                        <Route path="/:session" element={<Session />} />
+                    </Routes>
+                </Layout>
             </ThemeProvider>
         </ServiceEventsContext.Provider>
     );

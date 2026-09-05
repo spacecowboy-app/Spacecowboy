@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-import React, { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link"
+import Link from "@/components/Link";
 
 import { SessionContext } from "@/model/context/SessionContext";
 
