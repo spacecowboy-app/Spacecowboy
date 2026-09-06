@@ -14,15 +14,13 @@
     limitations under the License.
 */
 
-import React from "react";
+import { JSX } from "react";
 
 import Stack from "@mui/material/Stack";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 import Constants from "@/constants";
-
-/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {
