@@ -66,7 +66,7 @@ export function sessionIdIsValid(id: string): string|undefined
     if (id.length > 50)
         return "Name too long";
 
-    if (!RegExp("^[a-zA-Z0-9\-]+$").test(id))
+    if (!RegExp("^[a-zA-Z0-9-]+$").test(id))
         return "Name contains invalid characters"
 
     const reservedIds = [ "about", "join", "start", "decks" ];
