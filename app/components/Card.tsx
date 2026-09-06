@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-"use client";
+import type { JSX } from "react";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -25,7 +25,6 @@ import { useTheme } from "@mui/material/styles";
 import CardModel, { CardStyle } from "@/model/Card";
 import Constants from "@/constants";
 
-/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {
@@ -134,5 +133,3 @@ export default function Card(props: Props): JSX.Element
     }
 
 }
-
-
