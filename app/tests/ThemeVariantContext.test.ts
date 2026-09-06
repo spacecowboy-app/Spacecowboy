@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { test, expect } from "@jest/globals";
+import { describe, test, expect } from "vitest";
 
 import { ThemeVariantSetAction, themeVariantReducer } from "@/model/context/ThemeVariantContext";
 
@@ -27,7 +27,7 @@ describe("Test theme variant dispatch actions", () => {
 
     test("toggle from dark theme results in light theme", () => {
         expect(themeVariantReducer("dark", { type: "toggle" } )).toBe("light");
-    })
+    }),
 
     test("set light theme results in light theme", () => {
         const action: ThemeVariantSetAction = { type: "set", value: "light"};
