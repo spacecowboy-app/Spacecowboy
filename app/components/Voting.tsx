@@ -58,7 +58,7 @@ export default function Voting(): JSX.Element
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">Place your vote</Typography>
                 <DeckGallery cards={session.deck.map(c => vote == c.id ? {...c, isDisabled: true} : c )} selectCard={placeVote} />
                 <VotingParticipants />

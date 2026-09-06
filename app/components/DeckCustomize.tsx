@@ -50,7 +50,7 @@ export default function DeckCustomize(props: Props): JSX.Element
 
     return (
         <Box>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">customize cards</Typography>
                 <Typography variant="h3">Tap a card to modify the deck</Typography>
                 <DeckGallery cards={cards} selectCard={toggleCard} />
