@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 RUN apk add --no-cache pnpm
 
 # Install dependencies only when needed
@@ -12,47 +12,23 @@ RUN pnpm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
-ARG VERSION=development
+ARG VERSION="development"
 ARG APIBASE=""
 ARG LOGLEVEL="warning"
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV NEXT_PUBLIC_SPACECOWBOY_VERSION=$VERSION
-ENV NEXT_PUBLIC_SPACECOWBOY_API_BASE=$APIBASE
-ENV NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL=$LOGLEVEL
+ENV VITE_SPACECOWBOY_VERSION=$VERSION
+ENV VITE_SPACECOWBOY_API_BASE=$APIBASE
+ENV VITE_SPACECOWBOY_LOGLEVEL=$LOGLEVEL
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Disable telemetry during the build.
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Run npm build
+# Build static production assets
 RUN pnpm run build
 
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
+# Production image serving the static files
+FROM nginx:alpine AS runner
 
-ENV NODE_ENV=production
-# Disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED=1
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT=3000
-
-CMD ["node", "server.js"]
+EXPOSE 80
