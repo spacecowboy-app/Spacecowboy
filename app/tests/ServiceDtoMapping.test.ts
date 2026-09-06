@@ -14,9 +14,9 @@
     limitations under the License.
 */
 
-import { test, expect } from "@jest/globals";
+import { describe, test, expect } from "vitest";
 
-import SessionResponse, { asSession } from "../service/dto/SessionResponse";
+import SessionResponse, { asSession } from "@/service/dto/SessionResponse";
 
 
 describe("SessionResponse", () => {
