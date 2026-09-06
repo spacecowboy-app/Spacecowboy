@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import log from "loglevel";
 
-import DeckCustomize from "./DeckCustomize";
-import DeckSelector from "./DeckSelector";
+import DeckCustomize from "@/components/DeckCustomize";
+import DeckSelector from "@/components/DeckSelector";
 import Deck from "@/model/Deck";
 import DeckCategoryFilter from "@/model/DeckCategoryFilter";
 import { getDecksAsync } from "@/service/Service";

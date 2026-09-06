@@ -14,11 +14,13 @@
     limitations under the License.
 */
 
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
-import log from "loglevel";
 import { JSX, useContext, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
+
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+
+import log from "loglevel";
 
 import Configuration from "@/Configuration";
 import createAppTheme from "@/theme";
@@ -26,7 +28,6 @@ import Layout from "@/components/Layout";
 import { ThemeVariantProvider, ThemeVariantContext } from "@/model/context/ThemeVariantContext";
 import { SessionProvider, SessionDispatchContext } from "@/model/context/SessionContext";
 import ServiceEvents, { ServiceEventsContext } from "@/service/ServiceEvents";
-
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import JoinGame from "@/pages/JoinGame";

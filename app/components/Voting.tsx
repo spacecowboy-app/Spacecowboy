@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import React, { useContext, useState } from "react";
-
+import { JSX, useContext, useState } from "react";
+    
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
@@ -23,12 +23,12 @@ import Typography from "@mui/material/Typography";
 
 import log from "loglevel";
 
-import DeckGallery from "./DeckGallery";
-import VotingParticipants from "./VotingParticipants";
+import DeckGallery from "@/components/DeckGallery";
+import VotingParticipants from "@/components/VotingParticipants";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { castVoteAsync } from "@/service/Service";
-import InvitePrompt from "./InvitePrompt";
+import InvitePrompt from "@/components/InvitePrompt";
 
 
 /**

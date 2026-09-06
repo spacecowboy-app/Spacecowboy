@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -24,9 +24,9 @@ import Typography from "@mui/material/Typography";
 
 import log from "loglevel";
 
-import Charm from "./Charm";
-import CharmGallery from "./CharmGallery";
-import CategorySelector from "./CategorySelector";
+import Charm from "@/components/Charm";
+import CharmGallery from "@/components/CharmGallery";
+import CategorySelector from "@/components/CategorySelector";
 import Avatar from "@/model/Avatar";
 import Charmset from "@/model/Charmset";
 import {getCharmsAsync} from "@/service/Service";

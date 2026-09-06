@@ -14,9 +14,11 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import { JSX, useState } from "react";
+
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 import log from "loglevel";
 
 

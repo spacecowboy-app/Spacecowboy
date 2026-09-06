@@ -19,8 +19,8 @@ import { useLocation } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 
-import ApplicationFooter from "./ApplicationFooter";
-import ApplicationHeader from "./ApplicationHeader";
+import ApplicationFooter from "@/components/ApplicationFooter";
+import ApplicationHeader from "@/components/ApplicationHeader";
 
 
 interface Props {

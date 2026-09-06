@@ -14,13 +14,13 @@
     limitations under the License.
 */
 
-import React, { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Charm from "./Charm";
+import Charm from "@/components/Charm";
 import Participant from "@/model/Participant";
 import { SessionContext } from "@/model/context/SessionContext";
 

@@ -14,11 +14,12 @@
     limitations under the License.
 */
 
+import { JSX } from "react";
+
 import Grid from '@mui/material/Grid';
-import log from "loglevel";
 
 import Charmset from "@/model/Charmset";
-import Charm from "./Charm";
+import Charm from "@/components/Charm";
 
 
 interface Props {

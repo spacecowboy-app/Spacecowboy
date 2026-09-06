@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import { JSX, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";

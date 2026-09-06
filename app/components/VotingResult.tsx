@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -24,7 +24,7 @@ import Typography from "@mui/material/Typography";
 
 import log from "loglevel";
 
-import VotingResultList from "./VotingResultList";
+import VotingResultList from "@/components/VotingResultList";
 import Constants from "@/constants";
 import { SessionContext } from "@/model/context/SessionContext";
 import { resetVotesAsync } from "@/service/Service";
