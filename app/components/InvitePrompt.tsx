@@ -19,8 +19,8 @@ import { JSX, useContext } from "react";
 import Typography from "@mui/material/Typography";
 
 import Link from "@/components/Link";
-
 import { SessionContext } from "@/model/context/SessionContext";
+
 
 /**
  * Component to prompt the user to invite additional participants to a session if the session has a single participant.

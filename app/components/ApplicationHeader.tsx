@@ -24,11 +24,11 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 
 import Link from "@/components/Link";
-
-import Logo from "@/images/logo.png";
 import ThemeSelector from "@/components/ThemeSelector";
 import { ServiceEventsContext } from "@/service/ServiceEvents";
 import { SessionContext } from "@/model/context/SessionContext";
+
+import Logo from "@/images/logo.png";
 
 
 export default function ApplicationHeader(): JSX.Element

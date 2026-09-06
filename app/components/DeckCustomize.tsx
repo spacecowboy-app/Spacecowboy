@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import { JSX, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import DeckGallery from "./DeckGallery";
+import DeckGallery from "@/components/DeckGallery";
 import Card from "@/model/Card";
 import Deck from "@/model/Deck";
 

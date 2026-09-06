@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-import { createContext, useReducer } from "react";
+import { JSX, createContext, useReducer } from "react";
 
 import log from "loglevel";
 
 import Deck from "@/model/Deck";
 import Session from "@/model/Session";
 import SessionResponse, {asSession} from "@/service/dto/SessionResponse";
-import SessionContextException from "./SessionContextException";
+import SessionContextException from "@/model/context/SessionContextException";
 
 
 enum SessionActionTypes {

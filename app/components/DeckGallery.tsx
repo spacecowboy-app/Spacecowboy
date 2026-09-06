@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-import React from "react";
+import { JSX } from "react";
 
 import Grid from '@mui/material/Grid';
 
-import Card from "./Card";
+import Card from "@/components/Card";
 import CardModel from "@/model/Card";
 
 
