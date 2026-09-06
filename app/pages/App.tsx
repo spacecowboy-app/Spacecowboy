@@ -37,6 +37,7 @@ import SessionShare from "@/pages/SessionShare";
 import StartGame from "@/pages/StartGame";
 
 
+console.log(`Environment ${import.meta.env.MODE}`);
 log.setLevel(Configuration.LogLevel());
 log.info(`App version ${Configuration.AppVersion}`);
 log.info(`API base ${Configuration.ApiBase}`)
