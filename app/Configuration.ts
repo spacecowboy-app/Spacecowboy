@@ -19,9 +19,9 @@ import log, { LogLevelDesc } from "loglevel";
 
 export default class Configuration
 {
-    public static readonly ApiBase: string = process.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE ?? "";
+    public static readonly ApiBase: string = import.meta.env.NEXT_PUBLIC_SPACECOWBOY_API_BASE ?? "";
 
-    public static readonly AppVersion?: string = process.env.NEXT_PUBLIC_SPACECOWBOY_VERSION;
+    public static readonly AppVersion?: string = import.meta.env.NEXT_PUBLIC_SPACECOWBOY_VERSION;
 
     /** Prefix for all keys used when storing state in the browser using localStorage or sessionStorage. */
     public static readonly BrowserStorageKeyPrefix = "spacecowboy1";
@@ -29,8 +29,8 @@ export default class Configuration
     /** The application logging level */
     public static LogLevel(): LogLevelDesc
     {
-        if (process.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL) {
-            switch (process.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL.toUpperCase()) {
+        if (import.meta.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL) {
+            switch (import.meta.env.NEXT_PUBLIC_SPACECOWBOY_LOGLEVEL.toUpperCase()) {
                 case "ERROR":
                     return log.levels.ERROR;
                 case "WARNING":
