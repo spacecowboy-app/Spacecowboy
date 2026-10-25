@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import { JSX, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import DeckGallery from "./DeckGallery";
+import DeckGallery from "@/components/DeckGallery";
 import Card from "@/model/Card";
 import Deck from "@/model/Deck";
 
@@ -50,7 +50,7 @@ export default function DeckCustomize(props: Props): JSX.Element
 
     return (
         <Box>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">customize cards</Typography>
                 <Typography variant="h3">Tap a card to modify the deck</Typography>
                 <DeckGallery cards={cards} selectCard={toggleCard} />

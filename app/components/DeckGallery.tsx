@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-import React from "react";
+import { JSX } from "react";
 
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 
-import Card from "./Card";
+import Card from "@/components/Card";
 import CardModel from "@/model/Card";
 
 
@@ -38,7 +38,7 @@ interface Props {
 export default function DeckGallery(props: Props): JSX.Element
 {
     return (
-        <Grid container spacing={2} justifyContent="center" >
+        <Grid container spacing={2} sx={{ justifyContent: "center" }}>
             { props.cards.map(c => <Card key={c.id} card={c} handleClick={() => { if (props.selectCard) props.selectCard(c.id); }} /> ) }
         </Grid>
     );

@@ -14,7 +14,8 @@
     limitations under the License.
 */
 
-import { useContext, useState } from "react";
+import { JSX, useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -22,11 +23,9 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Link from "next/link";
-import { useRouter } from "next/router";
-
 import log from "loglevel";
 
+import Link from "@/components/Link";
 import Constants from "@/constants";
 import HeroImage from "@/components/HeroImage";
 import { createSessionAsync } from "@/service/Service";
@@ -42,14 +41,14 @@ import heroImage from "@/images/hero/noplace.png";
  * */
 export default function SessionNotFound(): JSX.Element
 {
-    const router = useRouter();
-    const sessionId = router.query.session as string;
+    const navigate = useNavigate();
+    const sessionId = useParams().session as string;
     const dispatch = useContext(SessionDispatchContext);
     const [ invalidNameOpen, setInvalidNameOpen ] = useState<string|undefined>();
 
     return (
         <>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <HeroImage src={heroImage} alt="" />
                 <Typography variant="h1">Lost in space</Typography>
                 <Typography variant="h3">The space <strong>{sessionId}</strong> does not exist</Typography>
@@ -86,7 +85,7 @@ export default function SessionNotFound(): JSX.Element
                         sessionId: sessionId,
                         isOwner: true
                     });
-                    router.push({ pathname:"/[session]", query: { session: sessionId } });
+                    navigate(`/${sessionId}`);
                 })
                 .catch((error) =>  {
                     // TODO Proper error message in client window
@@ -103,7 +102,7 @@ export default function SessionNotFound(): JSX.Element
     function closeInvalidNameOpen(): void
     {
         setInvalidNameOpen(undefined);
-        router.push("/");
+        navigate("/");
     }
 
 }

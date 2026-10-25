@@ -14,13 +14,13 @@
     limitations under the License.
 */
 
-import React, { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Card from "./Card";
-import Charm from "./Charm";
+import Card from "@/components/Card";
+import Charm from "@/components/Charm";
 import CardModel from "@/model/Card";
 import Participant from "@/model/Participant";
 import { SessionContext } from "@/model/context/SessionContext";
@@ -37,7 +37,7 @@ export default function VotingResultList(): JSX.Element
     const voteCard = (p: Participant) => session.deck!.find(c => c.id == p.vote);
 
     const renderParticipantVote = (p: Participant, v?: CardModel): JSX.Element => (
-        <Stack key={p.id} alignItems="center">
+        <Stack key={p.id} sx={{ alignItems: "center" }}>
             { v ? <Card card={v} /> : <></> }
             <Charm charm={p.avatar.charm} variant="small" />
             <Typography>{p.avatar.name}</Typography>

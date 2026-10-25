@@ -2,28 +2,40 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
 	"name": "Spacecowboy App",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:22",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:24-bullseye",
+	// Image README: https://github.com/devcontainers/images/tree/main/src/typescript-node
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		3000
-	],
+	"forwardPorts": [ 5173 ],
+	"portsAttributes": {
+		"5173": {
+			"label": "Vite Dev Server",
+			"onAutoForward": "notify"
+		}
+	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "pnpm install",
 
 	// Configure tool-specific properties.
 	"customizations": {
-		// Configure properties specific to VS Code.
 		"vscode": {
-			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"orta.vscode-jest"
-			]
+				"vitest.explorer",
+				"dbaeumer.vscode-eslint"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"eslint.validate": [
+					"javascript",
+					"typescript",
+					"javascriptreact",
+					"typescriptreact"
+				]
+			}
 		}
 	}
 

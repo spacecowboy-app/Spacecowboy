@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -24,9 +24,9 @@ import Typography from "@mui/material/Typography";
 
 import log from "loglevel";
 
-import Charm from "./Charm";
-import CharmGallery from "./CharmGallery";
-import CategorySelector from "./CategorySelector";
+import Charm from "@/components/Charm";
+import CharmGallery from "@/components/CharmGallery";
+import CategorySelector from "@/components/CategorySelector";
 import Avatar from "@/model/Avatar";
 import Charmset from "@/model/Charmset";
 import {getCharmsAsync} from "@/service/Service";
@@ -76,7 +76,7 @@ export default function AvatarCreator(props: Props): JSX.Element
 
     return (
         <Box component="form" onSubmit={(e:React.SyntheticEvent) => setAvatar(e)}>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">select your charm</Typography>
                 <Charm charm={avatarCharm} variant="large" />
                 <TextField id="avatar-name" value={avatarName ?? ""} error={avatarName !== undefined && avatarNameError !== undefined} label={avatarNameError ?? "make your name"} autoFocus={true} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAvatarName(e)} sx={sx} />

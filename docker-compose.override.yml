@@ -17,4 +17,4 @@ services:
         APIBASE: "http://localhost:5000"
         LOGLEVEL: "debug"
     ports:
-      - 8000:3000
+      - 8000:80

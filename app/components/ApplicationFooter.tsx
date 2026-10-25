@@ -14,17 +14,15 @@
     limitations under the License.
 */
 
-"use client";
+import { JSX } from "react";
 
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
-import Image from "next/image";
 
 import Configuration from "@/Configuration";
 
@@ -43,25 +41,25 @@ export default function ApplicationFooter(): JSX.Element
 
     if (isLargeFooter) {
         return (
-            <Grid container spacing={2} borderTop={1} mt={6} mr={2} ml={2} pt={1} pb={1}>
-                <Grid flexGrow={1}>
+            <Grid container spacing={2} sx={{ borderTop: 1, mt: 6, mr: 2, ml: 2, pt: 1, pb: 1 }}>
+                <Grid sx={{ flexGrow: 1 }}>
                     <Box>
                         <Typography variant="h4">Space Cowboy</Typography>
-                        <Typography variant="body1" pt={1}>The place in space for fast decisions <br/> and great collaboration on the world wild web and the galaxy</Typography>
-                        <Typography variant="body1" pt={1}>No warranty. No personal data collected.</Typography>
-                        <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2026 Rolf Michelsen and Tami Weiss</Typography>
-                        <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
+                        <Typography variant="body1" sx={{ pt: 1 }}>The place in space for fast decisions <br/> and great collaboration on the world wild web and the galaxy</Typography>
+                        <Typography variant="body1" sx={{ pt: 1 }}>No warranty. No personal data collected.</Typography>
+                        <Typography variant="subtitle1" sx={{ pt: 1, pb: 0 }}>Copyright 2021-2026 Rolf Michelsen and Tami Weiss</Typography>
+                        <Typography variant="subtitle1" sx={{ pt: 0 }}>Version {Configuration.AppVersion}</Typography>
                     </Box>
                 </Grid>
                 <Grid>
                     <Box>
                         <Typography variant="h4">Send feedback</Typography>
-                        <Typography variant="body1" pt={1}>Space Cowboy HQ</Typography>
-                        <Typography variant="body1" pb={1}>OSLO NORWAY</Typography>
+                        <Typography variant="body1" sx={{ pt: 1 }}>Space Cowboy HQ</Typography>
+                        <Typography variant="body1" sx={{ pb: 1 }}>OSLO NORWAY</Typography>
                         <Link href="mailto:howdy@spacecowboy.app" variant="body1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
-                        <Box pt={0.8}>
+                        <Box sx={{ pt: 0.8 }}>
                             <Link href="https://github.com/spacecowboy-app" >
-                                <Image src={logo} alt="Github repository" width={32} />
+                                <img src={logo} alt="Github repository" width={32} />
                             </Link>
                         </Box>
                     </Box>
@@ -71,11 +69,11 @@ export default function ApplicationFooter(): JSX.Element
     }
     else {
         return (
-            <Stack borderTop={1} mt={6} pt={1} pl={2} pr={2}>
+            <Stack sx={{ borderTop: 1, mt: 6, pt: 1, pl: 2, pr: 2 }}>
                 <Typography variant="h4">Space Cowboy</Typography>
-                <Typography variant="subtitle1" pt={1} pb={0}>Copyright 2021-2026</Typography>
-                <Typography variant="subtitle1" pt={0} pb={0}>Rolf Michelsen and Tami Weiss</Typography>
-                <Typography variant="subtitle1" pt={0}>Version {Configuration.AppVersion}</Typography>
+                <Typography variant="subtitle1" sx={{ pt: 1, pb: 0 }}>Copyright 2021-2026</Typography>
+                <Typography variant="subtitle1" sx={{ pt: 0, pb: 0 }}>Rolf Michelsen and Tami Weiss</Typography>
+                <Typography variant="subtitle1" sx={{ pt: 0 }}>Version {Configuration.AppVersion}</Typography>
                 <Link href="mailto:howdy@spacecowboy.app" variant="subtitle1" color="text.primary" underline="hover">howdy@spacecowboy.app</Link>
             </Stack>
         );

@@ -14,7 +14,8 @@
     limitations under the License.
 */
 
-import { test, expect } from "@jest/globals";
+import { describe, test, expect } from "vitest";
+
 import Session from "@/model/Session";
 import { sessionStateReducer, setSessionIdAction } from "@/model/context/SessionContext";
 

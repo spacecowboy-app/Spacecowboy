@@ -14,11 +14,12 @@
     limitations under the License.
 */
 
-import Grid from '@mui/material/Unstable_Grid2';
-import log from "loglevel";
+import { JSX } from "react";
+
+import Grid from '@mui/material/Grid';
 
 import Charmset from "@/model/Charmset";
-import Charm from "./Charm";
+import Charm from "@/components/Charm";
 
 
 interface Props {
@@ -33,7 +34,7 @@ interface Props {
 export default function CharmGallery(props: Props): JSX.Element
 {
     return (
-        <Grid container spacing={2} justifyContent="center" >
+        <Grid container spacing={2} sx={{ justifyContent: "center" }}>
             { props.charms.charms.map(c =>
                 <Grid key={c}>
                     <Charm charm={c} variant="small" selectCharm={() => selectCharm(c)} />

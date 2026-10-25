@@ -14,13 +14,13 @@
     limitations under the License.
 */
 
-import React, { useContext } from "react";
+import { JSX, useContext } from "react";
 
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Charm from "./Charm";
+import Charm from "@/components/Charm";
 import Participant from "@/model/Participant";
 import { SessionContext } from "@/model/context/SessionContext";
 
@@ -34,7 +34,7 @@ export default function VotingParticipants(): JSX.Element
 
     // Function to return an avatar for a participant.
     const getAvatar = (p: Participant, highlight: boolean) => (
-        <Stack key={p.id} alignItems="center">
+        <Stack key={p.id} sx={{ alignItems: "center" }}>
             <Charm charm={p.avatar.charm} variant="small" />
             <Typography noWrap={false}>{highlight ? <strong>{p.avatar.name}</strong> : p.avatar.name}</Typography>
         </Stack>
@@ -44,13 +44,13 @@ export default function VotingParticipants(): JSX.Element
 
     return (
         <Stack spacing={4} direction="row" divider={<Divider orientation="vertical" role="presentation" variant="middle" flexItem />}>
-            <Stack spacing={1} alignItems="left">
+            <Stack spacing={1} sx={{ alignItems: "left" }}>
                 <Typography>Voted:</Typography>
                 <Stack direction="row" spacing={1}>
                     { participants.filter(p => p.vote != session.noVote?.id).map(p => getAvatar(p, p.id == session.participantId)) }
                 </Stack>
             </Stack>
-            <Stack spacing={1} alignItems="left">
+            <Stack spacing={1} sx={{ alignItems: "left" }}>
                 <Typography>Not yet voted:</Typography>
                 <Stack direction="row" spacing={1}>
                     { participants.filter(p => p.vote == session.noVote?.id).map(p => getAvatar(p, p.id == session.participantId)) }

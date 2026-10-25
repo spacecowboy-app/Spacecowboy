@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import React, { useState } from "react";
+import { JSX, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
@@ -50,7 +50,7 @@ export default function DeckSelector(props: Props): JSX.Element
 
     return (
         <Box>
-            <Stack spacing={2} alignItems="center">
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
                 <Typography variant="h1">select deck</Typography>
                 { props.deckFilters && selectedDeckCategory &&
                     <Select value={selectedDeckCategory.name} onChange={(e) => { setSelectedDeckCategory(props.deckFilters!.find(f => f.name == (e.target.value as string))); }}>

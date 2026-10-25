@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-"use client";
+import type { JSX } from "react";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -25,7 +25,6 @@ import { useTheme } from "@mui/material/styles";
 import CardModel, { CardStyle } from "@/model/Card";
 import Constants from "@/constants";
 
-/* eslint-disable @next/next/no-img-element */
 
 
 interface Props {
@@ -104,7 +103,7 @@ export default function Card(props: Props): JSX.Element
     function CardValueAndImage(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+            <Stack sx={{ alignItems: "center", justifyContent: "space-between", height: "100%" }}>
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
@@ -115,7 +114,7 @@ export default function Card(props: Props): JSX.Element
     function CardImageAndValue(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="space-between" sx={{height: "100%"}}>
+            <Stack sx={{ alignItems: "center", justifyContent: "space-between", height: "100%" }}>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
                 <Typography align="center" sx={fontStyles[card.font ?? "small"]}>{card.value}</Typography>
             </Stack>
@@ -127,12 +126,10 @@ export default function Card(props: Props): JSX.Element
     function CardCenteredImage(card: CardModel): JSX.Element
     {
         return (
-            <Stack alignItems="center" justifyContent="center">
+            <Stack sx={{ alignItems: "center", justifyContent: "center" }}>
                 <img src={`${Constants.CardsPath}/${card.image}`} width={imageSize} height={imageSize} alt={props.card.value ?? ""} />
             </Stack>
         );
     }
 
 }
-
-
