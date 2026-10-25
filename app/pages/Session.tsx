@@ -223,7 +223,7 @@ export default function Session(): JSX.Element
     function registerDeck(deck: Deck): void
     {
         addDeckAsync(sessionId, deck)
-            .then((p) => {
+            .then(() => {
                 dispatch(setDeckAction(deck));
             })
             .catch(() => {
