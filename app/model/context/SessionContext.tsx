@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { JSX, createContext, useReducer } from "react";
+import { createContext } from "react";
 
 import log from "loglevel";
 
@@ -108,35 +108,17 @@ export type SessionActions =
     | ReturnType<typeof setSessionOwnerAction>
 
 
-const initialSessionState: Session = {
-    participants: [],
-    votingCompleted: false,
-};
+export function createInitialSessionState(): Session
+{
+    return {
+        participants: [],
+        votingCompleted: false,
+    };
+}
 
-export const SessionContext = createContext<Session>(initialSessionState);
+export const SessionContext = createContext<Session>(createInitialSessionState());
 export const SessionDispatchContext = createContext<(a: SessionActions) => void>(() => {});
 
-interface Props
-{
-    children: JSX.Element[]|JSX.Element
-}
-
-
-/**
- * Context provider for the session state.
- */
-export function SessionProvider(props: Props): JSX.Element
-{
-    const [ sessionState, dispatch ] = useReducer(sessionStateReducer, initialSessionState);
-
-    return (
-        <SessionContext.Provider value={sessionState}>
-            <SessionDispatchContext.Provider value={dispatch}>
-                {props.children}
-            </SessionDispatchContext.Provider>
-        </SessionContext.Provider>
-    );
-}
 
 
 /**
@@ -148,7 +130,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
 
         case SessionActionTypes.CLEAR_SESSION: {
             log.debug(`Session State [${session.id}]: Clear session.`);
-            return initialSessionState;
+            return createInitialSessionState();
         }
 
         case SessionActionTypes.CLEAR_VOTES: {
@@ -200,7 +182,7 @@ export function sessionStateReducer(session: Session, action: SessionActions): S
                 throw new SessionContextException(`Session State: Trying to change the session id from ${session.id} to ${action.id}`);
             }
             return {
-                ...initialSessionState,
+                ...createInitialSessionState(),
                 id: action.id,
             };
         }
