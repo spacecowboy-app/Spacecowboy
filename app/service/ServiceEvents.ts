@@ -150,7 +150,7 @@ export default class ServiceEvents {
                 await this.connection.invoke(EventTypes.SessionUnsubscribe, this.sessionId);
                 log.debug(`SessionEvents [${this.sessionId}]: Unsubscribed from updates for session.`);
             }
-            catch (err) {
+            catch {
                 log.error(`SessionEvents [${this.sessionId}]: Unable to unsubscribe from updates for session.`);
                 // Logger.Error(err.toString());   // TODO: Fix tis
             }

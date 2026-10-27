@@ -89,7 +89,6 @@ export default function Card(props: Props): JSX.Element
         "large": { fontSize: 32 * sizeMultiplier, fontWeight: "bold" },
     }
 
-    const cardColor = `var(--${props.card.color})`;
     const layoutFunction = props.card.style ? deckStyles[props.card.style] : CardCenteredImage;
 
     return (

@@ -23,16 +23,16 @@ describe("Test theme variant dispatch actions", () => {
 
     test("toggle from light theme results in dark theme", () => {
         expect(themeVariantReducer("light", { type: "toggle" } )).toBe("dark");
-    }),
+    });
 
     test("toggle from dark theme results in light theme", () => {
         expect(themeVariantReducer("dark", { type: "toggle" } )).toBe("light");
-    }),
+    });
 
     test("set light theme results in light theme", () => {
         const action: ThemeVariantSetAction = { type: "set", value: "light"};
         expect(themeVariantReducer("dark", action)).toBe("light");
-    }),
+    });
 
     test("set dark theme results in dark theme", () => {
         const action: ThemeVariantSetAction = { type: "set", value: "dark"};

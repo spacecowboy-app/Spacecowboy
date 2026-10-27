@@ -173,7 +173,7 @@ export default function Session(): JSX.Element
     return (<VotingResult />);
 
     /** Callback for closing the error snackbar. */
-    function handleAvatarCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleAvatarCreatorErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -183,7 +183,7 @@ export default function Session(): JSX.Element
 
 
     /** Callback for closing the deck creator error snackbar. */
-    function handleDeckCreatorErrorClose(event: SyntheticEvent<any, Event>|Event, reason: SnackbarCloseReason): void
+    function handleDeckCreatorErrorClose(event: SyntheticEvent<Element, Event>|Event, reason: SnackbarCloseReason): void
     {
         if (reason == "clickaway") {
             return;
@@ -223,7 +223,7 @@ export default function Session(): JSX.Element
     function registerDeck(deck: Deck): void
     {
         addDeckAsync(sessionId, deck)
-            .then((p) => {
+            .then(() => {
                 dispatch(setDeckAction(deck));
             })
             .catch(() => {

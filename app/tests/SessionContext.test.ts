@@ -35,7 +35,7 @@ describe("Session state actions", () => {
 
         expect(newSession.id).toBe("foo");
         expect(newSession.owner).toBeUndefined();
-    }),
+    });
 
     test("Override session id", () => {
         const session: Session =

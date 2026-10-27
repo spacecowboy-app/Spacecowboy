@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { JSX, createContext, useReducer } from "react";
+import { createContext } from "react";
 
 import log from "loglevel";
 
@@ -22,13 +22,9 @@ import log from "loglevel";
 export type ThemeVariant = "light"|"dark"|undefined;
 
 export const ThemeVariantContext = createContext<ThemeVariant>(undefined);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ThemeVariantDispatchContext = createContext<any>(null);
 
-
-interface Props
-{
-    children: JSX.Element[]|JSX.Element
-}
 
 
 export interface ThemeVariantAction
@@ -51,24 +47,6 @@ export interface ThemeVariantSetAction extends ThemeVariantAction
     value: "light"|"dark",
 }
 
-
-
-
-/**
- * Context provider for the theme variant.
- */
-export function ThemeVariantProvider(props: Props): JSX.Element
-{
-    const [ themeVariant, dispatch ] = useReducer(themeVariantReducer, undefined);
-
-    return (
-        <ThemeVariantContext.Provider value={themeVariant}>
-            <ThemeVariantDispatchContext.Provider value={dispatch}>
-                {props.children}
-            </ThemeVariantDispatchContext.Provider>
-        </ThemeVariantContext.Provider>
-    );
-}
 
 
 /**
